@@ -1,8 +1,21 @@
-# website
+# Research-Ready website
 
-Scaffold for the research-ready.nl marketing website (Quarto website project).
+Astro site for research-ready.nl, with Dutch (default) and English content.
 
-- `quarto preview` to run locally
-- `quarto render` to build to `_site/`
+- `npm install` — install dependencies
+- `npm run dev` — run the dev server
+- `npm run build` — build the static site to `dist/`
+- `npm run preview` — preview the production build locally
 
-Empty scaffold — content, branding and theme still to be filled in.
+## Structure
+
+- `src/pages/` — Dutch pages (default locale, unprefixed URLs)
+- `src/pages/en/` — English pages (`/en/...`)
+- `src/i18n/nl.ts`, `src/i18n/en.ts` — page copy per language
+- `src/layouts/BaseLayout.astro` — shared page shell, head tags, hreflang links
+- `src/components/` — Navbar (language toggle), Footer, Cal.com booking embed
+
+## Before launch
+
+- Replace the placeholder `calLink` in `src/components/CalEmbed.astro` with the real Cal.com event link once that account exists.
+- Provision the `info@research-ready.nl` mailbox and DNS records at the registrar.

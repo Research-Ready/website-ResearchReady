@@ -1,0 +1,17 @@
+---
+import { nl } from '../i18n/nl';
+import { en } from '../i18n/en';
+
+interface Props {
+  locale: 'nl' | 'en';
+}
+
+const { locale } = Astro.props;
+const t = locale === 'nl' ? nl : en;
+---
+
+<footer class="site-footer">
+  <div class="content">
+    <p>{t.footer.text}</p>
+  </div>
+</footer>

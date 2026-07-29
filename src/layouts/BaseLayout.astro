@@ -1,0 +1,37 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  locale: 'nl' | 'en';
+  title: string;
+  description: string;
+}
+
+const { locale, title, description } = Astro.props;
+
+const path = Astro.url.pathname.replace(/^\/en(\/|$)/, '/');
+const nlUrl = new URL(path, Astro.site).toString();
+const enUrl = new URL(path === '/' ? '/en/' : `/en${path}`, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · Research-Ready</title>
+    <meta name="description" content={description} />
+    <link rel="alternate" hreflang="nl" href={nlUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={nlUrl} />
+  </head>
+  <body>
+    <Navbar locale={locale} />
+    <main class="content">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+  </body>
+</html>

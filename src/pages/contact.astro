@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CalEmbed from '../components/CalEmbed.astro';
+import { nl } from '../i18n/nl';
+
+const t = nl;
+---
+
+<BaseLayout locale="nl" title={t.contact.title} description={t.contact.intro}>
+  <h1>{t.contact.title}</h1>
+  <p>{t.contact.intro}</p>
+
+  <div class="contact-block">
+    <p>{t.contact.emailLabel} <a href="mailto:info@research-ready.nl">info@research-ready.nl</a></p>
+  </div>
+
+  <div class="contact-block">
+    <h2>{t.contact.bookingLabel}</h2>
+    <CalEmbed />
+  </div>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+import { nl } from '../i18n/nl';
+import { en } from '../i18n/en';
+
+interface Props {
+  locale: 'nl' | 'en';
+}
+
+const { locale } = Astro.props;
+const t = locale === 'nl' ? nl : en;
+
+// Strip a leading /en to get the path's "shape", then rebuild for each locale.
+const path = Astro.url.pathname.replace(/^\/en(\/|$)/, '/');
+const nlHref = path;
+const enHref = path === '/' ? '/en/' : `/en${path}`;
+const toggleHref = locale === 'nl' ? enHref : nlHref;
+---
+
+<nav class="site-nav">
+  <div class="content">
+    <div class="nav-links">
+      <a href={locale === 'nl' ? '/' : '/en/'}>{t.nav.home}</a>
+      <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'}>{t.nav.pipelines}</a>
+      <a href={locale === 'nl' ? '/contact/' : '/en/contact/'}>{t.nav.contact}</a>
+    </div>
+    <a class="lang-toggle" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
+  </div>
+</nav>

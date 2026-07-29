@@ -1,2 +1,4 @@
-/_site/
-/.quarto/
+node_modules/
+dist/
+.astro/
+WebsiteVault.kdbx

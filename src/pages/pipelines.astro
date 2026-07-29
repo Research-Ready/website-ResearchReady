@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { nl } from '../i18n/nl';
+
+const t = nl;
+---
+
+<BaseLayout locale="nl" title={t.pipelines.title} description={t.pipelines.intro}>
+  <h1>{t.pipelines.title}</h1>
+  <p>{t.pipelines.intro}</p>
+  {t.pipelines.items.map((item) => (
+    <div class="pipeline-card">
+      <span class="repo-badge">{item.repo}</span>
+      <h3>{item.title}</h3>
+      <p>{item.description}</p>
+    </div>
+  ))}
+</BaseLayout>
