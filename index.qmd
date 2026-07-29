@@ -1,0 +1,7 @@
+---
+title: "Research-Ready"
+---
+
+Digitaal soevereine AI-pipelines voor onderzoek, overheid en bedrijfsleven.
+
+Content volgt. Zie [pipelines](pipelines.qmd) voor een overzicht van de acht usecases.
