@@ -11,7 +11,35 @@ const t = locale === 'nl' ? nl : en;
 ---
 
 <footer class="site-footer">
-  <div class="content">
-    <p>{t.footer.text}</p>
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <a class="brand" href={locale === 'nl' ? '/' : '/en/'}>
+        <svg class="brand-mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M8 22 L16 10 L24 22" stroke="#7fb8d6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="16" cy="10" r="3" fill="#7fb8d6" />
+          <circle cx="8" cy="22" r="3" fill="#eaf1f4" />
+          <circle cx="24" cy="22" r="3" fill="#eaf1f4" />
+        </svg>
+        Research-Ready
+      </a>
+      <p>{t.footer.blurb}</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>{t.footer.navTitle}</h4>
+        <a href={locale === 'nl' ? '/' : '/en/'}>{t.nav.home}</a>
+        <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'}>{t.nav.pipelines}</a>
+        <a href={locale === 'nl' ? '/contact/' : '/en/contact/'}>{t.nav.contact}</a>
+      </div>
+      <div class="footer-col">
+        <h4>Research-Ready</h4>
+        <a href="https://github.com/Research-Ready" target="_blank" rel="noopener">{t.footer.githubLabel}</a>
+        <a href="mailto:info@research-ready.nl">info@research-ready.nl</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>{t.footer.copyright}</span>
+    <span>research-ready.nl</span>
   </div>
 </footer>

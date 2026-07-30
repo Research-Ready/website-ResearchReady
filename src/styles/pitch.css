@@ -1,0 +1,268 @@
+/* Research-Ready pitch deck — reveal.js theme built on the site's own tokens */
+
+html,
+body {
+  margin: 0;
+  background: #0e1a24;
+}
+
+.reveal-root {
+  --bg: #0e1a24;
+  --bg-2: #142633;
+  --ink: #eaf1f4;
+  --ink-muted: #9fb2bd;
+  --accent: #7fb8d6;
+  --accent-strong: #2f6f92;
+  --border: #253846;
+  height: 100vh;
+  background: var(--bg);
+}
+
+.reveal-root .reveal-viewport {
+  background-color: var(--bg) !important;
+}
+
+.reveal-root .reveal {
+  --r-background-color: var(--bg);
+  --r-main-color: var(--ink);
+  --r-heading-color: var(--ink);
+  --r-main-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --r-heading-font: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --r-link-color: var(--accent);
+  --r-link-color-hover: var(--ink);
+  --r-selection-background-color: var(--accent-strong);
+}
+
+.reveal-root .reveal .slides section {
+  text-align: left;
+}
+
+.reveal-root .reveal h1,
+.reveal-root .reveal h2,
+.reveal-root .reveal h3 {
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  text-shadow: none;
+  color: var(--ink) !important;
+}
+
+.reveal-root .reveal h1 {
+  font-size: 2.6em;
+}
+
+.reveal-root .reveal h2 {
+  font-size: 1.8em;
+}
+
+.reveal-root .reveal section p {
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.reveal-root .reveal .progress {
+  color: var(--accent-strong);
+}
+
+/* Back-to-site link */
+
+.pitch-exit {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 40;
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #9fb2bd;
+  background: rgba(14, 26, 36, 0.6);
+  border: 1px solid #253846;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  text-decoration: none;
+}
+
+.pitch-exit:hover {
+  color: #eaf1f4;
+  border-color: #7fb8d6;
+  text-decoration: none;
+}
+
+/* Shared slide building blocks */
+
+.slide-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.7em;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6em;
+}
+
+.slide-eyebrow::before {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.slide-lede {
+  font-size: 1.15em;
+  max-width: 30em;
+}
+
+.slide-graphic {
+  opacity: 0.9;
+}
+
+.slide-stats {
+  display: flex;
+  gap: 3em;
+  margin-top: 1.4em;
+  flex-wrap: wrap;
+}
+
+.slide-stat-num {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 1.8em;
+  color: var(--ink);
+}
+
+.slide-stat-label {
+  font-size: 0.6em;
+  color: var(--ink-muted);
+}
+
+.slide-checklist {
+  list-style: none;
+  margin: 1.2em 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7em;
+  font-size: 0.75em;
+}
+
+.slide-checklist li {
+  display: flex;
+  gap: 0.7em;
+  align-items: baseline;
+  color: var(--ink-muted);
+}
+
+.slide-checklist li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  margin-top: 0.35em;
+}
+
+.slide-pipeline-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+  margin-top: 1.2em;
+}
+
+.slide-pipeline-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1em 1.1em;
+}
+
+.slide-pipeline-index {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.6em;
+  letter-spacing: 0.04em;
+}
+
+.slide-pipeline-card h3 {
+  margin: 0.4em 0 0.3em;
+  font-size: 0.85em;
+  color: var(--ink);
+}
+
+.slide-pipeline-card p {
+  margin: 0;
+  font-size: 0.55em;
+  color: var(--ink-muted);
+}
+
+.slide-repo-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.65em;
+  font-weight: 500;
+  color: var(--ink-muted);
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 0.1em 0.5em;
+  margin-left: 0.5em;
+}
+
+.slide-actions {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin-top: 1.6em;
+}
+
+.slide-btn {
+  display: inline-flex;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.7em;
+  padding: 0.7em 1.3em;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.slide-btn-primary {
+  background: var(--accent-strong);
+  color: #fff;
+}
+
+.slide-btn-primary:hover {
+  background: #235870;
+  text-decoration: none;
+}
+
+.slide-btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--ink);
+}
+
+.slide-btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.slide-contact-list {
+  list-style: none;
+  margin: 1.4em 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5em;
+  font-size: 0.85em;
+}
+
+.slide-contact-list li {
+  color: var(--ink-muted);
+}
+
+.slide-contact-list a {
+  color: var(--ink);
+}

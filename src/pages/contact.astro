@@ -7,15 +7,20 @@ const t = nl;
 ---
 
 <BaseLayout locale="nl" title={t.contact.title} description={t.contact.intro}>
-  <h1>{t.contact.title}</h1>
-  <p>{t.contact.intro}</p>
-
-  <div class="contact-block">
-    <p>{t.contact.emailLabel} <a href="mailto:info@research-ready.nl">info@research-ready.nl</a></p>
-  </div>
-
-  <div class="contact-block">
-    <h2>{t.contact.bookingLabel}</h2>
-    <CalEmbed />
-  </div>
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">{t.contact.title}</span>
+        <h1>{t.contact.title}</h1>
+        <p class="lede">{t.contact.intro}</p>
+        <div class="contact-block">
+          <p>{t.contact.emailLabel} <a href="mailto:info@research-ready.nl">info@research-ready.nl</a></p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h2>{t.contact.bookingLabel}</h2>
+        <CalEmbed />
+      </div>
+    </div>
+  </section>
 </BaseLayout>

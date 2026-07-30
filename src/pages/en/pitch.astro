@@ -1,0 +1,29 @@
+---
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import PitchSlides from '../../components/PitchSlides.astro';
+import { en } from '../../i18n/en';
+
+const t = en;
+const title = `${t.home.title} — presentation`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e1a24" />
+    <title>{title} · Research-Ready</title>
+    <meta name="description" content={t.home.tagline} />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <PitchSlides locale="en" t={t} />
+  </body>
+</html>

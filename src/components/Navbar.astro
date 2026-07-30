@@ -14,15 +14,28 @@ const path = Astro.url.pathname.replace(/^\/en(\/|$)/, '/');
 const nlHref = path;
 const enHref = path === '/' ? '/en/' : `/en${path}`;
 const toggleHref = locale === 'nl' ? enHref : nlHref;
+
+const isActive = (shape: string) => path === shape;
 ---
 
-<nav class="site-nav">
-  <div class="content">
-    <div class="nav-links">
-      <a href={locale === 'nl' ? '/' : '/en/'}>{t.nav.home}</a>
-      <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'}>{t.nav.pipelines}</a>
-      <a href={locale === 'nl' ? '/contact/' : '/en/contact/'}>{t.nav.contact}</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href={locale === 'nl' ? '/' : '/en/'}>
+      <svg class="brand-mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M8 22 L16 10 L24 22" stroke="#2f6f92" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="16" cy="10" r="3" fill="#2f6f92" />
+        <circle cx="8" cy="22" r="3" fill="#101c26" />
+        <circle cx="24" cy="22" r="3" fill="#101c26" />
+      </svg>
+      Research-Ready
+    </a>
+    <div class="site-nav-row">
+      <nav class="nav-links" aria-label="Main">
+        <a href={locale === 'nl' ? '/' : '/en/'} aria-current={isActive('/') ? 'page' : undefined}>{t.nav.home}</a>
+        <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'} aria-current={isActive('/pipelines/') ? 'page' : undefined}>{t.nav.pipelines}</a>
+        <a href={locale === 'nl' ? '/contact/' : '/en/contact/'} aria-current={isActive('/contact/') ? 'page' : undefined}>{t.nav.contact}</a>
+      </nav>
+      <a class="lang-toggle" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
     </div>
-    <a class="lang-toggle" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
   </div>
-</nav>
+</header>

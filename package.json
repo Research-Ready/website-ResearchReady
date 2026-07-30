@@ -9,6 +9,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.1.0"
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "astro": "^5.1.0",
+    "reveal.js": "^6.0.1"
   }
 }

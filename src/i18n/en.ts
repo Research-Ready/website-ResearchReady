@@ -7,14 +7,45 @@ export const en = {
     langToggle: 'NL',
   },
   footer: {
-    text: '© 2026 Research-Ready · info@research-ready.nl',
+    blurb: 'Digitally sovereign AI pipelines, self-hosted and fully under European control.',
+    navTitle: 'Navigation',
+    githubLabel: 'Research-Ready on GitHub',
+    copyright: '© 2026 Research-Ready',
   },
   home: {
     title: 'Research-Ready',
     tagline: 'Digitally sovereign AI pipelines for research, government, and business.',
-    mission:
-      'Research-Ready builds self-directed AI pipelines that stay fully under European control. No dependency on external cloud platforms for the core of your work — but the full power of modern AI, applied to research, public services, and business processes.',
-    cta: 'View our pipelines',
+    eyebrow: 'Digitally sovereign AI infrastructure',
+    headline: 'AI pipelines that keep running on your own infrastructure',
+    lede: 'Research-Ready builds self-directed AI pipelines that stay fully under European control. No dependency on external cloud platforms for the core of your work — but the full power of modern AI, applied to research, public services, and business processes.',
+    ctaPrimary: 'View our pipelines',
+    ctaSecondary: 'Book a call',
+    stats: [
+      { num: '8', label: 'production pipelines' },
+      { num: '100%', label: 'self-hosted' },
+      { num: 'NL/EU', label: 'under European control' },
+    ],
+    sovereign: {
+      eyebrow: 'Why self-hosted',
+      title: 'No dependency on external cloud platforms',
+      body: 'Every pipeline runs on a self-hosted AI stack. Data, source code, and models stay inside the environment you control — even while the pipeline makes decisions on its own.',
+      points: [
+        'Data and models stay inside your own environment',
+        'No vendor lock-in with large cloud platforms',
+        'Every pipeline can be audited and adapted',
+      ],
+    },
+    pipelinesTeaser: {
+      title: 'Eight pipelines, one approach',
+      intro: 'From citable research to business creation — each pipeline is a self-contained, adaptable production line with its own repository.',
+      cta: 'View all eight pipelines',
+    },
+    closingCta: {
+      title: 'Curious what a pipeline could do for your organization?',
+      body: 'Book a short, no-obligation call, or send us a message directly.',
+      primary: 'Book a call',
+      secondary: 'Send an email',
+    },
   },
   pipelines: {
     title: 'Pipelines',

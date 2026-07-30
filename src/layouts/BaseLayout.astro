@@ -1,4 +1,10 @@
 ---
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -14,6 +20,7 @@ const { locale, title, description } = Astro.props;
 const path = Astro.url.pathname.replace(/^\/en(\/|$)/, '/');
 const nlUrl = new URL(path, Astro.site).toString();
 const enUrl = new URL(path === '/' ? '/en/' : `/en${path}`, Astro.site).toString();
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -21,15 +28,24 @@ const enUrl = new URL(path === '/' ? '/en/' : `/en${path}`, Astro.site).toString
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f1b26" />
     <title>{title} · Research-Ready</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="nl" href={nlUrl} />
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="x-default" href={nlUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} · Research-Ready`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
+    <a class="skip-link" href="#main">{locale === 'nl' ? 'Naar de inhoud' : 'Skip to content'}</a>
     <Navbar locale={locale} />
-    <main class="content">
+    <main id="main">
       <slot />
     </main>
     <Footer locale={locale} />
