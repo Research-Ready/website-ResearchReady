@@ -4,6 +4,7 @@ export const nl = {
     home: 'Home',
     pipelines: 'Pipelines',
     contact: 'Contact',
+    pitch: 'Presentatie',
     langToggle: 'EN',
   },
   footer: {
