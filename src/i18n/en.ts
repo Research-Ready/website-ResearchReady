@@ -100,4 +100,52 @@ export const en = {
     emailLabel: 'Prefer email first? Reach us at',
     bookingLabel: 'Book a call',
   },
+  pitch: {
+    institution: 'Value Chain Hackers Lab · Windesheim University of Applied Sciences',
+    problem: {
+      eyebrow: 'The shared problem',
+      title: 'Applied AI is becoming infrastructure — on someone else’s terms',
+      body: 'Research groups, public institutions, and businesses are all being pulled onto the same handful of commercial AI clouds: closed models, opaque pricing, data leaving the institution by default.',
+      points: [
+        'Research needs pipelines that are reproducible and inspectable, not black-box APIs',
+        'Public institutions need to know exactly where data and decisions happen',
+        'Long-term dependency on external platforms is a structural risk, not just a cost line',
+      ],
+    },
+    builtToday: {
+      eyebrow: 'What exists today',
+      title: 'Eight pipelines, three domains',
+      groups: [
+        { label: 'Research & knowledge', indices: [0, 7] },
+        { label: 'Public & business services', indices: [2, 3, 4] },
+        { label: 'Applied AI tooling', indices: [1, 5, 6] },
+      ],
+    },
+    closerLook: {
+      eyebrow: 'A closer look',
+      title: 'Citable, reproducible research — end to end',
+      body: 'A research workflow that automatically makes results citable and reproducible, from data to publication — built around exactly the kind of reproducibility standard research institutions are expected to meet.',
+    },
+    academic: {
+      eyebrow: 'Where this comes from',
+      title: 'Built inside applied research, not a pitch deck',
+      body: 'Research-Ready grew out of the Value Chain Hackers Lab at the Supply Chain Finance Lectorate, Windesheim University of Applied Sciences — pipelines are developed and tested in real research and teaching contexts before they become reusable products.',
+    },
+    collaborate: {
+      eyebrow: 'Ways to work together',
+      title: 'What a partnership could look like',
+      points: [
+        'A pilot on one existing pipeline, adapted to your context',
+        'A co-developed pipeline for a new research or public-service question',
+        'Shared infrastructure for a research group or consortium',
+        'A joint research or funding proposal',
+      ],
+    },
+    closing: {
+      title: 'Let’s explore what fits',
+      body: 'Book a short call, or send a message — we can look together at which pipeline, or which new one, makes sense for your institution.',
+      primary: 'Book a call',
+      secondary: 'Send an email',
+    },
+  },
 } as const;

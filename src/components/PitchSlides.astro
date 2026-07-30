@@ -10,8 +10,7 @@ interface Props {
 const { locale, t } = Astro.props;
 const contactHref = locale === 'nl' ? '/contact/' : '/en/contact/';
 const homeHref = locale === 'nl' ? '/' : '/en/';
-const firstFour = t.pipelines.items.slice(0, 4);
-const lastFour = t.pipelines.items.slice(4, 8);
+const uc1 = t.pipelines.items[0];
 ---
 
 <a class="pitch-exit" href={homeHref}>&larr; research-ready.nl</a>
@@ -20,7 +19,7 @@ const lastFour = t.pipelines.items.slice(4, 8);
   <div class="reveal">
     <div class="slides">
       <section>
-        <span class="slide-eyebrow">{t.home.eyebrow}</span>
+        <span class="slide-eyebrow">{t.pitch.institution}</span>
         <h1>{t.home.title}</h1>
         <p class="slide-lede">{t.home.tagline}</p>
         <svg class="slide-graphic" width="260" height="220" viewBox="0 0 320 280" role="img" aria-hidden="true">
@@ -43,8 +42,21 @@ const lastFour = t.pipelines.items.slice(4, 8);
       </section>
 
       <section>
-        <h2>{t.home.headline}</h2>
-        <p class="slide-lede">{t.home.lede}</p>
+        <span class="slide-eyebrow">{t.pitch.problem.eyebrow}</span>
+        <h2>{t.pitch.problem.title}</h2>
+        <p class="slide-lede">{t.pitch.problem.body}</p>
+        <ul class="slide-checklist">
+          {t.pitch.problem.points.map((point: string) => <li>{point}</li>)}
+        </ul>
+      </section>
+
+      <section>
+        <span class="slide-eyebrow">{t.home.sovereign.eyebrow}</span>
+        <h2>{t.home.sovereign.title}</h2>
+        <p>{t.home.sovereign.body}</p>
+        <ul class="slide-checklist">
+          {t.home.sovereign.points.map((point: string) => <li>{point}</li>)}
+        </ul>
         <div class="slide-stats">
           {t.home.stats.map((s: { num: string; label: string }) => (
             <div>
@@ -56,50 +68,48 @@ const lastFour = t.pipelines.items.slice(4, 8);
       </section>
 
       <section>
-        <span class="slide-eyebrow">{t.home.sovereign.eyebrow}</span>
-        <h2>{t.home.sovereign.title}</h2>
-        <p>{t.home.sovereign.body}</p>
+        <span class="slide-eyebrow">{t.pitch.builtToday.eyebrow}</span>
+        <h2>{t.pitch.builtToday.title}</h2>
+        <div class="slide-groups">
+          {t.pitch.builtToday.groups.map((g: { label: string; indices: number[] }) => (
+            <div class="slide-group">
+              <h3 class="slide-group-label">{g.label}</h3>
+              <ul class="slide-group-items">
+                {g.indices.map((i: number) => <li>{t.pipelines.items[i].title}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <span class="slide-eyebrow">{t.pitch.closerLook.eyebrow}</span>
+        <h2>{t.pitch.closerLook.title}</h2>
+        <p class="slide-lede">{t.pitch.closerLook.body}</p>
+        <span class="slide-repo-badge slide-repo-badge-standalone">{uc1.repo}</span>
+      </section>
+
+      <section>
+        <span class="slide-eyebrow">{t.pitch.academic.eyebrow}</span>
+        <h2>{t.pitch.academic.title}</h2>
+        <p class="slide-lede">{t.pitch.academic.body}</p>
+      </section>
+
+      <section>
+        <span class="slide-eyebrow">{t.pitch.collaborate.eyebrow}</span>
+        <h2>{t.pitch.collaborate.title}</h2>
         <ul class="slide-checklist">
-          {t.home.sovereign.points.map((point: string) => <li>{point}</li>)}
+          {t.pitch.collaborate.points.map((point: string) => <li>{point}</li>)}
         </ul>
       </section>
 
       <section>
-        <span class="slide-eyebrow">{t.pipelines.title}</span>
-        <h2>{t.home.pipelinesTeaser.title}</h2>
-        <p class="slide-lede" style="font-size: 0.7em;">{t.home.pipelinesTeaser.intro}</p>
-        <div class="slide-pipeline-grid">
-          {firstFour.map((item: { title: string; repo: string; description: string }, i: number) => (
-            <div class="slide-pipeline-card">
-              <span class="slide-pipeline-index">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{item.title} <span class="slide-repo-badge">{item.repo}</span></h3>
-              <p>{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section>
-        <span class="slide-eyebrow">{t.pipelines.title}</span>
-        <h2>{t.home.pipelinesTeaser.title}</h2>
-        <div class="slide-pipeline-grid">
-          {lastFour.map((item: { title: string; repo: string; description: string }, i: number) => (
-            <div class="slide-pipeline-card">
-              <span class="slide-pipeline-index">{String(i + 5).padStart(2, '0')}</span>
-              <h3>{item.title} <span class="slide-repo-badge">{item.repo}</span></h3>
-              <p>{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section>
         <span class="slide-eyebrow">{t.contact.title}</span>
-        <h2>{t.home.closingCta.title}</h2>
-        <p class="slide-lede">{t.home.closingCta.body}</p>
+        <h2>{t.pitch.closing.title}</h2>
+        <p class="slide-lede">{t.pitch.closing.body}</p>
         <div class="slide-actions">
-          <a class="slide-btn slide-btn-primary" href={contactHref}>{t.home.closingCta.primary}</a>
-          <a class="slide-btn slide-btn-ghost" href="mailto:info@research-ready.nl">{t.home.closingCta.secondary}</a>
+          <a class="slide-btn slide-btn-primary" href={contactHref}>{t.pitch.closing.primary}</a>
+          <a class="slide-btn slide-btn-ghost" href="mailto:info@research-ready.nl">{t.pitch.closing.secondary}</a>
         </div>
         <ul class="slide-contact-list">
           <li>research-ready.nl</li>

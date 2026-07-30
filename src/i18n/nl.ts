@@ -100,4 +100,52 @@ export const nl = {
     emailLabel: 'Liever eerst e-mailen? Stuur ons een bericht via',
     bookingLabel: 'Plan een gesprek',
   },
+  pitch: {
+    institution: 'Value Chain Hackers Lab · Windesheim',
+    problem: {
+      eyebrow: 'Het gedeelde probleem',
+      title: 'Toegepaste AI wordt infrastructuur — op andermans voorwaarden',
+      body: 'Onderzoeksgroepen, publieke instellingen en bedrijven komen allemaal terecht op dezelfde handvol commerciële AI-clouds: gesloten modellen, ondoorzichtige prijzen, data die standaard de instelling verlaat.',
+      points: [
+        'Onderzoek heeft reproduceerbare, inspecteerbare pipelines nodig, geen black-box API’s',
+        'Publieke instellingen moeten precies weten waar data en beslissingen plaatsvinden',
+        'Langdurige afhankelijkheid van externe platformen is een structureel risico, geen kostenpost',
+      ],
+    },
+    builtToday: {
+      eyebrow: 'Wat er nu al is',
+      title: 'Acht pipelines, drie domeinen',
+      groups: [
+        { label: 'Onderzoek & kennis', indices: [0, 7] },
+        { label: 'Publieke & bedrijfsdiensten', indices: [2, 3, 4] },
+        { label: 'Toegepaste AI-tooling', indices: [1, 5, 6] },
+      ],
+    },
+    closerLook: {
+      eyebrow: 'Uitgelicht',
+      title: 'Citeerbaar, reproduceerbaar onderzoek — van begin tot eind',
+      body: 'Een onderzoeksworkflow die resultaten automatisch citeerbaar en reproduceerbaar maakt, van data tot publicatie — gebouwd rond precies het soort reproduceerbaarheid dat van onderzoeksinstellingen wordt verwacht.',
+    },
+    academic: {
+      eyebrow: 'Waar dit vandaan komt',
+      title: 'Ontstaan binnen toegepast onderzoek, niet in een pitchdeck',
+      body: 'Research-Ready komt voort uit het Value Chain Hackers Lab bij het Lectoraat Supply Chain Finance, Windesheim — pipelines worden eerst ontwikkeld en getest in echte onderzoeks- en onderwijscontexten, voordat ze herbruikbare producten worden.',
+    },
+    collaborate: {
+      eyebrow: 'Manieren om samen te werken',
+      title: 'Hoe een samenwerking eruit kan zien',
+      points: [
+        'Een pilot op een bestaande pipeline, aangepast aan uw context',
+        'Een samen ontwikkelde pipeline voor een nieuwe onderzoeks- of dienstverleningsvraag',
+        'Gedeelde infrastructuur voor een onderzoeksgroep of consortium',
+        'Een gezamenlijk onderzoeks- of subsidievoorstel',
+      ],
+    },
+    closing: {
+      title: 'Laten we kijken wat past',
+      body: 'Plan een kort gesprek, of stuur een bericht — dan bekijken we samen welke pipeline, of welke nieuwe, aansluit bij uw instelling.',
+      primary: 'Plan een gesprek',
+      secondary: 'Stuur een e-mail',
+    },
+  },
 } as const;
