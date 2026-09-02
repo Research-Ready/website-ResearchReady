@@ -35,10 +35,8 @@ The analysis pipeline follows four stages:
 
 Quarto evaluates code at render time, so results stay in sync with data.
 
-```{r}
-#| eval: false
-#| label: summary-stats
-#| tbl-cap: "Descriptive statistics"
+```r
+# label: summary-stats — descriptive statistics
 
 # Replace with your actual data source
 data <- data.frame(
@@ -50,9 +48,8 @@ data <- data.frame(
 knitr::kable(data, col.names = c("Pipeline", "Hours saved / cycle", "Accuracy"))
 ```
 
-```{python}
-#| eval: false
-#| label: python-example
+```python
+# label: python-example
 
 # Or use Python — uncomment Python support in the workflow
 import pandas as pd
