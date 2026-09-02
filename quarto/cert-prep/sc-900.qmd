@@ -1,0 +1,104 @@
+---
+title: "SC-900: Microsoft Security, Compliance & Identity Fundamentals"
+---
+
+<span class="cert-badge">Beginner</span> <span class="cert-badge">Microsoft</span> <span class="cert-badge">€165</span>
+
+## Examenoverzicht
+
+| | |
+|---|---|
+| **Slagingsdrempel** | 700/1000 |
+| **Duur** | 60 minuten |
+| **Vragen** | 40–60 (MCQ + case study) |
+| **Geldigheid** | Levenslang (no renewal) |
+| **Aanbevolen voorkennis** | Geen — echte instapper |
+
+### Examendomeinen
+
+| Domein | Gewicht |
+|--------|---------|
+| Security, compliance & identity concepts | 10–15% |
+| Microsoft Entra capabilities | 25–30% |
+| Microsoft security solutions | 35–40% |
+| Microsoft compliance solutions | 25–30% |
+
+## Kernconcepten
+
+### Domein 1 — Concepten
+
+- **CIA-triad**: Confidentiality, Integrity, Availability
+- **Zero Trust**: Verify explicitly, least privilege, assume breach
+- **Defense in depth**: lagen van beveiliging (fysiek → netwerk → applicatie → data)
+- **Shared responsibility model**: wat Microsoft beheert vs. wat jij beheert
+- **Encryption**: at rest vs. in transit; symmetric vs. asymmetric
+
+### Domein 2 — Microsoft Entra (Identity)
+
+- **Entra ID** (voorheen Azure AD): cloud identity provider
+- **Authenticatie**: MFA, passwordless (FIDO2, Windows Hello, Authenticator app)
+- **Conditional Access**: if-then beleid (locatie, apparaat, risico → toegang blokkeren/toestaan)
+- **RBAC**: Role-Based Access Control — least privilege
+- **Identity Protection**: risicosignalen, automatische remediation
+- **Privileged Identity Management (PIM)**: just-in-time adminrechten
+
+### Domein 3 — Microsoft Security Solutions
+
+- **Microsoft Defender** familie: Defender for Cloud, Endpoint, Identity, O365
+- **Microsoft Sentinel**: SIEM + SOAR in Azure
+- **Azure Firewall / NSG**: netwerkbeveiliging
+- **Microsoft 365 Defender**: XDR-platform
+
+### Domein 4 — Compliance
+
+- **Microsoft Purview**: data governance, compliance, DLP
+- **Compliance Manager**: risicoscore, actie-items
+- **Information Protection**: labels, DLP-beleid
+- **eDiscovery**: juridische zoekfunctie in M365
+- **Audit logs**: activiteitsregistratie in M365 en Azure
+
+## Oefenvragen
+
+::: {.callout-note}
+### Vraag 1
+Een organisatie wil dat medewerkers alleen toegang krijgen tot bedrijfssystemen als ze inloggen vanaf een beheerd apparaat. Welke Entra ID-functie passen ze toe?
+
+**A)** Identity Protection
+**B)** Conditional Access ✓
+**C)** PIM
+**D)** SSPR
+
+**Uitleg:** Conditional Access stelt if-then-beleid in. "Als apparaat onbeheerd → toegang blokkeren" is een klassiek CA-scenario.
+:::
+
+::: {.callout-note}
+### Vraag 2
+Welk model beschrijft dat Microsoft de fysieke datacenterbeveiligng beheert maar de klant verantwoordelijk is voor identiteitsbeheer?
+
+**A)** Zero Trust
+**B)** Defense in depth
+**C)** Shared responsibility ✓
+**D)** Least privilege
+
+**Uitleg:** In het shared responsibility model verschuift verantwoordelijkheid per servicelaag (IaaS/PaaS/SaaS). Identity is altijd de klant.
+:::
+
+## Studiestrategie
+
+**Tijdsinvestering:** 2–4 weken (1–2 uur/dag)
+
+1. **Week 1** — Microsoft Learn gratis leerpad SC-900 (officieel, gratis)
+2. **Week 2** — MeasureUp oefenexamen of Whizlabs; noteer zwakke domeinen
+3. **Week 3-4** — Focus op zwakke domeinen; nog twee oefenexamens
+
+**Gratis bronnen:**
+- [Microsoft Learn SC-900](https://learn.microsoft.com/credentials/certifications/security-compliance-and-identity-fundamentals/)
+- John Savill's SC-900 YouTube series
+- Microsoft Virtual Training Days (gratis, met examenvoucher)
+
+::: {.callout-tip}
+**Tip:** Microsoft geeft regelmatig gratis examenvouchers weg via Virtual Training Days. Zoek op "Microsoft Virtual Training Day SC-900" — je bespaart €165.
+:::
+
+---
+*[← Terug naar overzicht](index.qmd)*

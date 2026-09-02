@@ -1,0 +1,396 @@
+---
+title: "Research-Ready Platform — Technische Architectuur"
+subtitle: "Build Pipeline, BPMN Procesflows & Systeemontwerp"
+date: today
+author: "Research-Ready"
+format:
+  html:
+    theme: cosmo
+    css: report-style.css
+    toc: true
+    toc-depth: 3
+    embed-resources: false
+execute:
+  eval: false
+  echo: false
+---
+
+## Systeemoverzicht
+
+Research-Ready is een volledig statisch platform dat bestaat uit twee complementaire bouwlagen:
+
+1. **Astro** — de marketingsite en navigatie (NL/EN i18n, statisch gerenderd)
+2. **Quarto** — automatisch gegenereerde presentaties, rapporten en de cert-prep trainingssite
+
+Alle output wordt gedeployed via **Cloudflare Pages** (directe upload via Wrangler). Er is geen Git-integratie met Cloudflare — elke deploy wordt expliciet getriggerd.
+
+---
+
+## 1. Component Architectuur (C4 Level 2)
+
+```{mermaid}
+graph TB
+  subgraph CLIENT["Browser / Bezoeker"]
+    USER["Gebruiker"]
+  end
+
+  subgraph CDN["Cloudflare Pages — research-ready.nl"]
+    CF["Edge CDN\n(wereldwijd)"]
+  end
+
+  subgraph DIST["dist/ — Static Outputmap"]
+    ASTRO_OUT["Astro Pagina's\n/index, /docs, /contact, /pitch\n/en/* (EN versies)"]
+    PRES_OUT["Quarto Presentaties\n/presentations/*.html\n(RevealJS, embed-resources)"]
+    REP_OUT["Quarto Rapporten\n/reports/*.html\n(Cosmo theme, CSS)"]
+    CERT_OUT["Cert-Prep Site\n/cert-prep/index.html\n+ 7 cert-pagina's\n(Quarto website type)"]
+  end
+
+  subgraph SRC["Broncode — repository"]
+    ASTRO_SRC["src/pages/**\n(Astro componenten, i18n)"]
+    QMD_PRES["quarto/presentations/**\n(.qmd + sltn-theme.scss\n+ brand-theme.scss)"]
+    QMD_REP["quarto/reports/**\n(.qmd + report-style.css)"]
+    QMD_CERT["quarto/cert-prep/**\n(.qmd × 8, _quarto.yml\n+ cert-style.css)"]
+  end
+
+  USER -->|HTTPS| CF
+  CF --> ASTRO_OUT
+  CF --> PRES_OUT
+  CF --> REP_OUT
+  CF --> CERT_OUT
+
+  ASTRO_SRC -->|"npm run build\n→ dist/"| ASTRO_OUT
+  QMD_PRES -->|"quarto render\n→ public/presentations/"| PRES_OUT
+  QMD_REP -->|"quarto render\n→ public/reports/"| REP_OUT
+  QMD_CERT -->|"quarto render\n→ public/cert-prep/"| CERT_OUT
+```
+
+---
+
+## 2. Build Pipeline — BPMN Procesflow
+
+Het platform kent twee deploypaden: **automatisch via GitHub Actions** (voor Quarto-content zonder ingebedde fonts) en **handmatig via Wrangler** (voor alles of wanneer de PublicPushGate hook de push blokkeert).
+
+```{mermaid}
+flowchart TD
+  START(["Start\n(Auteur schrijft .qmd of .astro"]])
+
+  START --> COMMIT["Auteur commit lokaal"]
+  COMMIT --> PUSH_TRY["git push naar main"]
+
+  PUSH_TRY --> GATE{PublicPushGate\nhook actief?}
+
+  GATE -->|"Base64 fonts\ngedetecteerd"| BLOCKED["Push geblokkeerd\n(embed-resources: true)"]
+  GATE -->|"Geen base64\n(embed-resources: false)"| GHA_TRIGGER["GitHub Actions\ngetriggerd op push"]
+
+  BLOCKED --> LOCAL_FLOW["Lokale deploybaan"]
+
+  subgraph LOCAL_FLOW["Lokale Deploy (handmatig)"]
+    L1["quarto render quarto/presentations/"]
+    L2["quarto render quarto/reports/"]
+    L3["quarto render quarto/cert-prep/"]
+    L4["npm run build"]
+    L5["cp -r public/* dist/"]
+    L6["wrangler pages deploy dist/\n--project-name research-ready"]
+    L1 --> L2 --> L3 --> L4 --> L5 --> L6
+  end
+
+  subgraph GHA_FLOW["GitHub Actions (automatisch)"]
+    G1["actions/checkout@v4"]
+    G2["quarto-dev/quarto-actions/setup@v2"]
+    G3["quarto render quarto/presentations/"]
+    G4["quarto render quarto/reports/"]
+    G5["quarto render quarto/cert-prep/"]
+    G6["git add public/\ngit commit + push"]
+    G1 --> G2 --> G3 --> G4 --> G5 --> G6
+  end
+
+  GHA_TRIGGER --> GHA_FLOW
+
+  G6 --> CF_DEPLOY["Cloudflare Pages\nontvangen nieuwe bestanden"]
+  L6 --> CF_DEPLOY
+
+  CF_DEPLOY --> LIVE(["Site live op\nresearch-ready.nl"])
+```
+
+---
+
+## 3. Deployment Sequencediagram
+
+```{mermaid}
+sequenceDiagram
+  actor Auteur
+  participant Git as GitHub (main)
+  participant GHA as GitHub Actions
+  participant Quarto as Quarto CLI
+  participant Astro as Astro CLI
+  participant CF as Cloudflare Pages
+
+  Auteur->>Git: git push (quarto/** of src/**)
+
+  alt Pad A: GHA automatisch (geen base64)
+    Git->>GHA: workflow_dispatch / on push
+    GHA->>Quarto: quarto render quarto/presentations/
+    Quarto-->>GHA: public/presentations/*.html
+    GHA->>Quarto: quarto render quarto/reports/
+    Quarto-->>GHA: public/reports/*.html
+    GHA->>Quarto: quarto render quarto/cert-prep/
+    Quarto-->>GHA: public/cert-prep/index.html + 7 pagina's
+    GHA->>Git: git commit + push (public/**)
+    Note over GHA,Git: GHA heeft contents:write permissie
+  else Pad B: Lokale deploy (manueel)
+    Auteur->>Quarto: quarto render quarto/*/
+    Quarto-->>Auteur: public/**
+    Auteur->>Astro: npm run build
+    Astro-->>Auteur: dist/ (Astro pagina's)
+    Auteur->>Auteur: cp -r public/* dist/
+    Auteur->>CF: wrangler pages deploy dist/
+  end
+
+  CF-->>Auteur: Deployment URL (*.pages.dev)
+  CF->>CF: CDN propagatie (wereldwijd)
+  CF-->>Auteur: research-ready.nl live
+```
+
+---
+
+## 4. Contentstructuur & URL-mapping
+
+```{mermaid}
+graph LR
+  subgraph REPO["Repository root"]
+    subgraph SRC_DIR["src/pages/"]
+      P_NL["index.astro → /"]
+      P_DOCS["docs.astro → /docs/"]
+      P_CONTACT["contact.astro → /contact/"]
+      P_PITCH["pitch.astro → /pitch/"]
+      P_EN["en/*.astro → /en/*"]
+    end
+    subgraph QMD_DIR["quarto/"]
+      QP["presentations/\n*.qmd"]
+      QR["reports/\n*.qmd"]
+      QC["cert-prep/\n_quarto.yml\n*.qmd × 8"]
+    end
+    subgraph PUB_DIR["public/ (gegenereerd)"]
+      PUB_P["presentations/*.html"]
+      PUB_R["reports/*.html"]
+      PUB_C["cert-prep/\nindex.html + certs"]
+    end
+    subgraph DIST_DIR["dist/ (deploy target)"]
+      D_ALL["Alles samengevoegd\n(Astro + Quarto outputs)"]
+    end
+  end
+
+  P_NL --> D_ALL
+  P_DOCS --> D_ALL
+  QP -->|"quarto render"| PUB_P --> D_ALL
+  QR -->|"quarto render"| PUB_R --> D_ALL
+  QC -->|"quarto render"| PUB_C --> D_ALL
+```
+
+---
+
+## 5. Cert-Prep Site Architectuur
+
+De cert-prep site gebruikt Quarto's `type: website` project — dit genereert een volledige multi-page site met navbar en sidebar, in tegenstelling tot losse HTML-bestanden.
+
+```{mermaid}
+graph TD
+  subgraph CERTSITE["Quarto Website Project — quarto/cert-prep/"]
+    YML["_quarto.yml\n(type: website, navbar, sidebar, cosmo theme)"]
+    IDX["index.qmd\n→ /cert-prep/\n(overzicht + vergelijkingstabel)"]
+    SP["sec-plus.qmd\n→ /cert-prep/sec-plus"]
+    CY["cysa-plus.qmd\n→ /cert-prep/cysa-plus"]
+    SC9["sc-900.qmd\n→ /cert-prep/sc-900"]
+    SC3["sc-300.qmd\n→ /cert-prep/sc-300"]
+    SC2["sc-200.qmd\n→ /cert-prep/sc-200"]
+    CC["ccna.qmd\n→ /cert-prep/ccna"]
+    AZ["az-500.qmd\n→ /cert-prep/az-500"]
+    CSS["cert-style.css\n(Research-Ready branding)"]
+  end
+
+  YML --> IDX
+  YML --> SP & CY & SC9 & SC3 & SC2 & CC & AZ
+  CSS -->|"html.css:"| YML
+
+  IDX --> NAV["Navbar: Overzicht | Certifications ▾"]
+  IDX --> SIDE["Sidebar: alle 8 pagina's"]
+
+  subgraph OUT["Output: public/cert-prep/"]
+    HTML_IDX["index.html"]
+    HTML_CERTS["sec-plus.html\ncysa-plus.html\nsc-900.html\nsc-300.html\nsc-200.html\nccna.html\naz-500.html"]
+    SHARED["site_libs/\n(Bootstrap, Quarto JS)"]
+  end
+
+  IDX --> HTML_IDX
+  SP & CY & SC9 & SC3 & SC2 & CC & AZ --> HTML_CERTS
+```
+
+---
+
+## 6. Technische Stack
+
+| Laag | Technologie | Versie / Config |
+|---|---|---|
+| Marketingsite | Astro | Static, NL/EN i18n |
+| Presentaties | Quarto + RevealJS | `embed-resources: true`, custom SCSS |
+| Rapporten | Quarto + HTML | Cosmo theme, externe CSS |
+| Cert-Prep | Quarto Website | `type: website`, sidebar + navbar |
+| CI/CD | GitHub Actions | `quarto-dev/quarto-actions/setup@v2` |
+| Deploy | Cloudflare Pages | Direct upload via Wrangler 4.x |
+| CDN | Cloudflare | Automatische `.html` stripping (308) |
+| Auth | CF API Token | Pages Write scope |
+| Security (lokaal) | PublicPushGate hook | Blokkeert base64 in public repo push |
+
+---
+
+## 7. Bekende Beperkingen & Ontwerpkeuzes
+
+| Beslissing | Reden |
+|---|---|
+| CF Pages = directe upload (geen Git-integratie) | Project was als empty geïnitialiseerd; Wrangler geeft meer controle |
+| `embed-resources: false` voor cert-prep | Voorkomt base64-font inbedding → PublicPushGate niet getriggerd |
+| `embed-resources: true` voor presentaties | RevealJS vereist self-contained HTML voor offline gebruik |
+| Geen R/Python engine in GHA | Code blocks als plain fences, geen `{r}` of `{python}` → geen runtime nodig |
+| CSS via `css:` key, niet in `theme:` array | Quarto verwacht SCSS layer markers in `theme:`; plain CSS mag alleen via `css:` |
+| GHA heeft `contents: write` permissie | Bot commit van gegenereerde Quarto output terug naar repo |
+
+---
+
+## 8. ITIL Service Management
+
+Research-Ready volgt de ITIL v4 Service Lifecycle als kader voor service delivery, change management en continual improvement.
+
+### 8.1 ITIL Service Lifecycle
+
+```{mermaid}
+flowchart LR
+  subgraph SS["Service Strategy"]
+    SS1["Platformdoel:\nAutomatische kennisdeling\nvoor security professionals"]
+    SS2["Service Portfolio:\nPresentaties · Rapporten\nCert-Prep · Marketingsite"]
+  end
+
+  subgraph SD["Service Design"]
+    SD1["Quarto pipeline ontwerp\n(render → output → dist)"]
+    SD2["Availablity: Cloudflare CDN\nSecurity: PublicPushGate\nCapacity: Statisch = onbeperkt"]
+    SD3["Service Catalog\n(zie §8.3)"]
+  end
+
+  subgraph ST["Service Transition"]
+    ST1["Change Management\n(git commit = RFC)"]
+    ST2["Release Management\n(Wrangler deploy = release)"]
+    ST3["CMDB: GitHub repo\n= Configuration Item record"]
+  end
+
+  subgraph SO["Service Operation"]
+    SO1["Availability monitoring:\nCF Pages dashboard"]
+    SO2["Incident Management:\n404 / build failures"]
+    SO3["Request Fulfillment:\nnieuwe .qmd = service request"]
+  end
+
+  subgraph CSI["Continual Improvement"]
+    CSI1["PIR na elke deploy\n(HTTP 200 verificatie)"]
+    CSI2["Backlog: GitHub Issues\nvoor verbeteringen"]
+    CSI3["KPI: build tijd,\npaginasnelheid, uptime"]
+  end
+
+  SS --> SD --> ST --> SO --> CSI --> SS
+```
+
+---
+
+### 8.2 Change Management — Normal Change Proces
+
+Elke inhoudelijke wijziging doorloopt het ITIL Normal Change proces. De git commit fungeert als **Request for Change (RFC)**.
+
+```{mermaid}
+flowchart TD
+  RFC(["RFC: git commit\n(wijziging in .qmd of .astro)"])
+
+  RFC --> CAT{"Change\nCategorie?"}
+
+  CAT -->|"Content\n(.qmd tekst)"| STANDARD["Standard Change\n(lage impact, pre-approved)"]
+  CAT -->|"Infrastructuur\n(workflow, wrangler, CF token)"| NORMAL["Normal Change\n(review vereist)"]
+
+  STANDARD --> IMPACT_S["Impact Assessment:\nPublicPushGate scan\n(automatisch)"]
+  NORMAL --> IMPACT_N["Impact Assessment:\nhandmatige review\n+ rollback-plan"]
+
+  IMPACT_S --> GATE_S{Scan OK?}
+  IMPACT_N --> APPROVE{Goedkeuring\nplatformbeheerder?}
+
+  GATE_S -->|Ja| BUILD_S["Build:\nGHA of lokale render"]
+  GATE_S -->|Nee — base64| REMEDIATE["Remediation:\nembed-resources: false\nof andere fix"]
+  REMEDIATE --> RFC
+
+  APPROVE -->|Ja| BUILD_N["Build:\nlokale render + npm build"]
+  APPROVE -->|Nee| REJECT(["Change afgewezen\n→ backlog"])
+
+  BUILD_S --> DEPLOY["Deploy:\nwrangler pages deploy dist/"]
+  BUILD_N --> DEPLOY
+
+  DEPLOY --> PIR["Post-Implementation Review:\nHTTP 200 verificatie\nop alle gewijzigde URLs"]
+
+  PIR --> OK{Alle URLs\n200 OK?}
+  OK -->|Ja| CLOSE(["Change gesloten\nCMDB bijgewerkt"])
+  OK -->|Nee| INCIDENT["Incident geopend\n→ Incident Management §8.4"]
+  INCIDENT --> ROLLBACK["Rollback:\nvorige Wrangler deploy\nopnieuw uitrollen"]
+  ROLLBACK --> PIR
+```
+
+---
+
+### 8.3 Service Catalog
+
+| Service | Type | Doelgroep | Levertijd | Availability | Eigenaar |
+|---|---|---|---|---|---|
+| Marketing Website | Business Service | Bezoekers / prospects | Continu (CDN) | 99.9% (CF SLA) | Research-Ready |
+| Quarto Presentaties | Supporting Service | Klanten / partners | On-demand render (~2 min) | 99.9% | Research-Ready |
+| Quarto Rapporten | Supporting Service | Klanten / partners | On-demand render (~1 min) | 99.9% | Research-Ready |
+| Cert-Prep Hub | Training Service | Security professionals | Continu (CDN) | 99.9% (CF SLA) | Research-Ready |
+| Build Pipeline (GHA) | IT Service | Platform team | On push (< 5 min) | Afhankelijk van GitHub SLA | GitHub / Research-Ready |
+
+---
+
+### 8.4 Incident Management
+
+```{mermaid}
+flowchart TD
+  DETECT(["Incident gedetecteerd\n(404, build failure, deploy error)"])
+
+  DETECT --> LOG["Incident gelogd\n(GitHub Issue aanmaken)"]
+  LOG --> P{Prioriteit?}
+
+  P -->|"P1 — site down"| P1["Directe actie:\nrollback vorige deploy\nvia Wrangler"]
+  P -->|"P2 — pagina 404"| P2["Diagnose:\ncontroleer output-dir\nen URL-mapping"]
+  P -->|"P3 — build fout"| P3["Diagnose:\nGHA logs lezen\nquarto render lokaal"]
+
+  P1 --> RESTORE["Herstel:\nwrangler pages deploy\n(vorige dist/)"]
+  P2 --> FIX_PATH["Fix:\ncorrectie in _quarto.yml\nof cp commando"]
+  P3 --> FIX_BUILD["Fix:\nCSS key, engine, SCSS\n(zie §7 Beperkingen)"]
+
+  RESTORE --> PIR2["PIR: root cause analyse\n→ kennisbank bijwerken"]
+  FIX_PATH --> REDEPLOY["Opnieuw deployen"]
+  FIX_BUILD --> REDEPLOY
+
+  REDEPLOY --> VERIFY["Verificatie: HTTP 200"]
+  VERIFY --> CLOSE2(["Incident gesloten"])
+  PIR2 --> CLOSE2
+```
+
+---
+
+### 8.5 Configuration Management Database (CMDB)
+
+De GitHub-repository is het centrale **Configuration Management Database (CMDB)**. Elk bestand is een Configuration Item (CI).
+
+| CI Type | Locatie | Verantwoordelijke | Wijzigingsprocedure |
+|---|---|---|---|
+| Astro broncode | `src/**` | Platform team | Normal Change via PR |
+| Quarto content | `quarto/**` | Content team | Standard Change via commit |
+| Build workflow | `.github/workflows/` | Platform team | Normal Change — handmatige review |
+| Cloudflare API token | KeePass vault | Platformbeheerder | Rotatie elk kwartaal |
+| Account ID / Project naam | KeePass vault | Platformbeheerder | Wijziging = infrastructuur change |
+| Gegenereerde output | `public/**` | GHA / auteur | Automatisch — geen directe wijziging |
+
+---
+
+*Gegenereerd door Research-Ready Quarto-pipeline.*

@@ -42,14 +42,13 @@ jobs:
       - name: Render reports (HTML)
         run: quarto render quarto/reports/
 
-      - name: Commit and push outputs
+      - name: Render cert-prep (Website)
+        run: quarto render quarto/cert-prep/
+
+      # Generated HTML contains embedded fonts (base64) — not committed to git.
+      # Deployment to Cloudflare Pages is done via Wrangler (direct upload).
+      - name: Verify outputs exist
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/presentations/ public/reports/
-          if git diff --staged --quiet; then
-            echo "No changes — skipping commit."
-          else
-            git commit -m "chore: rebuild quarto outputs"
-            git push
-          fi
+          ls public/presentations/*.html
+          ls public/reports/*.html
+          ls public/cert-prep/index.html

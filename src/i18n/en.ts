@@ -5,6 +5,7 @@ export const en = {
     pipelines: 'Pipelines',
     contact: 'Contact',
     pitch: 'Presentation',
+    docs: 'Documents',
     langToggle: 'NL',
   },
   footer: {

@@ -1,0 +1,62 @@
+---
+title: "Security Cert Prep"
+subtitle: "Gestructureerde studiehulp — aangedreven door Research-Ready pipelines"
+---
+
+## Welkom
+
+Deze kennisbank helpt je studietraject voor de zeven meest gevraagde security-certifcaten. Elk document is automatisch gegenereerd en bijgehouden via de Research-Ready Quarto-pipeline.
+
+::: {.callout-tip}
+**Nieuw hier?** Begin met **SC-900** (Microsoft fundamentals) of **Security+** (vendor-neutral basis), afhankelijk van of je Microsoft-gericht of breed wilt starten.
+:::
+
+## Certificeringskaart
+
+| Certificaat | Niveau | Vendor | Domein | Kosten (ca.) |
+|-------------|--------|--------|--------|-------------|
+| [SC-900](sc-900.qmd) | Beginner | Microsoft | Security fundamentals | €165 |
+| [Security+](sec-plus.qmd) | Entry | CompTIA | Brede security basis | €392 |
+| [CCNA](ccna.qmd) | Entry-Mid | Cisco | Netwerken + security | €330 |
+| [SC-300](sc-300.qmd) | Mid | Microsoft | Identity & Access | €165 |
+| [AZ-500](az-500.qmd) | Mid | Microsoft | Azure security | €165 |
+| [CySA+](cysa-plus.qmd) | Mid | CompTIA | Threat detection / SOC | €392 |
+| [SC-200](sc-200.qmd) | Mid | Microsoft | Microsoft Sentinel / SOC | €165 |
+
+## Aanbevolen leerpad
+
+```
+Stap 1 — Fundament
+  └── SC-900 (2-4 weken) → Security+ (6-8 weken)
+
+Stap 2 — Specialisatie: kies een richting
+  ├── Microsoft cloud-security: SC-300 → AZ-500 → SC-200
+  └── Vendor-neutraal SOC:      CCNA → CySA+
+
+Stap 3 — Combineer
+  └── SC-200 + CySA+ = sterk SOC-analist profiel
+```
+
+## Hoe deze studiehulp werkt
+
+Elk certifcaatdocument bevat:
+
+- **Examenoverzicht** — domeinen, gewichten, slagingsdrempel
+- **Kernconcepten per domein** — beknopt, gericht op wat het examen toetst
+- **Oefenvragen** — scenario-gebaseerd, met uitleg
+- **Studiestrategie** — tijdplanning, gratis + betaalde bronnen
+- **Labsuggesties** — hands-on oefening zonder grote kosten
+
+::: {.callout-note}
+**Research-Ready pipeline:** De inhoud van deze kennisbank wordt bijgehouden via een geautomatiseerde Quarto-pipeline. Zodra examendoelstellingen wijzigen, kan de pipeline nieuwe content genereren en publiceren zonder handmatig werk.
+:::
+
+## Studietips
+
+1. **Sla officiële doelstellingen op** — Microsoft Learn en CompTIA publiceren exacte examendomeinen gratis. Dit is de enige "syllabus" die telt.
+2. **Bouw labs vroeg** — zeker voor SC-200 en AZ-500. Lees + doe gelijktijdig.
+3. **Oefenexamens zijn de maatstaf** — gebruik je score per domein om studiepriorieten te bepalen, niet je totaalscore.
+4. **Plan je examen voor je klaar voelt** — een deadline versnelt de voorbereiding aantoonbaar.
+
+---
+*Gegenereerd door de Research-Ready Quarto-pipeline · [research-ready.nl](https://research-ready.nl)*

@@ -1,0 +1,112 @@
+---
+title: "AZ-500: Microsoft Azure Security Technologies"
+---
+
+<span class="cert-badge">Mid-level</span> <span class="cert-badge">Microsoft</span> <span class="cert-badge">Azure</span> <span class="cert-badge">€165</span>
+
+## Examenoverzicht
+
+| | |
+|---|---|
+| **Slagingsdrempel** | 700/1000 |
+| **Duur** | 120 minuten |
+| **Vragen** | 40–60 |
+| **Aanbevolen voorkennis** | AZ-900, SC-900, of Azure-werkervaring |
+| **Geldigheid** | 1 jaar |
+
+### Examendomeinen
+
+| Domein | Gewicht |
+|--------|---------|
+| Manage identity & access | 25–30% |
+| Secure networking | 20–25% |
+| Secure compute, storage & databases | 20–25% |
+| Manage security operations | 25–30% |
+
+## Kernconcepten
+
+### Identity & Access
+
+- **Entra ID RBAC**: built-in rollen (Owner, Contributor, Reader), custom roles, scope (management group → subscription → resource group → resource)
+- **Managed Identities**: system-assigned vs. user-assigned — geen credentials in code
+- **Service Principals**: app-registraties, certificaat vs. client secret
+- **PIM in Azure**: tijdgebonden activatie van Azure RBAC-rollen
+- **Azure Policy**: deny, audit, modify, deployIfNotExists — compliance afdwingen
+- **Microsoft Entra ID Governance**: access reviews voor Azure-resources
+
+### Secure Networking
+
+- **Azure Firewall**: Premium vs. Standard, DNAT/SNAT-regels, threat intelligence feed
+- **Azure DDoS Protection**: Basic (gratis) vs. Standard (bescherming + SLA)
+- **Network Security Groups (NSG)**: inbound/outbound regels, effectieve regels debuggen
+- **Azure Bastion**: RDP/SSH zonder publiek IP op VM's
+- **Private Endpoints & Private Link**: service bereikbaar via privénetwerk
+- **Azure Front Door + WAF**: Layer 7 beveiliging, geo-filtering, rate limiting
+- **VNet peering & Hub-Spoke**: netwerkisolatie en segmentatie
+
+### Compute, Storage & Databases
+
+- **Azure Key Vault**: secrets, keys, certificates — access policies vs. RBAC
+- **Disk encryption**: Azure Disk Encryption (BitLocker/DM-Crypt) vs. Server-Side Encryption
+- **VM security**: JIT-toegang (just-in-time VM access), endpoint protection
+- **Container security**: Azure Container Registry (ACR) — content trust, vulnerability scanning
+- **AKS security**: pod identity, network policies, RBAC
+- **Storage security**: SAS tokens, storage firewall, immutable blob, Defender for Storage
+- **SQL security**: Azure Defender for SQL, Transparent Data Encryption, auditing, Always Encrypted
+
+### Security Operations
+
+- **Microsoft Defender for Cloud**: Secure Score, aanbevelingen, workload protections
+- **Defender CSPM**: attack paths, cloud security explorer
+- **Microsoft Sentinel integratie**: data connectors voor Azure-services
+- **Azure Monitor**: Log Analytics, diagnostic settings, alerts
+- **Microsoft Defender for Cloud regulatory compliance**: CIS, NIST, PCI-DSS
+- **Incident response in Azure**: isoleren van VM's, NSG-blokkades, Key Vault-revocatie
+
+## Oefenvragen
+
+::: {.callout-note}
+### Vraag 1
+Je wilt dat een Azure Function toegang heeft tot secrets in Key Vault zonder dat credentials in de code staan. Wat is de beste aanpak?
+
+**A)** Hardcode de client secret in de applicatiecode
+**B)** Gebruik een system-assigned managed identity + Key Vault RBAC ✓
+**C)** Sla de secret op in een environment variable
+**D)** Gebruik een service principal met client secret in app settings
+
+**Uitleg:** Managed Identity elimineert credential-beheer volledig. De Function krijgt automatisch een identiteit; Key Vault RBAC kent de rol "Key Vault Secrets User" toe. Geen secret in code, geen rotatieproblemen.
+:::
+
+::: {.callout-note}
+### Vraag 2
+Een VM is gecompromitteerd. Je wilt verdere schade beperken zonder de VM direct te stoppen (forensisch bewijs bewaren). Wat doe je als eerste?
+
+**A)** VM onmiddellijk dealloceren
+**B)** NSG-regel toevoegen die al inbound/outbound verkeer blokkeert ✓
+**C)** VM-snapshot maken
+**D)** Defender for Cloud alert sluiten
+
+**Uitleg:** NSG-isolatie stopt communicatie (inclusief C2) zonder de VM te stoppen, waardoor geheugeninhoud en lopende processen bewaard blijven voor forensisch onderzoek. Snapshot daarna.
+:::
+
+## Studiestrategie
+
+**Tijdsinvestering:** 8–12 weken
+
+1. **Week 1-3** — Microsoft Learn AZ-500 leerpad (officieel, gratis)
+2. **Week 4-6** — Hands-on labs in Azure (free account €200 credit of Pay-As-You-Go)
+3. **Week 7-9** — John Savill AZ-500 Study Cram + oefenexamens
+4. **Week 10-12** — Whizlabs of MeasureUp, focus op zwakke domeinen
+
+**Aanbevolen labs om zelf te bouwen:**
+- Key Vault + Managed Identity + Function App
+- Hub-Spoke netwerk met Azure Firewall
+- Defender for Cloud inschakelen op een subscription
+- JIT VM Access configureren en testen
+
+::: {.callout-tip}
+**Azure free account is voldoende.** De meeste AZ-500-labs draaien op gratis-tier resources (B1s VM's, free Key Vault operations, gratis Log Analytics 5GB). Budget €5–15 voor de labs die net buiten de free tier vallen.
+:::
+
+---
+*[← Terug naar overzicht](index.qmd)*

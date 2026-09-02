@@ -1,0 +1,99 @@
+---
+title: "SC-300: Microsoft Identity & Access Administrator"
+---
+
+<span class="cert-badge">Mid-level</span> <span class="cert-badge">Microsoft</span> <span class="cert-badge">€165</span>
+
+## Examenoverzicht
+
+| | |
+|---|---|
+| **Slagingsdrempel** | 700/1000 |
+| **Duur** | 120 minuten |
+| **Vragen** | 40–60 |
+| **Aanbevolen voorkennis** | SC-900, AZ-900, of Entra ID-werkervaring |
+| **Geldigheid** | 1 jaar (renewal via gratis online assessment) |
+
+### Examendomeinen
+
+| Domein | Gewicht |
+|--------|---------|
+| Implement & manage user identities | 20–25% |
+| Implement authentication & access management | 25–30% |
+| Implement access management for applications | 15–20% |
+| Plan & implement identity governance | 25–30% |
+
+## Kernconcepten
+
+### Identiteitsbeheer
+
+- **Entra ID-tenants**: structuur, directories, B2B vs. B2C
+- **Gebruikers & groepen**: typen, dynamische groepen, licenties
+- **Hybrid identity**: Entra Connect (sync van on-prem AD), Password Hash Sync, Pass-Through Auth, Federation
+- **External identities**: B2B-gastgebruikers, B2C-consumentenidentiteit
+
+### Authenticatie & Access Management
+
+- **MFA-methoden**: Authenticator app, FIDO2, SMS, voice, hardware tokens
+- **Conditional Access (CA)**: Named locations, device compliance, sign-in risk, user risk
+- **Identity Protection**: risicodetectie, geautomatiseerde policies
+- **SSPR**: Self-Service Password Reset — vereisten, registratie
+- **Passwordless**: Windows Hello for Business, FIDO2 security keys
+
+### Application Access
+
+- **App registrations vs. Enterprise apps**
+- **OAuth 2.0 flows**: authorization code, client credentials, implicit
+- **App permissions**: delegated (namens gebruiker) vs. application (namens app)
+- **Managed Identities**: system-assigned vs. user-assigned voor Azure-resources
+- **Single Sign-On (SSO)**: SAML, OIDC, password-based
+
+### Identity Governance
+
+- **Access reviews**: wie heeft welke toegang, periodiek herzien
+- **Entitlement management**: access packages, catalogs
+- **PIM**: Privileged Identity Management — just-in-time, tijdgebonden adminrollen
+- **Lifecycle workflows**: automatische onboarding/offboarding
+- **Audit logs & sign-in logs**
+
+## Oefenvragen
+
+::: {.callout-note}
+### Vraag 1
+Een gebruiker meldt dat haar account als "at risk" is gemarkeerd in Identity Protection. Ze wil weten hoe ze dit zelf kan verhelpen. Welke functie gebruik je?
+
+**A)** Conditional Access blokkade
+**B)** SSPR met risk remediation ✓
+**C)** PIM-activatie
+**D)** Global Admin-ingrijpen vereist
+
+**Uitleg:** Identity Protection kan gebruikers verplichten hun wachtwoord via SSPR te resetten om het risico zelf op te lossen, zonder admin-interventie.
+:::
+
+::: {.callout-note}
+### Vraag 2
+Je wilt dat een applicatie zonder gebruikersinterventie toegang heeft tot de Microsoft Graph API. Welk OAuth 2.0 flow gebruik je?
+
+**A)** Authorization code flow
+**B)** Implicit flow
+**C)** Client credentials flow ✓
+**D)** Device code flow
+
+**Uitleg:** Client credentials flow = machine-to-machine, geen gebruiker betrokken. De app authenticeer met eigen client ID + secret of certificaat.
+:::
+
+## Studiestrategie
+
+**Tijdsinvestering:** 6–8 weken
+
+1. **Week 1-2** — Microsoft Learn SC-300 leerpad (gratis, officieel)
+2. **Week 3-4** — Hands-on in gratis Azure-tenant (M365 Developer Program = 90 dagen gratis)
+3. **Week 5-6** — MeasureUp of Whizlabs oefenexamens per domein
+4. **Week 7-8** — PIM, CA en governance-labs herhalen
+
+::: {.callout-tip}
+**Maak een gratis M365 Developer-tenant** via het Microsoft 365 Developer Program. Dit geeft je 25 testicenses en een volledige Entra ID-omgeving om alle SC-300-concepten hands-on te oefenen.
+:::
+
+---
+*[← Terug naar overzicht](index.qmd)*

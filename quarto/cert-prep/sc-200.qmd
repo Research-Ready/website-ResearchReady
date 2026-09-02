@@ -1,0 +1,122 @@
+---
+title: "SC-200: Microsoft Security Operations Analyst"
+---
+
+<span class="cert-badge">Mid-level</span> <span class="cert-badge">Microsoft</span> <span class="cert-badge">SOC</span> <span class="cert-badge">€165</span>
+
+## Examenoverzicht
+
+| | |
+|---|---|
+| **Slagingsdrempel** | 700/1000 |
+| **Duur** | 120 minuten |
+| **Vragen** | 40–60 |
+| **Aanbevolen voorkennis** | SC-900, Security+, of SOC-werkervaring |
+| **Geldigheid** | 1 jaar |
+
+### Examendomeinen
+
+| Domein | Gewicht |
+|--------|---------|
+| Mitigate threats using Microsoft Defender XDR | 25–30% |
+| Mitigate threats using Defender for Cloud | 15–20% |
+| Mitigate threats using Microsoft Sentinel | 50–55% |
+
+## Kernconcepten
+
+### Microsoft Defender XDR
+
+- **Microsoft 365 Defender portal**: unified XDR — incidents, alerts, hunting
+- **Defender for Endpoint**: onboarding, alert triage, live response
+- **Defender for Identity**: AD-aanvalsdetectie (lateral movement, DCSync, pass-the-hash)
+- **Defender for Office 365**: anti-phishing, safe links, safe attachments, ZAP
+- **Defender for Cloud Apps**: CASB — schaduw-IT, beleid, sessiecontrole
+- **Incident correlatie**: hoe Defender XDR alerts samenvoegt tot incidenten
+
+### Microsoft Defender for Cloud
+
+- **Security posture**: Secure Score, aanbevelingen opvolgen
+- **Workload protections**: servers, containers, databases, storage
+- **Defender CSPM vs. Defender for Servers**
+- **Regulatory compliance**: CIS, NIST, ISO dashboards
+
+### Microsoft Sentinel (grootste domein)
+
+- **Architectuur**: Log Analytics Workspace, data connectors, parsers
+- **KQL (Kusto Query Language)**: dit is het meest kritische onderdeel
+- **Analytics rules**: scheduled, fusion, ML-based, NRT
+- **Hunting**: built-in queries, MITRE ATT&CK coverage
+- **Automation**: playbooks (Logic Apps), automation rules
+- **Workbooks**: dashboards en rapportage
+- **UEBA**: User & Entity Behavior Analytics
+- **Threat Intelligence**: TAXII/STIX feeds integreren
+- **Content hub**: out-of-the-box oplossingen per product
+
+## KQL — De Essentie
+
+KQL is het hart van het SC-200-examen. Basispatronen die je moet kennen:
+
+```kql
+// Filter + project
+SecurityEvent
+| where EventID == 4625
+| where TimeGenerated > ago(1h)
+| project TimeGenerated, Account, Computer, IpAddress
+
+// Aggregatie
+SigninLogs
+| where ResultType != 0
+| summarize FailCount = count() by UserPrincipalName
+| where FailCount > 10
+| sort by FailCount desc
+
+// Join
+let riskUsers = SigninLogs
+    | where RiskLevelDuringSignIn == "high"
+    | distinct UserPrincipalName;
+AuditLogs
+| where InitiatedBy.user.userPrincipalName in (riskUsers)
+| project TimeGenerated, ActivityDisplayName, InitiatedBy
+```
+
+## Oefenvragen
+
+::: {.callout-note}
+### Vraag 1
+Een Sentinel-analytic rule genereert te veel false positives. Je wilt de rule aanpassen zonder hem uit te zetten. Wat doe je?
+
+**A)** Verwijder de rule en maak een nieuwe
+**B)** Pas de query aan en/of stel een suppression in ✓
+**C)** Zet de rule op "disabled"
+**D)** Verhoog de alert threshold in Defender
+
+**Uitleg:** Je kunt de KQL-query verfijnen (exclusies toevoegen) en/of een suppression instellen om gelijke alerts te groeperen. De rule blijft actief.
+:::
+
+::: {.callout-note}
+### Vraag 2
+Je wilt automatisch een Teams-bericht sturen wanneer Sentinel een P1-incident aanmaakt. Wat gebruik je?
+
+**A)** Analytics rule action
+**B)** Automation rule + Playbook (Logic App) ✓
+**C)** Workbook alert
+**D)** Threat Intelligence indicator
+
+**Uitleg:** Automation rules triggeren op incident-aanmaak/-update en kunnen playbooks starten. Een playbook (Logic App) bevat de Teams-connector-actie.
+:::
+
+## Studiestrategie
+
+**Tijdsinvestering:** 8–12 weken
+
+1. **KQL eerst** — Week 1-2: KQL-oefening via [kql.guide](https://kql.guide) of Microsoft Learn
+2. **Week 3-5** — Sentinel-labs via Microsoft Learn; gratis Sentinel-trial in Azure
+3. **Week 6-8** — Defender XDR portal verkennen via M365 Defender trial
+4. **Week 9-12** — John Savill SC-200 YouTube + oefenexamens
+
+::: {.callout-tip}
+**Gratis Sentinel-lab:** Activeer een Azure free account (€200 credit) + deploy de "Microsoft Sentinel Training Lab" ARM-template uit de GitHub-repository van Microsoft. Dit geeft je een volledig werkende SIEM met voorbeelddata.
+:::
+
+---
+*[← Terug naar overzicht](index.qmd)*

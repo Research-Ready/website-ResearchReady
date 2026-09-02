@@ -1,0 +1,58 @@
+project:
+  type: website
+  output-dir: ../../public/cert-prep
+
+execute:
+  eval: false
+  echo: true
+
+website:
+  title: "Security Cert Prep — Research-Ready"
+  description: "Gestructureerde studiehulp voor Security+, CySA+, SC-900, SC-300, SC-200, CCNA en AZ-500."
+  favicon: /favicon.svg
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overzicht
+      - text: Certifications
+        menu:
+          - href: sec-plus.qmd
+            text: "Security+"
+          - href: cysa-plus.qmd
+            text: "CySA+"
+          - href: sc-900.qmd
+            text: "SC-900"
+          - href: sc-300.qmd
+            text: "SC-300"
+          - href: sc-200.qmd
+            text: "SC-200"
+          - href: ccna.qmd
+            text: "CCNA"
+          - href: az-500.qmd
+            text: "AZ-500"
+    right:
+      - text: "research-ready.nl"
+        href: "https://research-ready.nl"
+  sidebar:
+    style: "docked"
+    contents:
+      - index.qmd
+      - section: "Certifications"
+        contents:
+          - sec-plus.qmd
+          - cysa-plus.qmd
+          - sc-900.qmd
+          - sc-300.qmd
+          - sc-200.qmd
+          - ccna.qmd
+          - az-500.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: cert-style.css
+    toc: true
+    toc-depth: 3
+    embed-resources: false
+    number-sections: false
+    link-external-newwindow: true

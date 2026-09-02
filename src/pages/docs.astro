@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { nl } from '../i18n/nl';
+const t = nl;
+
+const presentations = [
+  {
+    title: 'Quarto voor het SOC',
+    description: 'Automatische rapportage voor Security Operations teams — SLTN',
+    href: '/presentations/sltn-soc-quarto-presentation',
+    lang: 'NL',
+  },
+  {
+    title: 'Research-Ready: AI Pipelines',
+    description: 'Overzichtspresentatie over reproduceerbare onderzoekspipelines',
+    href: '/presentations/example-presentation',
+    lang: 'NL',
+  },
+];
+
+const reports = [
+  {
+    title: 'Technisch Veiligheidsrapport',
+    description: 'Criminaliteitspreventie & digitale weerbaarheid — SLTN',
+    href: '/reports/sltn-criminal-prevention-report',
+    lang: 'NL',
+  },
+  {
+    title: 'Technische Architectuur',
+    description: 'BPMN procesflows, component- en sequentiediagrammen van de volledige Research-Ready pipeline',
+    href: '/reports/rr-architecture',
+    lang: 'NL',
+  },
+  {
+    title: 'Pipeline Analysis Report',
+    description: 'Voorbeeld van een automatisch gegenereerd analyserapport',
+    href: '/reports/example-report',
+    lang: 'EN',
+  },
+];
+---
+
+<BaseLayout locale="nl" title="Documenten — Research-Ready" description="Automatisch gegenereerde presentaties en rapporten van Research-Ready.">
+  <section class="section section-dark" style="padding-bottom: 2rem;">
+    <div class="wrap">
+      <span class="eyebrow">Automatische documentatie</span>
+      <h1>Documenten</h1>
+      <p class="lede">Presentaties en rapporten gegenereerd door de Research-Ready Quarto-pipeline — reproduceerbaar, up-to-date, en direct deelbaar.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Presentaties</h2>
+      <div class="teaser-grid">
+        {presentations.map((item) => (
+          <a class="teaser-card doc-card" href={item.href} target="_blank" rel="noopener">
+            <span class="teaser-index">{item.lang}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <span class="doc-link">Openen →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <h2>Rapporten</h2>
+      <div class="teaser-grid">
+        {reports.map((item) => (
+          <a class="teaser-card doc-card" href={item.href} target="_blank" rel="noopener">
+            <span class="teaser-index">{item.lang}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <span class="doc-link">Openen →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Certificering & Training</h2>
+      <div class="teaser-grid">
+        <a class="teaser-card doc-card" href="/cert-prep/" target="_blank" rel="noopener">
+          <span class="teaser-index">🎓</span>
+          <h3>Cert Prep Hub</h3>
+          <p>Studiemateriaal voor Security+, CySA+, SC-900, SC-200, SC-300, CCNA en AZ-500 — met kernconcepten, oefenvragen en studiestrategieën.</p>
+          <span class="doc-link">Naar de trainingssite →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark cta-band">
+    <div class="wrap">
+      <h2>Wil je dit voor jouw organisatie?</h2>
+      <p class="lede">We bouwen een pipeline die jouw data automatisch omzet in professionele rapporten en presentaties.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/contact/">{t.home.ctaSecondary}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .doc-card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .doc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .doc-link {
+    margin-top: auto;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+</style>

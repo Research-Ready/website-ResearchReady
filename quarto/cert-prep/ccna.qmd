@@ -1,0 +1,131 @@
+---
+title: "CCNA (200-301)"
+---
+
+<span class="cert-badge">Entry-Mid</span> <span class="cert-badge">Cisco</span> <span class="cert-badge">Netwerken</span> <span class="cert-badge">€330</span>
+
+## Examenoverzicht
+
+| | |
+|---|---|
+| **Slagingsdrempel** | ~825/1000 (niet officieel gepubliceerd) |
+| **Duur** | 120 minuten |
+| **Vragen** | 100–120 (MCQ + drag-drop + simlets) |
+| **Aanbevolen voorkennis** | Basiskennis netwerken of CompTIA Network+ |
+| **Geldigheid** | 3 jaar |
+
+### Examendomeinen (200-301)
+
+| Domein | Gewicht |
+|--------|---------|
+| Network Fundamentals | 20% |
+| Network Access | 20% |
+| IP Connectivity | 25% |
+| IP Services | 10% |
+| Security Fundamentals | 15% |
+| Automation & Programmability | 10% |
+
+## Kernconcepten
+
+### Network Fundamentals
+
+- **OSI-model**: alle 7 lagen, protocol per laag, encapsulation
+- **TCP vs. UDP**: handshake, poorten, use cases
+- **IPv4 subnetting**: CIDR, VLSM — dit moet razendsnel gaan
+- **IPv6**: adrestypen (global unicast, link-local, multicast), dual-stack, tunnel
+
+### Network Access (Switching)
+
+- **Ethernet**: MAC-adressen, collision domains, broadcast domains
+- **VLANs**: access port vs. trunk port, 802.1Q tagging, native VLAN
+- **STP / RSTP**: root bridge election, port states, convergentie
+- **EtherChannel**: LACP vs. PAgP
+
+### IP Connectivity (Routing)
+
+- **Static routing**: default route, floating static
+- **OSPF (single-area)**: neighborrelatie, DR/BDR, LSA-types 1 en 2
+- **EIGRP** (basiskennis): AD-waarden, feasible successor
+- **First Hop Redundancy**: HSRP, VRRP
+
+### IP Services
+
+- **NAT/PAT**: static, dynamic, overload (PAT)
+- **DHCP**: DORA-proces, relay agent
+- **DNS**: A, AAAA, CNAME, MX records
+- **NTP**: stratum, client/server config
+- **QoS**: DSCP-markering, queuing (basiskennis)
+
+### Security Fundamentals
+
+- **AAA**: TACACS+ vs. RADIUS — verschil kennen
+- **ACL**: standard (bron-IP), extended (bron, bestemming, protocol, poort)
+- **Port security**: max MAC, violation modes (shutdown, restrict, protect)
+- **DHCP snooping**: trusted vs. untrusted ports
+- **Dynamic ARP Inspection (DAI)**
+- **VPN-concepten**: site-to-site IPSec, remote access
+
+### Automation & Programmability
+
+- **REST API**: GET, POST, PUT, DELETE, HTTP-statuscodes
+- **Data formats**: JSON, XML, YAML — lezen en interpreteren
+- **Cisco DNA Center vs. traditioneel beheer**
+- **Ansible basics**: playbook, inventory, idempotency
+
+## Subnetting — Snelle methode
+
+```
+Gegeven: 192.168.10.0/26
+
+Stap 1 — Subnetmasker: /26 = 255.255.255.192
+Stap 2 — Blokgrootte: 256 - 192 = 64
+Stap 3 — Subnetten: .0, .64, .128, .192
+Stap 4 — Voor 192.168.10.75:
+  Subnet:    192.168.10.64
+  Broadcast: 192.168.10.127
+  Hosts:     .65 – .126 (62 bruikbaar)
+```
+
+Oefen tot je dit in <30 seconden doet.
+
+## Oefenvragen
+
+::: {.callout-note}
+### Vraag 1
+Een switch-port staat in "err-disabled" state. Wat is de meest waarschijnlijke oorzaak?
+
+**A)** STP loop gedetecteerd
+**B)** Port security violation (shutdown mode) ✓
+**C)** VLAN niet geconfigureerd
+**D)** Duplex mismatch
+
+**Uitleg:** Bij port security violation mode "shutdown" zet de switch de port op err-disabled. Je moet de port handmatig resetten (`shutdown` + `no shutdown`) na de oorzaak te verhelpen.
+:::
+
+::: {.callout-note}
+### Vraag 2
+Welk verschil is essentieel tussen TACACS+ en RADIUS?
+
+**A)** RADIUS versleutelt het volledige pakket; TACACS+ alleen het wachtwoord
+**B)** TACACS+ versleutelt het volledige pakket; RADIUS alleen het wachtwoord ✓
+**C)** TACACS+ gebruikt UDP; RADIUS TCP
+**D)** Ze zijn functioneel identiek
+
+**Uitleg:** TACACS+ (TCP 49) versleutelt het volledige pakket en scheidt AAA-functies. RADIUS (UDP 1812/1813) versleutelt alleen het wachtwoord en combineert auth + authorization.
+:::
+
+## Studiestrategie
+
+**Tijdsinvestering:** 12–20 weken (zwaarste cert in de lijst)
+
+1. **Weeks 1-6** — Jeremy's IT Lab gratis CCNA-cursus (YouTube — beste gratis bron)
+2. **Weeks 7-10** — Packet Tracer labs (gratis via Cisco NetAcad)
+3. **Weeks 11-14** — Boson NetSim of GNS3 voor gevorderde labs
+4. **Weeks 15+** — Boson ExSim oefenexamens (goudstandaard voor CCNA)
+
+::: {.callout-tip}
+**Subnetting is het fundament.** Als je subnetting niet blind kunt, oefen dan dagelijks via [subnettingpractice.com](https://subnettingpractice.com) tot het automatisch gaat. Het CCNA-examen geeft geen tijd voor langzame berekeningen.
+:::
+
+---
+*[← Terug naar overzicht](index.qmd)*

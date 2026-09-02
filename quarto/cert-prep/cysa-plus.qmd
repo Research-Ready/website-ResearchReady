@@ -1,0 +1,98 @@
+---
+title: "CompTIA CySA+ (CS0-003)"
+---
+
+<span class="cert-badge">Mid-level</span> <span class="cert-badge">CompTIA</span> <span class="cert-badge">SOC-gericht</span> <span class="cert-badge">€392</span>
+
+## Examenoverzicht
+
+| | |
+|---|---|
+| **Slagingsdrempel** | 750/900 |
+| **Duur** | 165 minuten |
+| **Vragen** | Max. 85 (MCQ + PBQ) |
+| **Aanbevolen voorkennis** | Security+, 3-4 jaar IT/security-ervaring |
+| **Geldigheid** | 3 jaar |
+
+### Examendomeinen (CS0-003)
+
+| Domein | Gewicht |
+|--------|---------|
+| Security Operations | 33% |
+| Vulnerability Management | 30% |
+| Incident Response & Management | 20% |
+| Reporting & Communication | 17% |
+
+## Kernconcepten
+
+### Security Operations
+
+- **SIEM-gebruik**: Splunk, Microsoft Sentinel — SPL-queries, KQL-queries lezen
+- **Threat hunting**: hypothesis-driven zoeken naar verborgen bedreigingen
+- **IOC vs. IOA**: Indicator of Compromise (bewijs achteraf) vs. Indicator of Attack (in-progress gedrag)
+- **MITRE ATT&CK framework**: tactics, techniques, procedures (TTPs)
+- **Log-analyse**: Windows Event IDs (4624, 4625, 4648, 4688), Sysmon, netflow
+
+### Vulnerability Management
+
+- **Vulnerability scanning**: Nessus, Qualys, OpenVAS — authenticated vs. unauthenticated
+- **Prioritering**: CVSS + context (internet-facing? data-criticality?) + CISA KEV
+- **Patch management lifecycle**
+- **Attack surface management**
+- **Remediation vs. mitigatie vs. acceptatie**
+
+### Incident Response
+
+- **IR-fasen**: Preparation, Detection, Analysis, Containment, Eradication, Recovery, Post-incident
+- **Digitale forensics**: geheugen-acquisitie, disk imaging, chain of custody
+- **Malware-analyse**: static vs. dynamic analysis
+- **Netwerk-forensics**: Wireshark, Zeek/Bro, NetFlow
+
+### Reporting & Communication
+
+- **Metrics**: MTTD, MTTR, false positive rate, SLA-naleving
+- **Exectuive vs. technisch rapport**
+- **Vulnerability-aging en SLA**
+- **Root cause analysis communiceren**
+
+## Oefenvragen
+
+::: {.callout-note}
+### Vraag 1
+Een SOC-analist ziet in Splunk dat een host elke 60 seconden een DNS-query stuurt naar een extern domein. Wat is de meest waarschijnlijke verklaring?
+
+**A)** Normaal Windows-updategedrag
+**B)** C2-beaconing via DNS ✓
+**C)** NTP-synchronisatie
+**D)** LDAP-authenticatie
+
+**Uitleg:** Regelmatige, periodieke outbound communicatie naar een extern domein is een klassiek C2-beaconingpatroon. DNS is populair omdat het zelden geblokkeerd wordt.
+:::
+
+::: {.callout-note}
+### Vraag 2
+Een kwetsbaarheid heeft CVSS 9.8 maar het getroffen systeem staat niet verbonden met internet en bevat geen gevoelige data. Hoe prioriteer je?
+
+**A)** Altijd onmiddellijk patchen — CVSS 9.8 is kritiek
+**B)** Lagere prioriteit op basis van context ✓
+**C)** Accepteren zonder actie
+**D)** Mitigeren met firewall-regel
+
+**Uitleg:** CVSS meet intrinsieke ernst, niet risico. Risico = kans × impact. Geen internet-exposure + geen gevoelige data verlaagt de kans significant. Context bepaalt prioriteit.
+:::
+
+## Studiestrategie
+
+**Tijdsinvestering:** 8–12 weken
+
+1. **Security+ als basis** — vereiste achtergrond
+2. **Weeks 1-4** — Jason Dion CySA+ cursus (Udemy) + CompTIA studiemateriaal
+3. **Weeks 5-8** — Hands-on: TryHackMe SOC Level 1 pad, SIEM-labs
+4. **Weeks 9-12** — Oefenexamens, focus op CS0-003 PBQ-simulaties
+
+::: {.callout-tip}
+**Praktijk is essentieel.** CySA+ toetst analytisch denken, niet alleen kennis. Werk TryHackMe of LetsDefend SOC-labs door — je herkent PBQ-scenario's dan direct.
+:::
+
+---
+*[← Terug naar overzicht](index.qmd)*
