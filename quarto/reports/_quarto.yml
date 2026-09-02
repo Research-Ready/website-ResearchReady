@@ -8,7 +8,8 @@ execute:
 
 format:
   html:
-    theme: [cosmo, report-style.css]
+    theme: cosmo
+    css: report-style.css
     toc: true
     toc-depth: 3
     toc-location: left

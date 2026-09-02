@@ -6,7 +6,8 @@ date: today
 classification: "VERTROUWELIJK"
 format:
   html:
-    theme: [cosmo, sltn-report-style.css]
+    theme: cosmo
+    css: sltn-report-style.css
     toc: true
     toc-depth: 3
     toc-location: left
