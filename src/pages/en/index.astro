@@ -78,6 +78,53 @@ const teaserItems = t.pipelines.items.slice(0, 4);
     </div>
   </section>
 
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">{t.home.approach.eyebrow}</span>
+      <h2>{t.home.approach.title}</h2>
+      <p class="lede">{t.home.approach.intro}</p>
+      <div class="teaser-grid">
+        {t.home.approach.steps.map((step, i) => (
+          <div class="teaser-card">
+            <span class="teaser-index">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="lede" style="margin-top: 2rem; font-size: 1.05rem;">{t.home.approach.closing}</p>
+      <p style="margin-top: 0.75rem;"><a href={t.home.approach.link.href}>{t.home.approach.link.label} →</a></p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">{t.home.gettingStarted.eyebrow}</span>
+        <h2>{t.home.gettingStarted.title}</h2>
+        <p>{t.home.gettingStarted.body}</p>
+        <ul class="check-list">
+          {t.home.gettingStarted.points.map((point) => (
+            <li>{point}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3>{t.home.gettingStarted.pilot.title}</h3>
+        <ol style="list-style:none; margin:1.25rem 0 0; padding:0; display:grid; gap:1rem;">
+          {t.home.gettingStarted.pilot.phases.map((phase) => (
+            <li style="display:flex; gap:1rem; align-items:baseline;">
+              <span class="repo-badge" style="flex-shrink:0;">{phase.range}</span>
+              <span><strong>{phase.label}.</strong> {phase.body}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="lede" style="margin-top:1.25rem; font-size:0.95rem;">{t.home.gettingStarted.pilot.asks.join(' · ')}</p>
+        <p style="color: var(--muted); font-size:0.9rem;">{t.home.gettingStarted.pilot.note}</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section section-dark cta-band">
     <div class="wrap">
       <h2>{t.home.closingCta.title}</h2>

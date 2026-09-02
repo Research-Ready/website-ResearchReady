@@ -1,0 +1,21 @@
+project:
+  type: default
+  output-dir: ../../public/reports
+
+format:
+  html:
+    theme: [cosmo, report-style.css]
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    page-layout: full
+    link-external-icon: true
+    link-external-newwindow: true
+    code-fold: true
+    code-tools: true
+    df-print: paged
+    fig-cap-location: bottom
+    citations-hover: true
+    footnotes-hover: true

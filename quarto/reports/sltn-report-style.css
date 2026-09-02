@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;900&display=swap');
+
+:root {
+  --sltn-primary: #233195;
+  --sltn-blue:    #2ea3f2;
+  --sltn-dark:    #141d5c;
+  --sltn-gray:    #f5f7fc;
+  --sltn-border:  #d0d8f0;
+}
+
+body {
+  font-family: "Raleway", "Helvetica Neue", Arial, sans-serif;
+  color: #1a1a2e;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Raleway", "Helvetica Neue", Arial, sans-serif;
+  color: var(--sltn-primary);
+  font-weight: 700;
+}
+
+h1 {
+  border-bottom: 3px solid var(--sltn-blue);
+  padding-bottom: 0.4em;
+}
+
+h2 {
+  border-left: 4px solid var(--sltn-blue);
+  padding-left: 0.6em;
+}
+
+a { color: var(--sltn-blue); }
+
+#title-block-header {
+  background: linear-gradient(135deg, var(--sltn-dark) 0%, var(--sltn-primary) 100%);
+  color: #ffffff;
+  padding: 2.5rem 3rem;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+}
+
+#title-block-header .title { color: #ffffff; font-weight: 900; }
+#title-block-header .subtitle,
+#title-block-header .author,
+#title-block-header .date { color: var(--sltn-blue); }
+
+table { border-collapse: collapse; width: 100%; margin: 1.5em 0; }
+thead tr { background: var(--sltn-primary); color: #ffffff; }
+thead th { padding: 0.6em 1em; text-align: left; }
+tbody tr:nth-child(even) { background: var(--sltn-gray); }
+tbody td { padding: 0.5em 1em; border-bottom: 1px solid var(--sltn-border); }
+
+pre { background: #141d5c !important; border-radius: 4px; }
+
+.callout-note    { border-left-color: var(--sltn-blue) !important; }
+.callout-warning { border-left-color: #f39c12 !important; }
+.callout-important { border-left-color: #e74c3c !important; }

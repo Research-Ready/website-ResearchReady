@@ -1,0 +1,55 @@
+name: Build Quarto Documents
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'quarto/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Render & Commit Quarto Outputs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      # --- Uncomment to add R support ---
+      # - name: Set up R
+      #   uses: r-lib/actions/setup-r@v2
+      # - name: Install R packages
+      #   run: Rscript -e 'install.packages(c("rmarkdown", "knitr", "tidyverse"))'
+
+      # --- Uncomment to add Python / Jupyter support ---
+      # - name: Set up Python
+      #   uses: actions/setup-python@v5
+      #   with:
+      #     python-version: '3.12'
+      # - name: Install Python packages
+      #   run: pip install jupyter pandas matplotlib
+
+      - name: Render presentations (RevealJS)
+        run: quarto render quarto/presentations/
+
+      - name: Render reports (HTML)
+        run: quarto render quarto/reports/
+
+      - name: Commit and push outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/presentations/ public/reports/
+          if git diff --staged --quiet; then
+            echo "No changes — skipping commit."
+          else
+            git commit -m "chore: rebuild quarto outputs"
+            git push
+          fi

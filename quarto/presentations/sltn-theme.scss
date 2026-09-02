@@ -1,0 +1,162 @@
+/*-- scss:defaults --*/
+
+// SLTN brand palette
+$sltn-primary:  #233195;
+$sltn-blue:     #2ea3f2;
+$sltn-dark:     #141d5c;
+$sltn-white:    #ffffff;
+$sltn-offwhite: #e8edf8;
+$sltn-gray:     #b0b8d0;
+
+$body-bg:                      $sltn-dark;
+$body-color:                   $sltn-offwhite;
+$link-color:                   $sltn-blue;
+
+$presentation-heading-color:   $sltn-white;
+$presentation-heading-font:    "Raleway", "Helvetica Neue", sans-serif;
+$font-family-sans-serif:       "Raleway", "Helvetica Neue", Arial, sans-serif;
+
+$presentation-h1-font-size:    2.2em;
+$presentation-h2-font-size:    1.6em;
+$presentation-h3-font-size:    1.2em;
+
+$code-block-bg:                $sltn-primary;
+$code-color:                   $sltn-blue;
+
+/*-- scss:rules --*/
+
+// Load Raleway from Google Fonts (internet required at render time)
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700;900&display=swap');
+
+.reveal .slides section {
+  text-align: left;
+}
+
+// Headings
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  color: $sltn-white;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+// Title slide
+.reveal .title-slide {
+  background: linear-gradient(135deg, $sltn-dark 0%, $sltn-primary 100%);
+}
+
+.reveal .title-slide h1 {
+  color: $sltn-white;
+  font-size: 2.4em;
+  font-weight: 900;
+  border-bottom: 3px solid $sltn-blue;
+  padding-bottom: 0.3em;
+}
+
+.reveal .title-slide p,
+.reveal .title-slide .subtitle {
+  color: $sltn-blue;
+  font-weight: 600;
+}
+
+// Section separator slides
+.reveal .slide-background.section-bg {
+  background: $sltn-primary;
+}
+
+// Progress bar
+.reveal .progress {
+  color: $sltn-blue;
+  height: 4px;
+}
+
+.reveal .controls {
+  color: $sltn-blue;
+}
+
+.reveal .slide-number {
+  color: $sltn-gray;
+  background: rgba($sltn-primary, 0.7);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.4em;
+}
+
+.reveal footer {
+  font-size: 0.45em;
+  color: rgba($sltn-gray, 0.7);
+}
+
+// Accent line on h2 slides
+.reveal h2 {
+  border-left: 4px solid $sltn-blue;
+  padding-left: 0.5em;
+}
+
+// Highlight boxes
+.callout {
+  border-left: 4px solid $sltn-blue !important;
+  background: rgba($sltn-primary, 0.5) !important;
+  border-radius: 4px;
+}
+
+// Tables
+.reveal table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85em;
+}
+
+.reveal table thead tr {
+  background: $sltn-primary;
+}
+
+.reveal table thead th {
+  color: $sltn-white;
+  padding: 0.5em 0.8em;
+  font-weight: 700;
+}
+
+.reveal table tbody tr:nth-child(even) {
+  background: rgba($sltn-primary, 0.3);
+}
+
+.reveal table tbody td {
+  padding: 0.4em 0.8em;
+  border-bottom: 1px solid rgba($sltn-blue, 0.2);
+}
+
+// Badges / labels
+.badge {
+  display: inline-block;
+  background: $sltn-blue;
+  color: $sltn-dark;
+  font-weight: 700;
+  font-size: 0.7em;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-red {
+  background: #e74c3c;
+  color: $sltn-white;
+}
+
+.badge-orange {
+  background: #f39c12;
+  color: $sltn-dark;
+}
+
+.badge-green {
+  background: #27ae60;
+  color: $sltn-white;
+}
+
+// Two-column layout helper
+.columns-custom {
+  display: flex;
+  gap: 2em;
+}

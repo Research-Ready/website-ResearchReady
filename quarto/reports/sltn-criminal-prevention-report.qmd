@@ -1,0 +1,235 @@
+---
+title: "Technisch Veiligheidsrapport"
+subtitle: "Criminaliteitspreventie & Digitale Weerbaarheid"
+author: "SLTN Cybersecurity"
+date: today
+classification: "VERTROUWELIJK"
+format:
+  html:
+    theme: [cosmo, sltn-report-style.css]
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    page-layout: full
+    code-fold: true
+---
+
+::: {.callout-important}
+**Classificatie: VERTROUWELIJK** — Dit rapport bevat gevoelige beveiligingsinformatie.
+Verspreiding uitsluitend aan geautoriseerde ontvangers.
+:::
+
+## Managementsamenvatting
+
+Dit rapport geeft een technisch overzicht van de criminaliteitspreventie-maatregelen en
+de actuele veiligheidsstatus van de organisatie. De bevindingen zijn gebaseerd op
+geautomatiseerde scans, loganalyse en dreigingsintelligentie over de rapportageperiode.
+
+**Sleutelbevindingen:**
+
+| Categorie | Status | Risico |
+|-----------|--------|--------|
+| Netwerkbeveiliging | Voldoende | Middel |
+| Eindpuntbeveiliging | Goed | Laag |
+| Toegangsbeheer | Vereist aandacht | Hoog |
+| Patch-compliance | 94% | Middel |
+| Phishing-resistentie | Voldoende | Middel |
+
+---
+
+## Dreigingslandschap
+
+### Actuele dreigingen (rapportageperiode)
+
+De volgende categorieën waren actief waargenomen in de omgeving of op basis van
+threat intelligence van toepassing op de sector:
+
+::: {.callout-warning}
+**Verhoogde activiteit:** Ransomware-groepen richten zich actief op Nederlandse mkb-organisaties
+in de IT- en dienstensector. SLTN-klanten vallen binnen het profiel.
+:::
+
+| Dreigingscategorie | Waarschijnlijkheid | Impact | Prioriteit |
+|--------------------|-------------------|--------|-----------|
+| Ransomware | Hoog | Kritiek | **P1** |
+| Business Email Compromise | Hoog | Hoog | **P1** |
+| Supply chain-aanval | Middel | Kritiek | **P2** |
+| Insider threat | Laag | Hoog | **P3** |
+| DDoS | Middel | Middel | **P3** |
+
+### Indicatoren van compromis (IOC's)
+
+```python
+# Voorbeeld: automatisch geladen vanuit TIP (MISP/OpenCTI) bij renderen
+# Vervang door live API-koppeling
+
+iocs = {
+    "malicious_ips":   42,
+    "phishing_domains": 18,
+    "malware_hashes":   7,
+    "blocked_this_period": 61
+}
+```
+
+Totaal geblokkeerd in rapportageperiode: **61 IOC's** automatisch door de security stack.
+
+---
+
+## Technische Preventiemaatregelen
+
+### Netwerk
+
+**Firewallbeleid**
+
+- North-south verkeer: whitelisting op applicatieniveau actief
+- East-west segmentatie: micro-segmentatie geïmplementeerd op kritieke zones
+- Inbound: alleen noodzakelijke poorten open (principe van minste privilege)
+
+**Intrusion Detection / Prevention**
+
+- IDS-signatures: bijgewerkt binnen 4 uur na CVE-publicatie
+- Anomaliedetectie: ML-baseline actief op netwerkverkeer
+- DNS-filtering: 99,7% malicious-domain-blokkering
+
+::: {.callout-note}
+**Aanbeveling:** Implementeer ZTNA (Zero Trust Network Access) voor remote-access-verkeer.
+SLTN biedt een managed ZTNA-dienst — zie sectie 6.
+:::
+
+### Eindpuntbeveiliging
+
+| Maatregel | Dekking | Status |
+|-----------|---------|--------|
+| EDR (Endpoint Detection & Response) | 98% endpoints | Actief |
+| Application whitelisting | Servers: 100%, Werkplekken: 72% | Gedeeltelijk |
+| Disk encryption | 100% laptops | Compleet |
+| USB-beleid (blokkering) | 85% endpoints | In uitrol |
+| Automatisch patchen OS | 94% compliance | Voldoende |
+
+**Openstaand:** 6% ungepatcht — zie patch-overzicht sectie 5.
+
+### Identiteit & Toegangsbeheer
+
+::: {.callout-important}
+**Bevinding met hoog risico:** 23 accounts hebben meer rechten dan noodzakelijk voor hun functie.
+Direct actie vereist — zie aanbeveling IAM-1.
+:::
+
+- MFA-dekking: 91% van alle accounts (doel: 100%)
+- Privileged Access Management: geïmplementeerd voor adminaccounts
+- Inactieve accounts (> 90 dagen geen login): **14 accounts** — verwijdering aanbevolen
+- Service accounts zonder rotatie: **8** — zie aanbeveling IAM-2
+
+---
+
+## Incidentstatistieken
+
+### Overzicht rapportageperiode
+
+```python
+# Automatisch gegenereerd vanuit SIEM/SOAR
+# Bij productiegebruik: koppel aan Splunk, Sentinel of QRadar API
+
+incidents = {
+    "P1_kritiek":     0,
+    "P2_hoog":        3,
+    "P3_middel":     18,
+    "P4_laag":       47,
+    "false_positives": 312,
+    "MTTD_minuten":   14,
+    "MTTR_uren":       2.4
+}
+```
+
+| Metriek | Waarde | Doel | Status |
+|---------|--------|------|--------|
+| P1-incidenten | 0 | 0 | ✓ |
+| P2-incidenten | 3 | < 5 | ✓ |
+| MTTD | 14 min | < 30 min | ✓ |
+| MTTR | 2,4 uur | < 4 uur | ✓ |
+| False positive ratio | 87% | < 90% | ✓ |
+
+### P2-incidenten — Korte beschrijving
+
+**Incident 001** — Verdachte PowerShell-executie op werkstation marketing.
+Geïsoleerd binnen 8 minuten. Geen laterale beweging gedetecteerd.
+
+**Incident 002** — Phishing-aanval met credential harvesting.
+3 medewerkers klikten; wachtwoorden gereset binnen 12 minuten, MFA voorkwam toegang.
+
+**Incident 003** — Ongeautoriseerde poging tot dataexport via cloud storage.
+Geblokkeerd door DLP-beleid. Onderzoek insider threat lopend.
+
+---
+
+## Patchbeheer & Kwetsbaarheden
+
+### Kritieke open kwetsbaarheden
+
+| CVE | Systeem | CVSS | Leeftijd | Deadline |
+|-----|---------|------|----------|---------|
+| CVE-2024-XXXX | Webserver A | 9.8 | 12 dagen | **Overschreden** |
+| CVE-2024-YYYY | VPN-appliance | 8.1 | 5 dagen | 3 dagen |
+| CVE-2024-ZZZZ | Exchange | 7.5 | 2 dagen | 12 dagen |
+
+::: {.callout-important}
+**CVE-2024-XXXX is in actieve exploitatie.** Onmiddellijk patchen of mitigeren.
+:::
+
+### Patch-compliance trend
+
+```
+Week -4:  89%  ████████████████████░░░
+Week -3:  91%  █████████████████████░░
+Week -2:  93%  █████████████████████░░
+Week -1:  94%  ██████████████████████░
+Nu:       94%  ██████████████████████░  ← doel: 98%
+```
+
+---
+
+## Aanbevelingen
+
+### Hoog prioriteit (binnen 30 dagen)
+
+**IAM-1 — Least privilege review**
+Audit en herstel de 23 over-geprivilegieerde accounts. Start met accounts met domeinbeheerdersrechten.
+
+**PATCH-1 — CVE-2024-XXXX**
+Patchen of isoleren binnen 24 uur. Systeem staat in actief exploit-gebruik.
+
+**MFA-1 — MFA-dekking naar 100%**
+9% van accounts zonder MFA is onaanvaardbaar risico. Forceer inschrijving.
+
+### Middel prioriteit (binnen 90 dagen)
+
+**NET-1 — ZTNA implementatie**
+Vervanging van VPN-gebaseerde remote access door Zero Trust. SLTN managed dienst beschikbaar.
+
+**EDR-1 — Application whitelisting werkplekken**
+Uitbreiden van 72% naar 100% dekking.
+
+**IAM-2 — Service account rotatie**
+Automatische rotatie instellen voor de 8 service accounts zonder actief rotatiebeleid.
+
+---
+
+## SLTN Diensten — Volgende Stap
+
+Dit rapport is gegenereerd als onderdeel van de SLTN Cybersecurity Managed Service.
+
+Voor verdere ondersteuning:
+
+- **SOC as a Service** — 24/7 monitoring en respons
+- **Vulnerability Management** — geautomatiseerd + geprioriteerd
+- **Zero Trust implementatie** — ZTNA, IAM, microsegmentatie
+- **Incident Response Retainer** — direct beschikbaar bij P1
+
+**Contact:** info@sltn.nl | sltn.nl/cybersecurity
+
+---
+
+*Rapport automatisch gegenereerd door de Research-Ready × SLTN rapportagepipeline.
+Volgende rapport: over 7 dagen. Vragen: info@sltn.nl*

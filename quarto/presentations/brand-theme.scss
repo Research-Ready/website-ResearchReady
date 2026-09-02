@@ -1,0 +1,95 @@
+/*-- scss:defaults --*/
+
+// Research-Ready brand palette
+$rr-dark:    #0f1e28;
+$rr-navy:    #25445a;
+$rr-blue:    #2f6f92;
+$rr-light:   #7fb8d6;
+$rr-white:   #e8f0f5;
+
+$body-bg:                      $rr-dark;
+$body-color:                   $rr-white;
+$link-color:                   $rr-light;
+
+$presentation-heading-color:   $rr-white;
+$presentation-heading-font:    "Space Grotesk", "Helvetica Neue", sans-serif;
+$font-family-sans-serif:       "Inter", "Helvetica Neue", sans-serif;
+
+$presentation-h1-font-size:    2.2em;
+$presentation-h2-font-size:    1.6em;
+$presentation-h3-font-size:    1.2em;
+
+$code-block-bg:                $rr-navy;
+$code-color:                   $rr-light;
+
+/*-- scss:rules --*/
+
+.reveal .slides section {
+  text-align: left;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  color: $rr-light;
+  letter-spacing: -0.02em;
+}
+
+.reveal h1 {
+  border-bottom: 2px solid $rr-blue;
+  padding-bottom: 0.3em;
+}
+
+.reveal .progress {
+  color: $rr-blue;
+  height: 3px;
+}
+
+.reveal .controls {
+  color: $rr-light;
+}
+
+.reveal .slide-number {
+  color: $rr-light;
+  background: rgba($rr-navy, 0.7);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.reveal footer {
+  font-size: 0.5em;
+  color: rgba($rr-light, 0.5);
+}
+
+// Title slide accent
+.reveal .title-slide h1 {
+  color: $rr-white;
+  font-size: 2.4em;
+}
+
+.reveal .title-slide p {
+  color: $rr-light;
+}
+
+// Callout / highlight box
+.callout {
+  border-left: 4px solid $rr-blue !important;
+  background: rgba($rr-navy, 0.6) !important;
+}
+
+// Tables
+.reveal table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.reveal table th {
+  background: $rr-navy;
+  color: $rr-light;
+  padding: 0.5em 1em;
+}
+
+.reveal table td {
+  border-bottom: 1px solid rgba($rr-blue, 0.3);
+  padding: 0.4em 1em;
+}

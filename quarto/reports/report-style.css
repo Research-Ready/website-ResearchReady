@@ -1,0 +1,114 @@
+/* Research-Ready report brand styling */
+
+:root {
+  --rr-dark:  #25445a;
+  --rr-blue:  #2f6f92;
+  --rr-light: #7fb8d6;
+  --rr-bg:    #f5f8fa;
+}
+
+body {
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  color: #1a2d3a;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Space Grotesk", "Helvetica Neue", sans-serif;
+  color: var(--rr-dark);
+}
+
+h1 {
+  border-bottom: 3px solid var(--rr-blue);
+  padding-bottom: 0.4em;
+}
+
+h2 {
+  border-bottom: 1px solid var(--rr-light);
+  padding-bottom: 0.2em;
+}
+
+a {
+  color: var(--rr-blue);
+}
+
+a:hover {
+  color: var(--rr-light);
+}
+
+/* Header / title block */
+#title-block-header {
+  background: var(--rr-dark);
+  color: #e8f0f5;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+}
+
+#title-block-header .title {
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+#title-block-header .author,
+#title-block-header .date {
+  color: var(--rr-light);
+  font-size: 0.9em;
+}
+
+/* Table of contents */
+#quarto-sidebar {
+  background: var(--rr-bg);
+  border-right: 1px solid #dde4ea;
+}
+
+.sidebar-title {
+  color: var(--rr-dark);
+  font-weight: 700;
+}
+
+/* Callout boxes */
+.callout-note {
+  border-left-color: var(--rr-blue) !important;
+}
+
+.callout-important {
+  border-left-color: #c0392b !important;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+}
+
+thead tr {
+  background: var(--rr-dark);
+  color: #e8f0f5;
+}
+
+thead th {
+  padding: 0.6em 1em;
+  text-align: left;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--rr-bg);
+}
+
+tbody td {
+  padding: 0.5em 1em;
+  border-bottom: 1px solid #dde4ea;
+}
+
+/* Code blocks */
+pre {
+  background: #1a2d3a !important;
+  border-radius: 4px;
+}
+
+/* Branding footer */
+.quarto-title-meta {
+  font-size: 0.85em;
+  color: #5a7a8f;
+}

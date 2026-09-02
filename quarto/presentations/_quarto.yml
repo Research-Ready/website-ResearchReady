@@ -1,0 +1,16 @@
+project:
+  type: default
+  output-dir: ../../public/presentations
+
+format:
+  revealjs:
+    theme: [default, brand-theme.scss]
+    slide-number: true
+    chalkboard: false
+    preview-links: auto
+    footer: "research-ready.nl"
+    transition: slide
+    background-transition: fade
+    embed-resources: true
+    width: 1280
+    height: 720

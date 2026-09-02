@@ -1,0 +1,227 @@
+---
+title: "Quarto voor het SOC"
+subtitle: "Automatische rapportage voor Security Operations"
+author: "SLTN | Future-proof IT"
+date: today
+format:
+  revealjs:
+    theme: [default, sltn-theme.scss]
+    slide-number: true
+    footer: "SLTN — Voor Future-proof IT | sltn.nl"
+    transition: slide
+    background-transition: fade
+    embed-resources: true
+    width: 1280
+    height: 720
+    logo: sltn-logo.png
+---
+
+## Het probleem: rapportage kost te veel tijd
+
+Elke week hetzelfde ritueel in elk SOC:
+
+::: {.incremental}
+- Analyst exporteert data uit SIEM naar Excel
+- Kopieer-plak naar Word-template
+- Grafieken handmatig bijwerken
+- Versie\_final\_v3\_DEF.docx rondsturen
+- Volgende week: herhaal
+:::
+
+::: {.callout}
+**Gevolg:** 4–8 uur per week per analyst verdampt aan formatting, geen analyse.
+:::
+
+---
+
+## Wat is Quarto?
+
+Quarto is een **open-source publishing systeem** dat code, data en tekst combineert tot professionele documenten — automatisch.
+
+::: {.columns}
+::: {.column width="55%"}
+**Schrijf één keer:**
+
+```markdown
+## Incidenten deze week
+
+Er waren **`{r} nrow(incidents)`** incidenten,
+waarvan **`{r} sum(incidents$critical)`** kritiek.
+```
+:::
+
+::: {.column width="45%"}
+**Krijg elke keer:**
+
+- Actueel rapport met live data
+- Consistente opmaak
+- PDF, HTML, of presentatie
+- Reproduceerbaar + audit-trail
+:::
+:::
+
+---
+
+## SOC Use Case 1: Wekelijks Dreigingsrapport
+
+```
+SIEM (Splunk / Sentinel / QRadar)
+        ↓
+  Query via API of export
+        ↓
+  Quarto .qmd (R of Python)
+        ↓
+  Render → HTML rapport
+        ↓
+  Auto-mail naar CISO + management
+```
+
+Totale cyclus: **< 5 minuten** — volledig onbeheerd.
+
+---
+
+## SOC Use Case 2: Incident Response Report
+
+Na elke P1/P2: automatisch een IR-rapport genereren vanuit ticketsysteem + logdata.
+
+| Sectie | Bron |
+|--------|------|
+| Timeline | SIEM events |
+| Getroffen systemen | CMDB API |
+| Indicators of Compromise | TIP (MISP/OpenCTI) |
+| Acties ondernomen | ServiceNow tickets |
+| Aanbevelingen | Analyst input (enige handmatige stap) |
+
+---
+
+## SOC Use Case 3: KPI Dashboard (HTML)
+
+Quarto genereert ook **interactieve HTML-dashboards** — geen BI-tool licentie nodig.
+
+::: {.incremental}
+- MTTD (Mean Time to Detect) — trend over 90 dagen
+- MTTR (Mean Time to Respond) — per categorie
+- Openstaande kwetsbaarheden — aging-curve
+- Phishing-klikratio — per afdeling
+- SLA-naleving — per klant (voor MSSPs)
+:::
+
+Alles uit dezelfde databron, elke ochtend opnieuw gegenereerd.
+
+---
+
+## SOC Use Case 4: Vulnerability Management Report
+
+::: {.columns}
+::: {.column width="50%"}
+**Input**
+
+- Nessus / Qualys / Rapid7 export
+- CVSS scores
+- Asset criticality uit CMDB
+- Patchstatus uit endpoint tool
+:::
+
+::: {.column width="50%"}
+**Output (automatisch)**
+
+- Prioriteitenmatrix
+- Trending: nieuw vs. gesloten
+- Per-team werklijst
+- CISO-samenvatting (1 pagina)
+:::
+:::
+
+::: {.callout}
+Geprioriteerd op **risico**, niet alleen op CVSS — automatisch berekend.
+:::
+
+---
+
+## Integratie met bestaande SLTN-stack
+
+Quarto werkt naast jullie huidige tooling:
+
+| Tool | Quarto-integratie |
+|------|------------------|
+| Microsoft Sentinel | REST API → Python/R |
+| Splunk | SDK of CSV export |
+| ServiceNow | REST API |
+| Microsoft Teams | Webhook: rapport als card |
+| SharePoint | Auto-upload via Graph API |
+| Power BI | Aanvullend, niet vervangen |
+
+---
+
+## Implementatiepad
+
+::: {.incremental}
+**Week 1–2 — Inventarisatie**
+Welke rapporten kosten de meeste tijd? Databronnen in kaart.
+
+**Week 3–4 — Pilot**
+Één bestaand rapport automatiseren als proof of concept.
+
+**Week 5–6 — Uitrol**
+Pipeline naar productie. Documentatie. Teamtraining (½ dag).
+
+**Doorlopend**
+Templates uitbreiden. Nieuwe use cases toevoegen. Volledig in eigen beheer.
+:::
+
+---
+
+## Wat levert het op?
+
+| Metriek | Huidig | Met Quarto |
+|---------|--------|-----------|
+| Tijd per wekelijks rapport | 4–6 uur | < 10 minuten |
+| Menselijke fouten | Aanwezig | Geëlimineerd |
+| Versiegeschiedenis | Onduidelijk | Git-based |
+| Reproduceerbaarheid | Nee | Ja, volledig |
+| Audit-trail | Geen | Automatisch |
+
+---
+
+## Technische vereisten
+
+**Minimaal:**
+
+- Python 3.10+ of R 4.3+ op één server
+- Quarto CLI (gratis, open source)
+- Toegang tot bestaande SIEM API of export
+
+**Optioneel maar krachtig:**
+
+- GitHub Actions of Azure DevOps: dagelijks automatisch renderen
+- Docker container: reproduceerbaar op elke omgeving
+- SLTN Datacenter & Cloud: managed hosting van de pipeline
+
+---
+
+## Volgende stap
+
+::: {.columns}
+::: {.column width="60%"}
+**Pilot-aanbod Research-Ready × SLTN**
+
+1. Selecteer één bestaand SOC-rapport
+2. Wij bouwen de Quarto-pipeline (2 weken)
+3. Jullie team beoordeelt de output
+4. Beslissing over uitrol
+
+Geen langetermijnverplichting. Geen grote investering vooraf.
+:::
+
+::: {.column width="40%"}
+**Contact**
+
+SLTN
+sltn.nl
+info@sltn.nl
+
+Research-Ready
+research-ready.nl
+info@research-ready.nl
+:::
+:::

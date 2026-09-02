@@ -1,0 +1,81 @@
+---
+title: "Research-Ready"
+subtitle: "AI Pipelines for Reproducible Science"
+author: "Research-Ready"
+date: today
+format: revealjs
+---
+
+## What We Do
+
+Turn your research workflow into a **verified, automated pipeline** — from raw data to publication-ready output.
+
+::: {.incremental}
+- Reproducible — every result traceable to source
+- Sovereign — runs on your own infrastructure
+- Automated — data to report in minutes, not days
+:::
+
+## The Problem
+
+::: {.columns}
+::: {.column width="50%"}
+**Before Research-Ready**
+
+- Manual copy-paste between tools
+- "It worked on my machine"
+- Report updates take a week
+- No audit trail
+:::
+
+::: {.column width="50%"}
+**After Research-Ready**
+
+- One command reruns everything
+- Fully reproducible on any machine
+- Reports update automatically
+- Complete provenance
+:::
+:::
+
+## Our Pipeline Approach
+
+```
+Raw Data → Validation → Analysis → Visualisation → Report
+    ↑                                                  ↓
+    └──────────── Version-controlled loop ─────────────┘
+```
+
+Each step is **automated, tested, and documented** before we hand it over.
+
+## Eight Use-Case Pipelines
+
+| # | Pipeline | What it solves |
+|---|----------|---------------|
+| 01 | Literature Review | Systematic search + extraction |
+| 02 | Survey Analysis | Quant + qual data in one pass |
+| 03 | Clinical Data | GDPR-compliant, audit-ready |
+| 04 | Document Intelligence | PDF/scan → structured data |
+
+*And four more — see research-ready.nl/pipelines*
+
+## How We Work
+
+**Week 1–2 — Discovery**
+Map your current workflow, identify the bottleneck.
+
+**Week 3–4 — Build**
+Deliver a working pipeline, documented and tested.
+
+**Week 5+ — Hand-off**
+Your team runs it independently. We stay available.
+
+## Let's Talk
+
+**Book a free 30-minute call**
+[research-ready.nl/contact](https://research-ready.nl/contact)
+
+**Email**
+info@research-ready.nl
+
+*We respond within one business day.*
