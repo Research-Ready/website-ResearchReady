@@ -106,20 +106,34 @@ const mod1Ch1: Chapter = {
     lo('understand', 'Student can explain the difference between a product and a service in an IT context.'),
   ],
   sections: [
-    sec('itil4-mod1-ch1-s1', 'ITIL Definition of Service', 'TODO: Explain the ITIL 4 definition: a means of enabling value co-creation by facilitating outcomes that customers want to achieve.'),
-    sec('itil4-mod1-ch1-s2', 'Products vs Services', 'TODO: Explain how ITIL distinguishes products (configurations of resources) from services.'),
-    sec('itil4-mod1-ch1-s3', 'Real-World Example', 'TODO: Walk through an example such as email-as-a-service to ground the definitions.'),
+    sec('itil4-mod1-ch1-s1', 'ITIL Definition of Service', 'A service is "a means of enabling value co-creation by facilitating outcomes that customers want to achieve, without the customer having to manage specific costs and risks." Three key ideas are packed in: (1) services enable outcomes — they exist to help customers achieve something; (2) value is co-created — the provider does not create value alone; (3) the provider absorbs certain costs and risks that the consumer would otherwise face.', 'The provider enables outcomes without the consumer bearing the associated costs and risks.'),
+    sec('itil4-mod1-ch1-s2', 'Products vs Services', 'A product is a configuration of an organisation\'s resources designed to offer value for a consumer. Think of it as the "what": a software platform, a helpdesk system, a cloud environment. A service is the "how that product is offered and experienced" — it includes the relationship, support, guarantees, and intangible elements. The same product can underpin multiple services. ITIL 4 treats services as the primary unit of value exchange.', 'Products are resource configurations; services are how those resources are offered to deliver value.'),
+    sec('itil4-mod1-ch1-s3', 'Real-World Example', 'Consider corporate email. The product is the mail server software plus infrastructure. The email service wraps that product with SLAs (99.9% uptime), support (helpdesk), security (spam filtering), and provisioning (account creation). The business user does not manage the servers, patches, or backups — those costs and risks stay with IT. The user gets the outcome: reliable business communication. That is a service.'),
   ],
   flashcards: [
     fc('itil4-mod1-ch1-fc1', 'Service', 'A means of enabling value co-creation by facilitating outcomes that customers want to achieve, without the customer having to manage specific costs and risks.'),
-    fc('itil4-mod1-ch1-fc2', 'TODO: term', 'TODO: definition'),
-    fc('itil4-mod1-ch1-fc3', 'TODO: term', 'TODO: definition'),
+    fc('itil4-mod1-ch1-fc2', 'Product', 'A configuration of an organisation\'s resources designed to offer value for a consumer. Products underpin services but are not services themselves.'),
+    fc('itil4-mod1-ch1-fc3', 'Utility', 'The functionality offered by a product or service to meet a particular need — what the service does ("fit for purpose"). A service must have utility AND warranty to deliver value.'),
   ],
   knowledgeChecks: [
-    kc('itil4-mod1-ch1-kc1', 'TODO: question about the ITIL definition of service', ['TODO: option A', 'TODO: option B', 'TODO: option C', 'TODO: option D'], 0, 'TODO: explanation'),
-    kc('itil4-mod1-ch1-kc2', 'TODO: question distinguishing product from service', ['TODO: option A', 'TODO: option B', 'TODO: option C', 'TODO: option D'], 0, 'TODO: explanation'),
+    kc('itil4-mod1-ch1-kc1', 'Which statement BEST describes a service in ITIL 4?', [
+      'A means of delivering technical infrastructure to users',
+      'A means of enabling value co-creation by facilitating outcomes that customers want to achieve, without them managing specific costs and risks',
+      'A configuration of organisational resources designed to offer value',
+      'A process for managing IT operations and support',
+    ], 1, 'Option B is the exact ITIL 4 definition. Option A is too narrow (technology only). Option C describes a product. Option D describes a process, not a service.'),
+    kc('itil4-mod1-ch1-kc2', 'An organisation deploys a cloud storage platform. Which term BEST describes the platform itself — the infrastructure and software configured to hold data?', [
+      'Service',
+      'Outcome',
+      'Product',
+      'Warranty',
+    ], 2, 'A product is a configuration of resources designed to offer value — the platform itself. A service is how that product is offered to consumers with associated support, SLAs, and risk management. The platform becomes a service when it is offered with those elements.'),
   ],
-  summary: ['TODO: key point 1', 'TODO: key point 2', 'TODO: key point 3'],
+  summary: [
+    'A service enables value co-creation — the provider facilitates outcomes without the consumer bearing the associated costs and risks.',
+    'A product is a configured bundle of resources; a service is the means by which value from that product reaches the consumer.',
+    'Utility = what the service does (fit for purpose); Warranty = how reliably it does it (fit for use). Both are needed for value.',
+  ],
   examTip: 'Memorise the exact ITIL definition of "service" — exam questions often use near-miss wording to catch candidates who only partially recall it.',
 };
 
@@ -131,20 +145,34 @@ const mod1Ch2: Chapter = {
     lo('understand', 'Student can distinguish between outputs (what is delivered) and outcomes (what the customer achieves).'),
   ],
   sections: [
-    sec('itil4-mod1-ch2-s1', 'Value and Co-creation', 'TODO: Explain that value is co-created — the provider enables it but the customer realises it.'),
-    sec('itil4-mod1-ch2-s2', 'Outputs vs Outcomes', 'TODO: Explain output (a deliverable) vs outcome (a result for the stakeholder).'),
-    sec('itil4-mod1-ch2-s3', 'Costs and Risks', 'TODO: Explain that service providers remove costs/risks from the consumer and absorb or manage them.'),
+    sec('itil4-mod1-ch2-s1', 'Value and Co-creation', 'Value is the perceived benefits, usefulness, and importance of something. ITIL 4 insists that value is always co-created — neither the provider nor the consumer creates it alone. The provider brings resources, capabilities, and processes; the consumer brings context, use cases, and adoption. A perfectly reliable email system creates no value if nobody uses it. Value emerges from the interaction between provider activity and consumer use.', 'Value is co-created: providers enable it, consumers realise it through use.'),
+    sec('itil4-mod1-ch2-s2', 'Outputs vs Outcomes', 'An output is a tangible or intangible deliverable produced by an activity — a report, a software build, a resolved ticket. An outcome is the result that matters to a stakeholder — informed decisions, faster releases, uninterrupted operations. Services exist to deliver outcomes, not just outputs. A provider can deliver many outputs that produce no meaningful outcome, or one output that transforms business performance. The exam tests whether candidates understand this distinction.', 'Outputs are deliverables; outcomes are results that matter to stakeholders.'),
+    sec('itil4-mod1-ch2-s3', 'Costs and Risks', 'Costs from the consumer perspective are what they give up when using a service — money, time, and resources. Services remove some costs from the consumer (they no longer run their own mail servers) but may impose others (subscription fees). Similarly, services remove certain risks (data loss, patching failures) but can introduce new ones (vendor lock-in, outage dependency). Good service design is transparent about which costs and risks are transferred, absorbed, and shared.'),
   ],
   flashcards: [
     fc('itil4-mod1-ch2-fc1', 'Outcome', 'A result for a stakeholder enabled by one or more outputs — the "why" behind using a service.'),
     fc('itil4-mod1-ch2-fc2', 'Output', 'A tangible or intangible deliverable of an activity — the "what" that is produced.'),
-    fc('itil4-mod1-ch2-fc3', 'TODO: term', 'TODO: definition'),
+    fc('itil4-mod1-ch2-fc3', 'Value', 'The perceived benefits, usefulness, and importance of something — always co-created between providers and consumers, never delivered unilaterally.'),
   ],
   knowledgeChecks: [
-    kc('itil4-mod1-ch2-kc1', 'TODO: question about output vs outcome', ['TODO: option A', 'TODO: option B', 'TODO: option C', 'TODO: option D'], 0, 'TODO: explanation'),
-    kc('itil4-mod1-ch2-kc2', 'TODO: question about value co-creation', ['TODO: option A', 'TODO: option B', 'TODO: option C', 'TODO: option D'], 0, 'TODO: explanation'),
+    kc('itil4-mod1-ch2-kc1', 'A service desk team closes 500 tickets in a month. The business reports that end-user productivity has not improved. Which statement BEST explains this situation?', [
+      'The service desk has delivered outputs but not outcomes',
+      'The service desk has delivered outcomes but not outputs',
+      'The service desk has failed to deliver utility',
+      'The service desk has delivered value to the consumer',
+    ], 0, 'Tickets closed = outputs (deliverables). Improved productivity = the outcome (result for the stakeholder). Producing outputs without achieving outcomes is a classic failure mode in IT service management.'),
+    kc('itil4-mod1-ch2-kc2', 'According to ITIL 4, which statement about value is CORRECT?', [
+      'Value is determined solely by the service provider based on the cost of delivery',
+      'Value is co-created through active collaboration between providers and consumers',
+      'Value is delivered by the provider when a service meets its SLA targets',
+      'Value is created when outputs match the agreed specifications',
+    ], 1, 'ITIL 4 explicitly states that value is co-created. The provider does not deliver value unilaterally — it is realised through the consumer\'s use. Meeting SLAs or specs produces outputs, not necessarily the outcomes that constitute value.'),
   ],
-  summary: ['TODO: key point 1', 'TODO: key point 2', 'TODO: key point 3'],
+  summary: [
+    'Value is co-created: providers enable it through resources and capabilities; consumers realise it through adoption and use.',
+    'Outputs are tangible deliverables (resolved tickets, deployed software); outcomes are the results stakeholders care about (uptime, productivity, revenue).',
+    'Services remove certain costs and risks from consumers but may introduce others — transparency about this trade-off is part of good service design.',
+  ],
   examTip: 'Output vs outcome is a favourite trick question. An output is a deliverable (a report); an outcome is the result that matters to the stakeholder (informed decision-making).',
 };
 
@@ -156,20 +184,34 @@ const mod1Ch3: Chapter = {
     lo('understand', 'Student can explain the service relationship model including provisioning, consumption, and management.'),
   ],
   sections: [
-    sec('itil4-mod1-ch3-s1', 'Provider and Consumer Roles', 'TODO: Explain service provider, service consumer, customer, user, and sponsor roles.'),
-    sec('itil4-mod1-ch3-s2', 'Service Relationship Model', 'TODO: Explain the three components: service provisioning, service consumption, service relationship management.'),
-    sec('itil4-mod1-ch3-s3', 'Example Relationship Chain', 'TODO: Walk through a scenario where the same org is both provider and consumer in a supply chain.'),
+    sec('itil4-mod1-ch3-s1', 'Provider and Consumer Roles', 'A service provider creates and delivers services. A service consumer receives them. The consumer role breaks into three sub-roles: the customer decides what services are needed and owns the service relationship; the user interacts with the service day-to-day; the sponsor authorises the budget. One person can occupy multiple roles — a small business owner is often customer, user, and sponsor simultaneously. Distinguishing these roles matters because different stakeholders have different concerns.', 'Consumer = customer (decides) + user (operates) + sponsor (funds) — often the same person in small organisations, always distinct concerns.'),
+    sec('itil4-mod1-ch3-s2', 'Service Relationship Model', 'ITIL 4 defines a service relationship as the cooperation between a service provider and consumer. It has three components: service provisioning (the provider\'s activities — managing resources, ensuring access, fulfilling demands); service consumption (the consumer\'s activities — using resources, receiving outputs, realising outcomes); and service relationship management (the joint activities both parties perform — agreeing requirements, co-creating value, providing feedback). All three must work for value to be realised.', 'Provisioning + Consumption + Relationship Management together constitute the service relationship.'),
+    sec('itil4-mod1-ch3-s3', 'Example Relationship Chain', 'A cloud provider (AWS) offers infrastructure to a SaaS company (Salesforce). Salesforce is AWS\'s consumer. Salesforce then offers CRM services to a retailer — making Salesforce both provider and consumer simultaneously. The retailer\'s IT team (provider) offers CRM access to its sales staff (consumers). Each link in the chain is a service relationship. This is why ITIL says organisations occupy both provider and consumer roles across their value chain.'),
   ],
   flashcards: [
     fc('itil4-mod1-ch3-fc1', 'Service Provider', 'An organisation that provides services to consumers.'),
     fc('itil4-mod1-ch3-fc2', 'Service Consumer', 'An organisation that consumes services — may include customers, users, and sponsors.'),
-    fc('itil4-mod1-ch3-fc3', 'TODO: term', 'TODO: definition'),
+    fc('itil4-mod1-ch3-fc3', 'Sponsor', 'A stakeholder who authorises the budget for service consumption. Distinct from the customer (who defines requirements) and the user (who operates the service).'),
   ],
   knowledgeChecks: [
-    kc('itil4-mod1-ch3-kc1', 'TODO: question about service relationship roles', ['TODO: option A', 'TODO: option B', 'TODO: option C', 'TODO: option D'], 0, 'TODO: explanation'),
-    kc('itil4-mod1-ch3-kc2', 'TODO: question about the service relationship model', ['TODO: option A', 'TODO: option B', 'TODO: option C', 'TODO: option D'], 0, 'TODO: explanation'),
+    kc('itil4-mod1-ch3-kc1', 'A department manager negotiates the CRM contract and approves the budget. Their team uses the CRM daily. Which roles does the manager fulfil?', [
+      'User and sponsor only',
+      'Customer and sponsor',
+      'Customer, user, and sponsor',
+      'Provider and customer',
+    ], 1, 'The manager approves budget (sponsor) and defines requirements/owns the relationship (customer), but does not use the service daily (that is the team = users). Customer + sponsor is correct. If the manager also used the CRM personally, they would additionally be a user.'),
+    kc('itil4-mod1-ch3-kc2', 'Which of the following is NOT one of the three components of a service relationship in ITIL 4?', [
+      'Service provisioning',
+      'Service consumption',
+      'Service relationship management',
+      'Service level monitoring',
+    ], 3, 'The three components are service provisioning, service consumption, and service relationship management. Service level monitoring is an activity that may occur within those components but is not itself a named component of the service relationship model.'),
   ],
-  summary: ['TODO: key point 1', 'TODO: key point 2', 'TODO: key point 3'],
+  summary: [
+    'Service consumer roles: customer (defines requirements), user (operates the service), sponsor (authorises budget) — one person can hold multiple roles.',
+    'A service relationship has three components: service provisioning (provider activities), service consumption (consumer activities), and service relationship management (joint activities).',
+    'Organisations are simultaneously providers and consumers across their supply chains — IT provides to staff while consuming from cloud vendors.',
+  ],
   examTip: 'The same organisation can be both a provider and a consumer simultaneously — e.g., an IT department providing services to staff while consuming cloud services from a vendor.',
 };
 
