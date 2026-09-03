@@ -1,0 +1,405 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { certs, certMap } from '../../../data/certs/index';
+
+export function getStaticPaths() {
+  return certs.flatMap(c =>
+    c.domains.map(d => ({ params: { cert: c.id, domain: d.id } }))
+  );
+}
+
+const { cert: certId, domain: domainId } = Astro.params;
+const mod = certMap[certId!];
+const domain = mod.domains.find(d => d.id === domainId)!;
+const domainIndex = mod.domains.findIndex(d => d.id === domainId);
+const prevDomain = domainIndex > 0 ? mod.domains[domainIndex - 1] : null;
+const nextDomain = domainIndex < mod.domains.length - 1 ? mod.domains[domainIndex + 1] : null;
+
+const questions = domain.questions;
+const flashcards = domain.flashcards;
+---
+
+<BaseLayout locale="nl" title={`${domain.title} — ${mod.title}`} description={`Les, quiz en geheugenkaarten voor ${domain.title}`}>
+  <section class="section">
+    <div class="wrap">
+      <a class="back-link" href={`/learn/${mod.id}/`}>← {mod.title}</a>
+
+      <div class="domain-header">
+        <span class="eyebrow">{mod.examCode} · Domein {domainIndex + 1}/{mod.domains.length}</span>
+        <h1>{domain.title}</h1>
+        <p class="domain-weight-badge">{domain.weight}% van het examen</p>
+      </div>
+
+      <!-- LESSON -->
+      <div class="learn-card" id="lesson-card">
+        <div class="learn-card-head">
+          <span class="phase-badge phase-2">Fase 2 — Leren</span>
+          <h2>Les</h2>
+        </div>
+        <div class="lesson-body">
+          <p class="lesson-overview">{domain.lesson.overview}</p>
+          <h3>Kernpunten</h3>
+          <ul class="key-points">
+            {domain.lesson.keyPoints.map(p => <li>{p}</li>)}
+          </ul>
+          <div class="study-tip">
+            <span class="tip-label">💡 Studietip</span>
+            <p>{domain.lesson.studyTip}</p>
+          </div>
+        </div>
+        <div class="lesson-foot">
+          <button class="btn btn-primary" id="lesson-done-btn">Les afgerond ✓</button>
+          <span class="lesson-status" id="lesson-status"></span>
+        </div>
+      </div>
+
+      <!-- QUIZ -->
+      <div class="learn-card" id="quiz-card">
+        <div class="learn-card-head">
+          <span class="phase-badge phase-3">Fase 3 — Oefenen</span>
+          <h2>Quiz ({questions.length} vragen)</h2>
+        </div>
+
+        <div id="quiz-body">
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="quiz-bar"></div>
+          </div>
+          <p class="quiz-progress-text" id="quiz-progress-text">Vraag 1 van {questions.length}</p>
+
+          <div id="quiz-question-wrap">
+            {questions.map((q, qi) => (
+              <div class="quiz-question" id={`q-${qi}`} style={qi === 0 ? '' : 'display:none'} data-correct={q.correct}>
+                <p class="q-text">{q.question}</p>
+                <div class="q-options">
+                  {q.options.map((opt, oi) => (
+                    <button class="q-opt" data-idx={oi}>{opt}</button>
+                  ))}
+                </div>
+                <div class="q-explanation" id={`exp-${qi}`} style="display:none">
+                  <p><strong>Toelichting:</strong> {q.explanation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="quiz-nav" id="quiz-nav">
+            <button class="btn" id="quiz-next" style="display:none">Volgende →</button>
+          </div>
+
+          <div class="quiz-result" id="quiz-result" style="display:none">
+            <h3 id="quiz-result-heading"></h3>
+            <p id="quiz-result-msg"></p>
+            <button class="btn btn-primary" id="quiz-retry">Quiz herstarten</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLASHCARDS -->
+      <div class="learn-card" id="flash-card">
+        <div class="learn-card-head">
+          <span class="phase-badge phase-3">Fase 3 — Oefenen</span>
+          <h2>Geheugenkaarten ({flashcards.length} kaarten)</h2>
+          <p class="flash-progress-text" id="flash-progress-text">0 van {flashcards.length} geweten</p>
+        </div>
+
+        <div class="flash-controls">
+          <button class="btn btn-sm" id="flash-reset">Alles herstellen</button>
+          <button class="btn btn-sm" id="flash-shuffle">Schudden</button>
+        </div>
+
+        <div class="flash-grid" id="flash-grid">
+          {flashcards.map((fc, fi) => (
+            <div class="flash-item" id={`fc-${fi}`} data-known="0">
+              <div class="flash-inner">
+                <div class="flash-front"><p>{fc.term}</p></div>
+                <div class="flash-back"><p>{fc.definition}</p></div>
+              </div>
+              <div class="flash-actions" style="display:none">
+                <button class="btn btn-sm btn-known" data-idx={fi}>✓ Geweten</button>
+                <button class="btn btn-sm btn-review" data-idx={fi}>↺ Herhalen</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="domain-nav">
+        {prevDomain
+          ? <a class="btn" href={`/learn/${mod.id}/${prevDomain.id}/`}>← {prevDomain.title}</a>
+          : <span></span>}
+        {nextDomain
+          ? <a class="btn btn-primary" href={`/learn/${mod.id}/${nextDomain.id}/`}>{nextDomain.title} →</a>
+          : <a class="btn btn-primary" href={`/learn/${mod.id}/exam/`}>Oefententamen →</a>}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ certId, domainId, totalQ: questions.length, totalF: flashcards.length }}>
+  const lsQuiz = `rr_learn_${certId}_quiz_${domainId}`;
+  const lsFlash = `rr_learn_${certId}_flash_${domainId}`;
+  const lsLesson = `rr_learn_${certId}_lesson_${domainId}`;
+
+  // ── LESSON ──────────────────────────────────────────────────────────────────
+  const lessonBtn = document.getElementById('lesson-done-btn');
+  const lessonStatus = document.getElementById('lesson-status');
+
+  function markLessonDone() {
+    localStorage.setItem(lsLesson, '1');
+    if (lessonBtn) lessonBtn.textContent = '✓ Afgerond';
+    if (lessonStatus) lessonStatus.textContent = 'Bekeken';
+  }
+
+  if (localStorage.getItem(lsLesson) === '1') markLessonDone();
+  lessonBtn?.addEventListener('click', markLessonDone);
+
+  // ── QUIZ ─────────────────────────────────────────────────────────────────────
+  let currentQ = 0;
+  let score = 0;
+  let answered = false;
+
+  const quizBar = document.getElementById('quiz-bar');
+  const quizProgressText = document.getElementById('quiz-progress-text');
+  const quizNext = document.getElementById('quiz-next');
+  const quizResult = document.getElementById('quiz-result');
+  const quizResultHeading = document.getElementById('quiz-result-heading');
+  const quizResultMsg = document.getElementById('quiz-result-msg');
+
+  function showQuestion(idx) {
+    answered = false;
+    document.querySelectorAll('.quiz-question').forEach((el, i) => {
+      (el as HTMLElement).style.display = i === idx ? '' : 'none';
+    });
+    if (quizBar) quizBar.style.width = `${(idx / totalQ) * 100}%`;
+    if (quizProgressText) quizProgressText.textContent = `Vraag ${idx + 1} van ${totalQ}`;
+    if (quizNext) quizNext.style.display = 'none';
+    // Reset option styles
+    document.querySelectorAll(`#q-${idx} .q-opt`).forEach(b => {
+      (b as HTMLElement).classList.remove('correct', 'wrong');
+      (b as HTMLElement).disabled = false;
+    });
+    const exp = document.getElementById(`exp-${idx}`);
+    if (exp) exp.style.display = 'none';
+  }
+
+  document.querySelectorAll('.q-opt').forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (answered) return;
+      answered = true;
+      const qEl = btn.closest('.quiz-question') as HTMLElement;
+      const correct = parseInt(qEl.dataset.correct ?? '0');
+      const chosen = parseInt((btn as HTMLElement).dataset.idx ?? '0');
+      const qi = parseInt(qEl.id.replace('q-', ''));
+
+      qEl.querySelectorAll('.q-opt').forEach((b, i) => {
+        (b as HTMLElement).disabled = true;
+        if (i === correct) (b as HTMLElement).classList.add('correct');
+        else if (i === chosen) (b as HTMLElement).classList.add('wrong');
+      });
+
+      const exp = document.getElementById(`exp-${qi}`);
+      if (exp) exp.style.display = '';
+
+      if (chosen === correct) score++;
+      if (quizNext) quizNext.style.display = '';
+    });
+  });
+
+  quizNext?.addEventListener('click', () => {
+    currentQ++;
+    if (currentQ < totalQ) {
+      showQuestion(currentQ);
+    } else {
+      // Show result
+      if (quizBar) quizBar.style.width = '100%';
+      document.getElementById('quiz-question-wrap')!.style.display = 'none';
+      document.getElementById('quiz-nav')!.style.display = 'none';
+      if (quizProgressText) quizProgressText.style.display = 'none';
+      if (quizResult) quizResult.style.display = '';
+
+      const pct = Math.round((score / totalQ) * 100);
+      const passed = pct >= 70;
+      if (quizResultHeading) quizResultHeading.textContent = `${score}/${totalQ} — ${pct}%`;
+      if (quizResultMsg) quizResultMsg.textContent = passed
+        ? `✓ Geslaagd! Je beheerst dit domein goed.`
+        : `Nog niet geslaagd (drempel: 70%). Herhaal de les en probeer opnieuw.`;
+      if (quizResult) quizResult.className = `quiz-result ${passed ? 'quiz-passed' : 'quiz-failed'}`;
+
+      localStorage.setItem(lsQuiz, JSON.stringify({ score: pct, passed, done: true }));
+    }
+  });
+
+  document.getElementById('quiz-retry')?.addEventListener('click', () => {
+    currentQ = 0; score = 0;
+    document.getElementById('quiz-question-wrap')!.style.display = '';
+    document.getElementById('quiz-nav')!.style.display = '';
+    if (quizProgressText) quizProgressText.style.display = '';
+    if (quizResult) quizResult.style.display = 'none';
+    showQuestion(0);
+  });
+
+  // Restore saved quiz state (just show result badge, allow replay)
+  const savedQuiz = localStorage.getItem(lsQuiz);
+  if (savedQuiz) {
+    const r = JSON.parse(savedQuiz);
+    const head = document.querySelector('#quiz-card .learn-card-head h2');
+    if (head) head.insertAdjacentHTML('afterend', `<p class="quiz-saved-score ${r.passed ? 'score-pass' : 'score-fail'}">Laatste score: ${r.score}% ${r.passed ? '✓' : '✗'} — <span>Herspelen</span></p>`);
+    head?.nextElementSibling?.querySelector('span')?.addEventListener('click', () => { /* already visible */ });
+  }
+
+  // ── FLASHCARDS ───────────────────────────────────────────────────────────────
+  let knownSet = new Set(JSON.parse(localStorage.getItem(lsFlash) ?? '[]'));
+
+  function saveFlash() {
+    localStorage.setItem(lsFlash, JSON.stringify([...knownSet]));
+  }
+
+  function updateFlashProgress() {
+    const el = document.getElementById('flash-progress-text');
+    if (el) el.textContent = `${knownSet.size} van ${totalF} geweten`;
+  }
+
+  function applyKnownState() {
+    document.querySelectorAll('.flash-item').forEach((item, i) => {
+      if (knownSet.has(i)) {
+        item.classList.add('flash-known');
+      } else {
+        item.classList.remove('flash-known');
+      }
+    });
+    updateFlashProgress();
+  }
+
+  // Flip on click
+  document.querySelectorAll('.flash-item').forEach((item, i) => {
+    item.addEventListener('click', function (e) {
+      if ((e.target as HTMLElement).tagName === 'BUTTON') return;
+      item.classList.toggle('flipped');
+      const actions = item.querySelector('.flash-actions') as HTMLElement;
+      if (actions) actions.style.display = item.classList.contains('flipped') ? '' : 'none';
+    });
+  });
+
+  // Known/review buttons
+  document.querySelectorAll('.btn-known').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const idx = parseInt((btn as HTMLElement).dataset.idx ?? '0');
+      knownSet.add(idx);
+      saveFlash();
+      applyKnownState();
+      const item = document.getElementById(`fc-${idx}`);
+      if (item) { item.classList.remove('flipped'); (item.querySelector('.flash-actions') as HTMLElement).style.display = 'none'; }
+    });
+  });
+
+  document.querySelectorAll('.btn-review').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const idx = parseInt((btn as HTMLElement).dataset.idx ?? '0');
+      knownSet.delete(idx);
+      saveFlash();
+      applyKnownState();
+      const item = document.getElementById(`fc-${idx}`);
+      if (item) { item.classList.remove('flipped'); (item.querySelector('.flash-actions') as HTMLElement).style.display = 'none'; }
+    });
+  });
+
+  document.getElementById('flash-reset')?.addEventListener('click', () => {
+    knownSet.clear(); saveFlash(); applyKnownState();
+    document.querySelectorAll('.flash-item').forEach(item => {
+      item.classList.remove('flipped');
+      (item.querySelector('.flash-actions') as HTMLElement).style.display = 'none';
+    });
+  });
+
+  document.getElementById('flash-shuffle')?.addEventListener('click', () => {
+    const grid = document.getElementById('flash-grid');
+    if (!grid) return;
+    const items = [...grid.children] as HTMLElement[];
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      grid.appendChild(items[j]);
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+  });
+
+  applyKnownState();
+</script>
+
+<style>
+  .back-link { display: inline-block; color: var(--accent, #2f6f92); text-decoration: none; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .back-link:hover { text-decoration: underline; }
+
+  .domain-header { margin-bottom: 2rem; }
+  .domain-weight-badge { display: inline-block; background: #e8eef3; color: #4a6478; font-size: 0.78rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 4px; margin-top: 0.5rem; }
+
+  .learn-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; margin-bottom: 2rem; overflow: hidden; }
+  .learn-card-head { background: #f6f8f9; border-bottom: 1px solid #e8eef3; padding: 1.25rem 1.5rem; }
+  .learn-card-head h2 { margin: 0.4rem 0 0; font-size: 1.15rem; }
+  .phase-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .phase-2 { background: #dbeafe; color: #1e40af; }
+  .phase-3 { background: #d1fae5; color: #065f46; }
+
+  /* Lesson */
+  .lesson-body { padding: 1.5rem; }
+  .lesson-overview { font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem; }
+  .lesson-body h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark, #0e1a24); }
+  .key-points { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .key-points li { font-size: 0.875rem; padding-left: 1.25rem; position: relative; line-height: 1.5; }
+  .key-points li::before { content: '→'; position: absolute; left: 0; color: var(--accent, #2f6f92); font-weight: 700; }
+  .study-tip { background: #fffbeb; border-left: 3px solid #f59e0b; border-radius: 0 6px 6px 0; padding: 0.75rem 1rem; }
+  .tip-label { font-size: 0.78rem; font-weight: 700; color: #92400e; display: block; margin-bottom: 0.25rem; }
+  .study-tip p { font-size: 0.875rem; margin: 0; color: #78350f; }
+  .lesson-foot { padding: 1rem 1.5rem; border-top: 1px solid #e8eef3; display: flex; align-items: center; gap: 1rem; }
+  .lesson-status { font-size: 0.8rem; color: #22c55e; font-weight: 600; }
+
+  /* Quiz */
+  .quiz-progress-bar { height: 4px; background: #e8eef3; }
+  .quiz-progress-fill { height: 100%; background: var(--accent, #2f6f92); width: 0; transition: width 0.3s; }
+  .quiz-progress-text { font-size: 0.78rem; color: #6a8499; padding: 0.75rem 1.5rem 0; margin: 0; }
+  .quiz-question { padding: 1.5rem; }
+  .q-text { font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .q-opt {
+    text-align: left; padding: 0.75rem 1rem; border: 1.5px solid #d1d9e0; border-radius: 6px;
+    background: #fff; cursor: pointer; font-size: 0.875rem; transition: border-color 0.15s, background 0.15s;
+  }
+  .q-opt:hover:not(:disabled) { border-color: var(--accent, #2f6f92); background: #eef5fa; }
+  .q-opt.correct { border-color: #22c55e; background: #f0fdf4; color: #15803d; font-weight: 600; }
+  .q-opt.wrong { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+  .q-opt:disabled { cursor: default; }
+  .q-explanation { margin: 1rem 0 0; padding: 0.75rem 1rem; background: #f6f8f9; border-radius: 6px; font-size: 0.85rem; line-height: 1.5; }
+  .quiz-nav { padding: 0 1.5rem 1.25rem; }
+  .quiz-result { padding: 1.5rem; text-align: center; }
+  .quiz-result h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .quiz-passed h3 { color: #15803d; }
+  .quiz-failed h3 { color: #b91c1c; }
+  .quiz-saved-score { font-size: 0.82rem; margin: 0.25rem 0 0; }
+  .score-pass { color: #15803d; }
+  .score-fail { color: #b91c1c; }
+
+  /* Flashcards */
+  .flash-progress-text { font-size: 0.82rem; color: #6a8499; margin: 0.25rem 0 0; }
+  .flash-controls { padding: 0.75rem 1.5rem; display: flex; gap: 0.5rem; border-bottom: 1px solid #e8eef3; }
+  .btn-sm { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
+  .flash-grid { padding: 1.25rem 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .flash-item { perspective: 800px; cursor: pointer; height: 140px; position: relative; }
+  .flash-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.4s; border-radius: 8px; }
+  .flash-item.flipped .flash-inner { transform: rotateY(180deg); }
+  .flash-front, .flash-back {
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; padding: 1rem; text-align: center;
+    border: 1.5px solid #d1d9e0;
+  }
+  .flash-front { background: #fff; }
+  .flash-front p { font-size: 0.875rem; font-weight: 600; color: var(--dark, #0e1a24); margin: 0; }
+  .flash-back { background: var(--accent, #2f6f92); transform: rotateY(180deg); }
+  .flash-back p { font-size: 0.8rem; color: #fff; margin: 0; line-height: 1.4; }
+  .flash-item.flash-known .flash-front { border-color: #22c55e; background: #f0fdf4; }
+  .flash-actions { position: absolute; bottom: -2.5rem; left: 0; right: 0; display: flex; gap: 0.4rem; justify-content: center; z-index: 1; }
+  .btn-known { background: #22c55e; color: #fff; border: none; }
+  .btn-review { background: #f59e0b; color: #fff; border: none; }
+
+  .domain-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e8eef3; }
+</style>

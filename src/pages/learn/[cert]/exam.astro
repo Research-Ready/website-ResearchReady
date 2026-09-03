@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { certs, certMap } from '../../../data/certs/index';
+
+export function getStaticPaths() {
+  return certs.map(c => ({ params: { cert: c.id } }));
+}
+
+const { cert: certId } = Astro.params;
+const mod = certMap[certId!];
+const questions = mod.mockExam;
+const durationSec = mod.duration * 60;
+---
+
+<BaseLayout locale="nl" title={`Oefententamen — ${mod.title}`} description={`Volledig oefententamen voor ${mod.examCode}`}>
+  <section class="section">
+    <div class="wrap">
+      <a class="back-link" href={`/learn/${mod.id}/`}>← {mod.title}</a>
+
+      <!-- PRE-EXAM SCREEN -->
+      <div id="pre-exam">
+        <span class="eyebrow">{mod.examCode} · Oefententamen</span>
+        <h1>Oefententamen</h1>
+        <p class="lede">
+          {questions.length} vragen · {mod.duration} minuten · Slagen bij {mod.passScore}%
+          ({Math.ceil(questions.length * mod.passScore / 100)} van {questions.length} goed)
+        </p>
+        <ul class="exam-rules">
+          <li>Zodra je start, begint de afteltimer.</li>
+          <li>Je kunt antwoorden later aanpassen zolang de tijd niet op is.</li>
+          <li>Na afloop zie je je score per domein.</li>
+        </ul>
+        <button class="btn btn-primary" id="start-exam">Tentamen starten →</button>
+      </div>
+
+      <!-- EXAM SCREEN -->
+      <div id="exam-screen" style="display:none">
+        <div class="exam-topbar">
+          <div>
+            <span class="eyebrow">{mod.examCode} — Oefententamen</span>
+            <span class="exam-qcount" id="exam-qcount">Vraag 1/{questions.length}</span>
+          </div>
+          <div class="timer-wrap">
+            <span class="timer-icon">⏱</span>
+            <span class="timer" id="timer">--:--</span>
+          </div>
+        </div>
+
+        <div class="exam-progress-bar"><div class="exam-progress-fill" id="exam-bar"></div></div>
+
+        <div id="exam-questions">
+          {questions.map((q, qi) => (
+            <div class="exam-question" id={`eq-${qi}`} style={qi === 0 ? '' : 'display:none'} data-domain={q.domain} data-correct={q.correct}>
+              <p class="eq-num">Vraag {qi + 1} van {questions.length}</p>
+              <p class="eq-text">{q.question}</p>
+              <div class="eq-options">
+                {q.options.map((opt, oi) => (
+                  <label class="eq-opt">
+                    <input type="radio" name={`q${qi}`} value={oi} />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="exam-nav">
+          <button class="btn" id="exam-prev" disabled>← Vorige</button>
+          <button class="btn" id="exam-next">Volgende →</button>
+          <button class="btn btn-primary" id="exam-submit" style="display:none">Inleveren</button>
+        </div>
+      </div>
+
+      <!-- RESULT SCREEN -->
+      <div id="result-screen" style="display:none">
+        <span class="eyebrow">{mod.examCode} · Resultaat</span>
+        <h1 id="result-heading"></h1>
+        <p class="lede" id="result-summary"></p>
+
+        <div class="result-score-big" id="result-score-big"></div>
+
+        <h2 class="result-section-title">Score per domein</h2>
+        <div class="domain-breakdown" id="domain-breakdown"></div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" id="retry-exam">Opnieuw proberen</button>
+          <a class="btn" href={`/learn/${mod.id}/`}>Terug naar overzicht</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ certId, questions, durationSec, totalQ: questions.length, passScore: mod.passScore }}>
+  const lsExam = `rr_learn_${certId}_exam`;
+  let timerInterval = null;
+  let secondsLeft = durationSec;
+  let currentIdx = 0;
+  const answers = new Array(totalQ).fill(-1);
+
+  // ── TIMER ─────────────────────────────────────────────────────────────────
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    return `${String(m).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+  }
+
+  function startTimer() {
+    const timerEl = document.getElementById('timer');
+    if (timerEl) timerEl.textContent = formatTime(secondsLeft);
+    timerInterval = setInterval(() => {
+      secondsLeft--;
+      if (timerEl) timerEl.textContent = formatTime(secondsLeft);
+      if (secondsLeft <= 300 && timerEl) timerEl.style.color = '#ef4444';
+      if (secondsLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+    }, 1000);
+  }
+
+  // ── NAVIGATION ────────────────────────────────────────────────────────────
+  function showQuestion(idx) {
+    document.querySelectorAll('.exam-question').forEach((el, i) => {
+      (el).style.display = i === idx ? '' : 'none';
+    });
+    currentIdx = idx;
+    const bar = document.getElementById('exam-bar');
+    if (bar) bar.style.width = `${(idx / totalQ) * 100}%`;
+    const qcount = document.getElementById('exam-qcount');
+    if (qcount) qcount.textContent = `Vraag ${idx + 1}/${totalQ}`;
+    document.getElementById('exam-prev').disabled = idx === 0;
+    const isLast = idx === totalQ - 1;
+    document.getElementById('exam-next').style.display = isLast ? 'none' : '';
+    document.getElementById('exam-submit').style.display = isLast ? '' : 'none';
+    // Restore radio selection
+    if (answers[idx] >= 0) {
+      const radio = document.querySelector(`input[name="q${idx}"][value="${answers[idx]}"]`);
+      if (radio) radio.checked = true;
+    }
+  }
+
+  // Save answer on radio change
+  document.querySelectorAll('.eq-options').forEach((wrap, qi) => {
+    wrap.querySelectorAll('input[type=radio]').forEach(radio => {
+      radio.addEventListener('change', () => { answers[qi] = parseInt(radio.value); });
+    });
+  });
+
+  document.getElementById('exam-prev')?.addEventListener('click', () => showQuestion(currentIdx - 1));
+  document.getElementById('exam-next')?.addEventListener('click', () => showQuestion(currentIdx + 1));
+
+  // ── SUBMIT ────────────────────────────────────────────────────────────────
+  function submitExam() {
+    clearInterval(timerInterval);
+    document.getElementById('exam-screen').style.display = 'none';
+
+    // Calculate results
+    let total = 0;
+    const domainMap = {};
+    questions.forEach((q, i) => {
+      const correct = answers[i] === q.correct;
+      if (correct) total++;
+      if (!domainMap[q.domain]) domainMap[q.domain] = { correct: 0, total: 0 };
+      domainMap[q.domain].total++;
+      if (correct) domainMap[q.domain].correct++;
+    });
+
+    const pct = Math.round((total / totalQ) * 100);
+    const passed = pct >= passScore;
+
+    localStorage.setItem(lsExam, JSON.stringify({ score: pct, passed, total, totalQ }));
+
+    // Show result
+    document.getElementById('result-screen').style.display = '';
+    document.getElementById('result-heading').textContent = passed ? '✓ Geslaagd!' : '✗ Gezakt';
+    document.getElementById('result-heading').style.color = passed ? '#15803d' : '#b91c1c';
+    document.getElementById('result-summary').textContent = `${total} van ${totalQ} vragen goed (${pct}%). Drempel: ${passScore}%.`;
+    const scoreBig = document.getElementById('result-score-big');
+    if (scoreBig) {
+      scoreBig.textContent = `${pct}%`;
+      scoreBig.style.color = passed ? '#15803d' : '#b91c1c';
+    }
+
+    const breakdown = document.getElementById('domain-breakdown');
+    if (breakdown) {
+      breakdown.innerHTML = Object.entries(domainMap).map(([dom, d]) => {
+        const dpct = Math.round((d.correct / d.total) * 100);
+        return `<div class="domain-row-result">
+          <div class="dr-info"><strong>${dom}</strong><span>${d.correct}/${d.total} — ${dpct}%</span></div>
+          <div class="dr-bar"><div class="dr-bar-fill" style="width:${dpct}%;background:${dpct >= passScore ? '#22c55e' : '#ef4444'}"></div></div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  document.getElementById('exam-submit')?.addEventListener('click', submitExam);
+
+  // ── START ─────────────────────────────────────────────────────────────────
+  document.getElementById('start-exam')?.addEventListener('click', () => {
+    document.getElementById('pre-exam').style.display = 'none';
+    document.getElementById('exam-screen').style.display = '';
+    showQuestion(0);
+    startTimer();
+  });
+
+  document.getElementById('retry-exam')?.addEventListener('click', () => {
+    answers.fill(-1);
+    secondsLeft = durationSec;
+    currentIdx = 0;
+    document.getElementById('result-screen').style.display = 'none';
+    document.getElementById('pre-exam').style.display = '';
+    document.querySelectorAll('input[type=radio]').forEach(r => { r.checked = false; });
+    const timerEl = document.getElementById('timer');
+    if (timerEl) { timerEl.textContent = formatTime(durationSec); timerEl.style.color = ''; }
+  });
+
+  // Show previous result if any
+  const prev = localStorage.getItem(lsExam);
+  if (prev) {
+    const r = JSON.parse(prev);
+    const pre = document.getElementById('pre-exam');
+    if (pre) {
+      const badge = document.createElement('p');
+      badge.className = `prev-result ${r.passed ? 'prev-pass' : 'prev-fail'}`;
+      badge.textContent = `Vorige poging: ${r.score}% — ${r.passed ? 'Geslaagd ✓' : 'Gezakt ✗'}`;
+      pre.insertBefore(badge, pre.lastElementChild);
+    }
+  }
+</script>
+
+<style>
+  .back-link { display: inline-block; color: var(--accent, #2f6f92); text-decoration: none; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .back-link:hover { text-decoration: underline; }
+
+  #pre-exam { max-width: 640px; }
+  .exam-rules { list-style: none; padding: 0; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .exam-rules li { font-size: 0.9rem; padding-left: 1.25rem; position: relative; }
+  .exam-rules li::before { content: '→'; position: absolute; left: 0; color: var(--accent, #2f6f92); }
+  .prev-result { display: inline-block; font-size: 0.82rem; font-weight: 600; padding: 0.3rem 0.75rem; border-radius: 4px; margin-bottom: 1rem; }
+  .prev-pass { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+  .prev-fail { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+  .exam-topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid #e8eef3; margin-bottom: 0.5rem; }
+  .exam-qcount { display: block; font-size: 0.82rem; color: #6a8499; margin-top: 0.25rem; }
+  .timer-wrap { display: flex; align-items: center; gap: 0.4rem; }
+  .timer { font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--dark, #0e1a24); }
+  .timer-icon { font-size: 1.2rem; }
+
+  .exam-progress-bar { height: 4px; background: #e8eef3; border-radius: 2px; margin-bottom: 1.5rem; }
+  .exam-progress-fill { height: 100%; background: var(--accent, #2f6f92); border-radius: 2px; width: 0; transition: width 0.3s; }
+
+  .exam-question { padding: 0.5rem 0 1.5rem; }
+  .eq-num { font-size: 0.75rem; color: #6a8499; margin-bottom: 0.5rem; font-weight: 500; }
+  .eq-text { font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; line-height: 1.5; }
+  .eq-options { display: flex; flex-direction: column; gap: 0.6rem; }
+  .eq-opt {
+    display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 1rem;
+    border: 1.5px solid #d1d9e0; border-radius: 6px; cursor: pointer;
+    font-size: 0.875rem; line-height: 1.5; transition: border-color 0.1s, background 0.1s;
+  }
+  .eq-opt:hover { border-color: var(--accent, #2f6f92); background: #eef5fa; }
+  .eq-opt input { margin-top: 0.15rem; flex-shrink: 0; accent-color: var(--accent, #2f6f92); }
+  .eq-opt:has(input:checked) { border-color: var(--accent, #2f6f92); background: #eef5fa; }
+
+  .exam-nav { display: flex; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid #e8eef3; }
+
+  /* Result */
+  .result-score-big { font-size: 4rem; font-weight: 800; margin: 1rem 0 2rem; }
+  .result-section-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; border-bottom: 1px solid #e8eef3; padding-bottom: 0.5rem; }
+  .domain-breakdown { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .domain-row-result { background: #f6f8f9; border: 1px solid #d1d9e0; border-radius: 8px; padding: 0.875rem 1rem; }
+  .dr-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.875rem; }
+  .dr-info strong { color: var(--dark, #0e1a24); }
+  .dr-info span { color: #6a8499; font-weight: 600; }
+  .dr-bar { height: 6px; background: #d1d9e0; border-radius: 3px; }
+  .dr-bar-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .result-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+</style>

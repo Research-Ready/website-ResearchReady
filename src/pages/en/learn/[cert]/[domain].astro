@@ -1,0 +1,9 @@
+---
+import { certs } from '../../../../data/certs/index';
+export function getStaticPaths() {
+  return certs.flatMap(c => c.domains.map(d => ({ params: { cert: c.id, domain: d.id } })));
+}
+const { cert, domain } = Astro.params;
+---
+<meta http-equiv="refresh" content={`0;url=/learn/${cert}/${domain}/`}>
+<link rel="canonical" href={`/learn/${cert}/${domain}/`}>

@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { certs, certMap } from '../../../data/certs/index';
+
+export function getStaticPaths() {
+  return certs.map(c => ({ params: { cert: c.id } }));
+}
+
+const { cert: certId } = Astro.params;
+const mod = certMap[certId!];
+
+// 2 questions per domain, sampled from index 0 and 5 to give variety
+const diagQuestions = mod.domains.flatMap(d => [
+  { ...d.questions[0], domainTitle: d.title, domainId: d.id },
+  { ...d.questions[Math.min(5, d.questions.length - 1)], domainTitle: d.title, domainId: d.id },
+]);
+---
+
+<BaseLayout locale="nl" title={`Diagnosetoets — ${mod.title}`} description={`Diagnosetoets voor ${mod.examCode}`}>
+  <section class="section">
+    <div class="wrap">
+      <a class="back-link" href={`/learn/${mod.id}/`}>← {mod.title}</a>
+
+      <div id="diag-intro">
+        <span class="eyebrow">Fase 1 — Diagnose</span>
+        <h1>Diagnosetoets</h1>
+        <p class="lede">
+          {diagQuestions.length} vragen · 2 per domein · Ontdek wat je al weet en waar je aandacht nodig hebt.
+        </p>
+        <ul class="diag-rules">
+          <li>Je ziet direct of je antwoord goed of fout is.</li>
+          <li>Je kunt niet teruggaan — net als het echte examen.</li>
+          <li>Na afloop zie je een overzicht per domein.</li>
+        </ul>
+        <button class="btn btn-primary" id="diag-start">Diagnosetoets starten →</button>
+      </div>
+
+      <div id="diag-quiz" style="display:none">
+        <div class="diag-progress-bar"><div class="diag-progress-fill" id="diag-bar"></div></div>
+        <p class="diag-progress-text" id="diag-progress">Vraag 1 van {diagQuestions.length}</p>
+
+        {diagQuestions.map((q, qi) => (
+          <div class="diag-q" id={`dq-${qi}`} style={qi === 0 ? '' : 'display:none'} data-correct={q.correct} data-domain={q.domainId} data-domain-title={q.domainTitle}>
+            <p class="dq-domain-label">{q.domainTitle}</p>
+            <p class="dq-text">{q.question}</p>
+            <div class="dq-options">
+              {q.options.map((opt, oi) => (
+                <button class="dq-opt" data-idx={oi}>{opt}</button>
+              ))}
+            </div>
+            <div class="dq-exp" id={`dexp-${qi}`} style="display:none">
+              <p>{q.explanation}</p>
+              <button class="btn btn-primary dq-next" id={`dnext-${qi}`}>
+                {qi < diagQuestions.length - 1 ? 'Volgende →' : 'Bekijk resultaat →'}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div id="diag-result" style="display:none">
+        <span class="eyebrow">Fase 1 — Resultaat</span>
+        <h1 id="diag-result-heading"></h1>
+        <p class="lede" id="diag-result-summary"></p>
+        <div id="diag-domain-breakdown"></div>
+        <div class="diag-actions">
+          <a class="btn btn-primary" id="diag-to-learn" href="#">Naar fase 2: Leren →</a>
+          <a class="btn" href={`/learn/${mod.id}/`}>Terug naar overzicht</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ certId, diagQuestions, totalDiag: diagQuestions.length }}>
+  const lsDiag = `rr_learn_${certId}_diag_done`;
+  const lsDiagScore = `rr_learn_${certId}_diag_score`;
+  const lsStage = `rr_learn_${certId}_stage`;
+
+  let currentQ = 0;
+  const domainResults = {};
+  let totalCorrect = 0;
+
+  function showQ(idx) {
+    document.querySelectorAll('.diag-q').forEach((el, i) => {
+      el.style.display = i === idx ? '' : 'none';
+    });
+    const bar = document.getElementById('diag-bar');
+    if (bar) bar.style.width = `${(idx / totalDiag) * 100}%`;
+    const prog = document.getElementById('diag-progress');
+    if (prog) prog.textContent = `Vraag ${idx + 1} van ${totalDiag}`;
+  }
+
+  document.querySelectorAll('.dq-opt').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const qEl = btn.closest('.diag-q');
+      if (!qEl) return;
+      const qi = parseInt(qEl.id.replace('dq-', ''));
+      const correct = parseInt(qEl.dataset.correct ?? '0');
+      const chosen = parseInt(btn.dataset.idx ?? '0');
+      const domainId = qEl.dataset.domain;
+      const domainTitle = qEl.dataset.domainTitle;
+
+      // Lock options + highlight
+      qEl.querySelectorAll('.dq-opt').forEach((b, i) => {
+        b.disabled = true;
+        if (i === correct) b.classList.add('correct');
+        else if (i === chosen) b.classList.add('wrong');
+      });
+
+      const isCorrect = chosen === correct;
+      if (isCorrect) totalCorrect++;
+
+      if (!domainResults[domainId]) domainResults[domainId] = { title: domainTitle, correct: 0, total: 0 };
+      domainResults[domainId].total++;
+      if (isCorrect) domainResults[domainId].correct++;
+
+      const exp = document.getElementById(`dexp-${qi}`);
+      if (exp) exp.style.display = '';
+    });
+  });
+
+  document.querySelectorAll('.dq-next').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const qi = parseInt(btn.id.replace('dnext-', ''));
+      if (qi < totalDiag - 1) {
+        currentQ = qi + 1;
+        showQ(currentQ);
+      } else {
+        showResult();
+      }
+    });
+  });
+
+  function showResult() {
+    document.getElementById('diag-quiz').style.display = 'none';
+    document.getElementById('diag-result').style.display = '';
+
+    const pct = Math.round((totalCorrect / totalDiag) * 100);
+    localStorage.setItem(lsDiag, '1');
+    localStorage.setItem(lsDiagScore, String(pct));
+    if (!localStorage.getItem(lsStage) || parseInt(localStorage.getItem(lsStage) ?? '1') < 2) {
+      localStorage.setItem(lsStage, '2');
+    }
+
+    document.getElementById('diag-result-heading').textContent = `${totalCorrect}/${totalDiag} — ${pct}%`;
+    document.getElementById('diag-result-summary').textContent =
+      'Hieronder zie je per domein hoe je scoorde. Begin met de domeinen waar je minder goed op scoorde.';
+
+    const breakdown = document.getElementById('diag-domain-breakdown');
+    if (breakdown) {
+      breakdown.innerHTML = Object.values(domainResults).map(d => {
+        const dpct = Math.round((d.correct / d.total) * 100);
+        const level = dpct === 100 ? 'Sterk' : dpct >= 50 ? 'Matig' : 'Aandacht nodig';
+        const color = dpct === 100 ? '#22c55e' : dpct >= 50 ? '#f59e0b' : '#ef4444';
+        return `<div class="diag-domain-row">
+          <div class="ddr-label"><strong>${d.title}</strong><span style="color:${color}">${d.correct}/${d.total} — ${level}</span></div>
+          <div class="ddr-bar"><div class="ddr-fill" style="width:${dpct}%;background:${color}"></div></div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  document.getElementById('diag-start')?.addEventListener('click', () => {
+    document.getElementById('diag-intro').style.display = 'none';
+    document.getElementById('diag-quiz').style.display = '';
+    showQ(0);
+  });
+</script>
+
+<style>
+  .back-link { display: inline-block; color: var(--accent, #2f6f92); text-decoration: none; font-size: 0.875rem; margin-bottom: 1.5rem; }
+  .back-link:hover { text-decoration: underline; }
+
+  #diag-intro { max-width: 640px; }
+  .diag-rules { list-style: none; padding: 0; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .diag-rules li { font-size: 0.9rem; padding-left: 1.25rem; position: relative; }
+  .diag-rules li::before { content: '→'; position: absolute; left: 0; color: var(--accent, #2f6f92); }
+
+  .diag-progress-bar { height: 4px; background: #e8eef3; border-radius: 2px; margin-bottom: 0.75rem; }
+  .diag-progress-fill { height: 100%; background: var(--accent, #2f6f92); border-radius: 2px; width: 0; transition: width 0.3s; }
+  .diag-progress-text { font-size: 0.78rem; color: #6a8499; margin-bottom: 1.25rem; }
+
+  .dq-domain-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent, #2f6f92); margin-bottom: 0.5rem; }
+  .dq-text { font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; line-height: 1.5; }
+  .dq-options { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .dq-opt {
+    text-align: left; padding: 0.75rem 1rem; border: 1.5px solid #d1d9e0; border-radius: 6px;
+    background: #fff; cursor: pointer; font-size: 0.875rem; transition: border-color 0.1s, background 0.1s;
+  }
+  .dq-opt:hover:not(:disabled) { border-color: var(--accent, #2f6f92); background: #eef5fa; }
+  .dq-opt.correct { border-color: #22c55e; background: #f0fdf4; color: #15803d; font-weight: 600; }
+  .dq-opt.wrong { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+  .dq-opt:disabled { cursor: default; }
+  .dq-exp { background: #f6f8f9; border-radius: 6px; padding: 0.875rem 1rem; font-size: 0.85rem; line-height: 1.5; }
+  .dq-exp p { margin: 0 0 0.75rem; }
+
+  .diag-domain-row { background: #f6f8f9; border: 1px solid #d1d9e0; border-radius: 8px; padding: 0.875rem 1rem; margin-bottom: 0.75rem; }
+  .ddr-label { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.5rem; }
+  .ddr-label strong { color: var(--dark, #0e1a24); }
+  .ddr-bar { height: 6px; background: #d1d9e0; border-radius: 3px; }
+  .ddr-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+  .diag-actions { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+</style>

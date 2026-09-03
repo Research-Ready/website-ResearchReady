@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { certs } from '../../../data/certs/index';
+---
+<BaseLayout locale="en" title="Learn" description="Interactive certification training modules.">
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">Learn</span>
+      <h1>Certification Training</h1>
+      <p class="lede">Interactive learning modules following the Conscious Competence model: diagnose, learn, practise, exam.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem">
+        {certs.map(c => (
+          <a class="btn btn-primary" href={`/en/learn/${c.id}/`}>{c.title} →</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

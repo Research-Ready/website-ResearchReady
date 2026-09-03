@@ -1,0 +1,228 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { certs } from '../../data/certs/index';
+
+const certAccent: Record<string, string> = {
+  'itil4': '#7b68ee',
+  'sec-plus': '#e85d26',
+};
+
+const stages = ['Diagnose', 'Leren', 'Oefenen', 'Tentamen'];
+---
+
+<BaseLayout locale="nl" title="Leren" description="Interactieve certificaattraining op basis van het Conscious Competence model.">
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">Leren</span>
+      <h1>Certificaattraining</h1>
+      <p class="lede">
+        Leer op je eigen tempo. Elke module volgt het <strong>Conscious Competence</strong>-model:
+        van diagnose via theorie en oefening naar examenvoorbereiding.
+      </p>
+
+      <div class="cc-journey">
+        {stages.map((s, i) => (
+          <>
+            <div class="cc-step">
+              <span class="cc-step-num">{i + 1}</span>
+              <span class="cc-step-label">{s}</span>
+            </div>
+            {i < stages.length - 1 && <div class="cc-arrow" aria-hidden="true">→</div>}
+          </>
+        ))}
+      </div>
+
+      <div class="cert-grid">
+        {certs.map(cert => (
+          <a class="cert-card" href={`/learn/${cert.id}/`} data-cert={cert.id}>
+            <div class="cert-card-top" style={`border-top: 4px solid ${certAccent[cert.id] ?? 'var(--accent)'}`}>
+              <div class="cert-badge-row">
+                <span class="cert-vendor">{cert.vendor}</span>
+                <span class="cert-level">{cert.level}</span>
+              </div>
+              <h2 class="cert-title">{cert.title}</h2>
+              <p class="cert-sub">{cert.subtitle}</p>
+            </div>
+            <dl class="cert-meta">
+              <dt>Examencode</dt><dd>{cert.examCode}</dd>
+              <dt>Vragen</dt><dd>{cert.totalQuestions}</dd>
+              <dt>Duur</dt><dd>{cert.duration} min</dd>
+              <dt>Zakken op</dt><dd>{cert.passScore}%</dd>
+              <dt>Kosten</dt><dd>{cert.cost}</dd>
+              <dt>Domeinen</dt><dd>{cert.domains.length}</dd>
+            </dl>
+            <div class="cert-card-footer">
+              <div class="stage-indicator" id={`stage-${cert.id}`}>
+                <div class="stage-bar"><div class="stage-bar-fill"></div></div>
+                <span class="stage-text">Fase 1 — Diagnose</span>
+              </div>
+              <span class="btn btn-primary cert-cta">Begin →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const stageLabels = ['', 'Diagnose', 'Leren', 'Oefenen', 'Tentamen'];
+
+  (['itil4', 'sec-plus'] as const).forEach(certId => {
+    const stage = parseInt(localStorage.getItem(`rr_learn_${certId}_stage`) ?? '1', 10) || 1;
+    const el = document.getElementById(`stage-${certId}`);
+    if (!el) return;
+    const fill = el.querySelector('.stage-bar-fill') as HTMLElement | null;
+    const text = el.querySelector('.stage-text') as HTMLElement | null;
+    if (fill) fill.style.width = `${((stage - 1) / 3) * 100}%`;
+    if (text) text.textContent = `Fase ${stage} — ${stageLabels[stage]}`;
+  });
+</script>
+
+<style>
+  .cc-journey {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 2rem 0 3rem;
+  }
+  .cc-step {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg, #f6f8f9);
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+  }
+  .cc-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--accent, #2f6f92);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cc-step-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--dark, #0e1a24);
+  }
+  .cc-arrow {
+    color: #8fa6b8;
+    font-size: 1.1rem;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .cert-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #d1d9e0;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .cert-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .cert-card-top {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+  .cert-badge-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .cert-vendor,
+  .cert-level {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #e8eef3;
+    color: #4a6478;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+  .cert-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+    color: var(--dark, #0e1a24);
+    line-height: 1.2;
+  }
+  .cert-sub {
+    font-size: 0.875rem;
+    color: #5a7a8e;
+    margin: 0;
+  }
+  .cert-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1rem;
+    padding: 1rem 1.5rem;
+    background: #f6f8f9;
+    margin: 0;
+    font-size: 0.8rem;
+    flex: 1;
+  }
+  .cert-meta dt {
+    color: #6a8499;
+    font-weight: 500;
+  }
+  .cert-meta dd {
+    color: var(--dark, #0e1a24);
+    font-weight: 600;
+    margin: 0;
+  }
+  .cert-card-footer {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid #e8eef3;
+  }
+  .stage-indicator {
+    flex: 1;
+    min-width: 0;
+  }
+  .stage-bar {
+    height: 4px;
+    background: #d1d9e0;
+    border-radius: 2px;
+    margin-bottom: 0.3rem;
+  }
+  .stage-bar-fill {
+    height: 100%;
+    background: var(--accent, #2f6f92);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  .stage-text {
+    font-size: 0.72rem;
+    color: #6a8499;
+    font-weight: 500;
+  }
+  .cert-cta {
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+</style>

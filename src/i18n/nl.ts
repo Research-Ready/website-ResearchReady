@@ -6,6 +6,7 @@ export const nl = {
     contact: 'Contact',
     pitch: 'Presentatie',
     docs: 'Documenten',
+    learn: 'Leren',
     langToggle: 'EN',
   },
   footer: {

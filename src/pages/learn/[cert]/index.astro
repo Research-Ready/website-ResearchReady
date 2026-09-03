@@ -1,0 +1,296 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { certs, certMap } from '../../../data/certs/index';
+
+export function getStaticPaths() {
+  return certs.map(c => ({ params: { cert: c.id } }));
+}
+
+const { cert: certId } = Astro.params;
+const mod = certMap[certId!];
+
+const stages = [
+  { num: 1, label: 'Diagnose', desc: 'Ontdek wat je nog niet weet', icon: '🔍' },
+  { num: 2, label: 'Leren', desc: 'Bestudeer de domeinen', icon: '📖' },
+  { num: 3, label: 'Oefenen', desc: 'Quiz en geheugenkaarten', icon: '🧠' },
+  { num: 4, label: 'Tentamen', desc: 'Volledige tijdgebonden toets', icon: '🎯' },
+];
+
+const domainIds = JSON.stringify(mod.domains.map(d => d.id));
+const certIdStr = mod.id;
+const totalDomains = mod.domains.length;
+const passPct = mod.passScore;
+---
+
+<BaseLayout locale="nl" title={mod.title} description={`Leermodule voor ${mod.title} — ${mod.examCode}`}>
+  <section class="section">
+    <div class="wrap">
+      <a class="back-link" href="/learn/">← Alle modules</a>
+
+      <div class="cert-header">
+        <div>
+          <span class="eyebrow">{mod.vendor} · {mod.level}</span>
+          <h1>{mod.title}</h1>
+          <p class="lede">{mod.subtitle}</p>
+        </div>
+        <dl class="exam-meta">
+          <dt>Code</dt><dd>{mod.examCode}</dd>
+          <dt>Vragen</dt><dd>{mod.totalQuestions}</dd>
+          <dt>Duur</dt><dd>{mod.duration} min</dd>
+          <dt>Zakken</dt><dd>{passPct}%</dd>
+        </dl>
+      </div>
+
+      <h2 class="section-heading">Jouw leerpad</h2>
+      <div class="stages-row" id="stages-row">
+        {stages.map(s => (
+          <div class="stage-card" data-stage={s.num} id={`stage-card-${s.num}`}>
+            <div class="stage-icon">{s.icon}</div>
+            <div class="stage-info">
+              <span class="stage-num">Fase {s.num}</span>
+              <strong class="stage-title">{s.label}</strong>
+              <span class="stage-desc">{s.desc}</span>
+            </div>
+            <div class="stage-status" id={`stage-status-${s.num}`}></div>
+          </div>
+        ))}
+      </div>
+
+      <div id="stage-action" class="stage-action-box"></div>
+
+      <h2 class="section-heading">Domeinen</h2>
+      <div class="domain-list">
+        {mod.domains.map((d, i) => (
+          <a class="domain-row" href={`/learn/${mod.id}/${d.id}/`} id={`domain-row-${d.id}`}>
+            <span class="domain-num">{String(i + 1).padStart(2, '0')}</span>
+            <div class="domain-info">
+              <strong>{d.title}</strong>
+              <span class="domain-weight">{d.weight}% van examen · {d.questions.length} vragen · {d.flashcards.length} kaarten</span>
+            </div>
+            <div class="domain-progress-wrap">
+              <div class="domain-bar"><div class="domain-bar-fill" id={`bar-${d.id}`}></div></div>
+              <span class="domain-score" id={`score-${d.id}`}></span>
+            </div>
+            <span class="domain-arrow">→</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="exam-cta-row">
+        <a class="btn btn-primary exam-btn" href={`/learn/${mod.id}/exam/`} id="exam-btn">
+          Oefententamen starten →
+        </a>
+        <p class="exam-note">Geslaagd bij {passPct}% ({Math.ceil(mod.totalQuestions * passPct / 100)} van {mod.totalQuestions} vragen goed)</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ certIdStr, domainIds: JSON.parse(domainIds), totalDomains }}>
+  const certId = certIdStr;
+  const stageLabels = ['', 'Diagnose', 'Leren', 'Oefenen', 'Tentamen'];
+  const currentStage = parseInt(localStorage.getItem(`rr_learn_${certId}_stage`) ?? '1', 10) || 1;
+
+  // Highlight active stage
+  for (let i = 1; i <= 4; i++) {
+    const card = document.getElementById(`stage-card-${i}`);
+    const status = document.getElementById(`stage-status-${i}`);
+    if (!card || !status) continue;
+    if (i < currentStage) {
+      card.classList.add('stage-done');
+      status.textContent = '✓';
+    } else if (i === currentStage) {
+      card.classList.add('stage-active');
+      status.textContent = '←';
+    } else {
+      card.classList.add('stage-locked');
+    }
+  }
+
+  // Stage action box
+  const actionBox = document.getElementById('stage-action');
+  if (actionBox) {
+    const diagDone = localStorage.getItem(`rr_learn_${certId}_diag_done`) === '1';
+    if (currentStage === 1 && !diagDone) {
+      actionBox.innerHTML = `<p>Start met de <strong>diagnosetoets</strong> om te ontdekken welke domeinen je aandacht nodig hebben.</p>
+        <a class="btn btn-primary" href="/learn/${certId}/diag/">Diagnosetoets starten →</a>`;
+    } else if (currentStage === 1 && diagDone) {
+      const score = localStorage.getItem(`rr_learn_${certId}_diag_score`) ?? '?';
+      actionBox.innerHTML = `<p>Diagnosetoets afgerond — score: <strong>${score}%</strong>. Begin nu met de domeinen.</p>
+        <button class="btn btn-primary" id="go-stage2">Naar fase 2: Leren →</button>`;
+      document.getElementById('go-stage2')?.addEventListener('click', () => {
+        localStorage.setItem(`rr_learn_${certId}_stage`, '2');
+        location.reload();
+      });
+    } else if (currentStage === 2) {
+      const visited = domainIds.filter((id) => localStorage.getItem(`rr_learn_${certId}_lesson_${id}`) === '1').length;
+      actionBox.innerHTML = `<p>${visited} van ${totalDomains} lessen bekeken. Bekijk alle domeinen hieronder om naar fase 3 te gaan.</p>`;
+      if (visited >= totalDomains) {
+        actionBox.innerHTML += `<button class="btn btn-primary" id="go-stage3">Naar fase 3: Oefenen →</button>`;
+        document.getElementById('go-stage3')?.addEventListener('click', () => {
+          localStorage.setItem(`rr_learn_${certId}_stage`, '3');
+          location.reload();
+        });
+      }
+    } else if (currentStage === 3) {
+      const passed = domainIds.filter((id) => {
+        const r = localStorage.getItem(`rr_learn_${certId}_quiz_${id}`);
+        return r ? JSON.parse(r).passed : false;
+      }).length;
+      actionBox.innerHTML = `<p>${passed} van ${totalDomains} domeinquizzen geslaagd (≥70%). Oefen alle domeinen om het tentamen te ontgrendelen.</p>`;
+      if (passed >= totalDomains) {
+        actionBox.innerHTML += `<button class="btn btn-primary" id="go-stage4">Naar fase 4: Tentamen →</button>`;
+        document.getElementById('go-stage4')?.addEventListener('click', () => {
+          localStorage.setItem(`rr_learn_${certId}_stage`, '4');
+          location.reload();
+        });
+      }
+    } else if (currentStage === 4) {
+      const examResult = localStorage.getItem(`rr_learn_${certId}_exam`);
+      if (examResult) {
+        const r = JSON.parse(examResult);
+        const status = r.passed ? '✓ Geslaagd' : '✗ Gezakt';
+        actionBox.innerHTML = `<p>Laatste tentamenresultaat: <strong>${r.score}%</strong> — ${status}. <a href="/learn/${certId}/exam/">Opnieuw proberen</a></p>`;
+      } else {
+        actionBox.innerHTML = `<p>Klaar voor het oefententamen? Maak alle vragen binnen de tijdslimiet.</p>`;
+      }
+    }
+  }
+
+  // Domain progress bars
+  domainIds.forEach((domainId) => {
+    const quizData = localStorage.getItem(`rr_learn_${certId}_quiz_${domainId}`);
+    const fill = document.getElementById(`bar-${domainId}`);
+    const scoreEl = document.getElementById(`score-${domainId}`);
+    if (quizData && fill && scoreEl) {
+      const r = JSON.parse(quizData);
+      fill.style.width = `${r.score}%`;
+      fill.style.background = r.passed ? '#22c55e' : '#f59e0b';
+      scoreEl.textContent = `${r.score}%`;
+      scoreEl.style.color = r.passed ? '#22c55e' : '#f59e0b';
+    }
+    const lessonDone = localStorage.getItem(`rr_learn_${certId}_lesson_${domainId}`) === '1';
+    const row = document.getElementById(`domain-row-${domainId}`);
+    if (lessonDone && row && !quizData) {
+      row.classList.add('lesson-done');
+    }
+  });
+</script>
+
+<style>
+  .back-link {
+    display: inline-block;
+    color: var(--accent, #2f6f92);
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  .cert-header {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .cert-header > div:first-child { flex: 1; min-width: 260px; }
+  .cert-header h1 { margin-bottom: 0.25rem; }
+
+  .exam-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    background: #f6f8f9;
+    border: 1px solid #d1d9e0;
+    border-radius: 8px;
+    padding: 1rem;
+    align-self: flex-start;
+    white-space: nowrap;
+  }
+  .exam-meta dt { color: #6a8499; }
+  .exam-meta dd { font-weight: 700; margin: 0; color: var(--dark, #0e1a24); }
+
+  .section-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark, #0e1a24);
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e8eef3;
+  }
+
+  .stages-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .stage-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: #f6f8f9;
+    border: 1px solid #d1d9e0;
+    border-radius: 8px;
+    padding: 1rem;
+    position: relative;
+    transition: border-color 0.15s;
+  }
+  .stage-card.stage-active { border-color: var(--accent, #2f6f92); background: #eef5fa; }
+  .stage-card.stage-done { border-color: #22c55e; background: #f0fdf4; }
+  .stage-card.stage-locked { opacity: 0.5; }
+  .stage-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .stage-info { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; }
+  .stage-num { font-size: 0.7rem; color: #6a8499; text-transform: uppercase; font-weight: 600; }
+  .stage-title { font-size: 0.9rem; font-weight: 700; color: var(--dark, #0e1a24); }
+  .stage-desc { font-size: 0.75rem; color: #6a8499; }
+  .stage-status {
+    position: absolute;
+    top: 0.5rem; right: 0.75rem;
+    font-size: 0.8rem;
+    color: #22c55e;
+    font-weight: 700;
+  }
+  .stage-card.stage-active .stage-status { color: var(--accent, #2f6f92); }
+
+  .stage-action-box {
+    background: #eef5fa;
+    border-left: 4px solid var(--accent, #2f6f92);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+  .stage-action-box p { margin: 0 0 0.75rem; }
+  .stage-action-box p:last-child { margin-bottom: 0; }
+
+  .domain-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
+  .domain-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: #fff;
+    border: 1px solid #d1d9e0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .domain-row:hover { border-color: var(--accent, #2f6f92); background: #eef5fa; }
+  .domain-row.lesson-done { border-left: 3px solid var(--accent, #2f6f92); }
+  .domain-num { font-size: 0.75rem; color: #6a8499; font-weight: 700; min-width: 1.5rem; }
+  .domain-info { flex: 1; min-width: 0; }
+  .domain-info strong { display: block; font-size: 0.9rem; color: var(--dark, #0e1a24); }
+  .domain-weight { font-size: 0.75rem; color: #6a8499; }
+  .domain-progress-wrap { display: flex; align-items: center; gap: 0.5rem; min-width: 80px; }
+  .domain-bar { height: 4px; background: #d1d9e0; border-radius: 2px; width: 60px; }
+  .domain-bar-fill { height: 100%; background: var(--accent, #2f6f92); border-radius: 2px; width: 0; transition: width 0.4s; }
+  .domain-score { font-size: 0.75rem; font-weight: 700; min-width: 2rem; text-align: right; }
+  .domain-arrow { color: #8fa6b8; font-size: 1rem; }
+
+  .exam-cta-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid #e8eef3; }
+  .exam-note { font-size: 0.8rem; color: #6a8499; margin: 0; }
+</style>
