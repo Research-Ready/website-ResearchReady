@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { coursesBySlug, courseSlugs } from '../../../data/courses/index';
+
+export function getStaticPaths() {
+  return courseSlugs.map(cert => ({ params: { cert } }));
+}
+
+const { cert } = Astro.params;
+const course = coursesBySlug[cert!]!;
+
+const accent: Record<string, string> = {
+  'itil4': '#7b68ee',
+  'sec-plus': '#e85d26',
+};
+const color = accent[cert!] ?? 'var(--accent)';
+---
+
+<BaseLayout locale="en" title={course.title} description={course.subtitle}>
+  <section class="section">
+    <div class="wrap">
+
+      <a class="back-link" href="/learn/">← All certifications</a>
+
+      <div class="course-hero" style={`border-left: 4px solid ${color}`}>
+        <div class="badge-row">
+          <span class="badge">{course.vendor}</span>
+          <span class="badge">{course.level}</span>
+          <span class="badge exam-code">{course.examCode}</span>
+        </div>
+        <h1>{course.title}</h1>
+        <p class="subtitle">{course.subtitle}</p>
+        <dl class="exam-meta">
+          <dt>Questions</dt><dd>{course.totalExamQuestions}</dd>
+          <dt>Duration</dt><dd>{course.examDuration} min</dd>
+          <dt>Pass score</dt><dd>{course.passScore}%</dd>
+          <dt>Modules</dt><dd>{course.modules.length}</dd>
+        </dl>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="course-progress" style="width:0%"></div></div>
+        <span class="progress-label" id="course-progress-label">0 / {course.modules.flatMap(m => m.chapters).length} chapters done</span>
+      </div>
+
+      <div class="module-list">
+        {course.modules.map((mod, mi) => (
+          <div class="module-card">
+            <a class="module-header" href={`/course/${cert}/${mod.id}/`}>
+              <div class="module-num">Module {mi}</div>
+              <h2 class="module-title">{mod.title}</h2>
+              {mod.examWeight && <span class="weight-badge">{mod.examWeight}% exam</span>}
+            </a>
+            <p class="module-desc">{mod.description}</p>
+            <ul class="chapter-list">
+              {mod.chapters.map(ch => (
+                <li>
+                  <a class="chapter-link" href={`/course/${cert}/${mod.id}/${ch.id}/`}>
+                    <span class="ch-dot" data-chid={ch.id}>○</span>
+                    {ch.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ cert, chapterIds: course.modules.flatMap(m => m.chapters.map(c => c.id)) }}>
+  let done = 0;
+  for (const id of chapterIds) {
+    if (localStorage.getItem(`rr_course_${cert}_ch_${id}_done`) === '1') {
+      done++;
+      const dot = document.querySelector(`[data-chid="${id}"]`);
+      if (dot) dot.textContent = '✓';
+    }
+  }
+  const pct = chapterIds.length ? Math.round((done / chapterIds.length) * 100) : 0;
+  const fill = document.getElementById('course-progress');
+  const label = document.getElementById('course-progress-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = `${done} / ${chapterIds.length} chapters done`;
+</script>
+
+<style>
+  .back-link { font-size: 0.875rem; color: var(--accent, #2f6f92); text-decoration: none; display: inline-block; margin-bottom: 1.5rem; }
+  .back-link:hover { text-decoration: underline; }
+  .course-hero { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 2rem; margin-bottom: 1.5rem; }
+  .badge-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+  .badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; background: #e8eef3; color: #4a6478; padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .exam-code { font-family: monospace; text-transform: none; }
+  .course-hero h1 { margin: 0 0 0.25rem; font-size: 1.75rem; }
+  .subtitle { color: #5a7a8e; margin: 0 0 1rem; }
+  .exam-meta { display: grid; grid-template-columns: repeat(4, auto); gap: 0.25rem 1.5rem; margin: 0; font-size: 0.8rem; }
+  .exam-meta dt { color: #6a8499; font-weight: 500; }
+  .exam-meta dd { color: #0e1a24; font-weight: 700; margin: 0; }
+
+  .progress-bar-wrap { margin-bottom: 2rem; }
+  .progress-bar { height: 6px; background: #d1d9e0; border-radius: 3px; margin-bottom: 0.4rem; }
+  .progress-fill { height: 100%; background: var(--accent, #2f6f92); border-radius: 3px; transition: width 0.4s ease; }
+  .progress-label { font-size: 0.8rem; color: #6a8499; }
+
+  .module-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .module-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; overflow: hidden; }
+  .module-header { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem 0.5rem; text-decoration: none; color: inherit; }
+  .module-header:hover .module-title { text-decoration: underline; }
+  .module-num { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #8fa6b8; letter-spacing: 0.05em; white-space: nowrap; }
+  .module-title { font-size: 1.1rem; font-weight: 700; margin: 0; flex: 1; color: #0e1a24; }
+  .weight-badge { font-size: 0.7rem; font-weight: 700; background: #e8eef3; color: #4a6478; padding: 0.2rem 0.5rem; border-radius: 4px; white-space: nowrap; }
+  .module-desc { padding: 0 1.5rem; color: #5a7a8e; font-size: 0.875rem; margin: 0.25rem 0 0.75rem; }
+  .chapter-list { list-style: none; padding: 0.5rem 1.5rem 1rem; margin: 0; display: flex; flex-direction: column; gap: 0.25rem; border-top: 1px solid #eef2f5; }
+  .chapter-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.875rem; color: #2f6f92; text-decoration: none; }
+  .chapter-link:hover { text-decoration: underline; }
+  .ch-dot { font-size: 0.8rem; color: #8fa6b8; flex-shrink: 0; }
+</style>

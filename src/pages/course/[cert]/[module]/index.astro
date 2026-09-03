@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { coursesBySlug, courseSlugs } from '../../../../data/courses/index';
+
+export function getStaticPaths() {
+  const paths: { params: { cert: string; module: string } }[] = [];
+  for (const cert of courseSlugs) {
+    const course = coursesBySlug[cert]!;
+    for (const mod of course.modules) {
+      paths.push({ params: { cert, module: mod.id } });
+    }
+  }
+  return paths;
+}
+
+const { cert, module: moduleId } = Astro.params;
+const course = coursesBySlug[cert!]!;
+const mod = course.modules.find(m => m.id === moduleId)!;
+const modIndex = course.modules.indexOf(mod);
+const allModules = course.modules;
+const prevMod = modIndex > 0 ? allModules[modIndex - 1] : null;
+const nextMod = modIndex < allModules.length - 1 ? allModules[modIndex + 1] : null;
+
+const accent: Record<string, string> = {
+  'itil4': '#7b68ee',
+  'sec-plus': '#e85d26',
+};
+const color = accent[cert!] ?? 'var(--accent)';
+const chapterIds = mod.chapters.map(c => c.id);
+---
+
+<BaseLayout locale="en" title={`${mod.title} — ${course.title}`} description={mod.description}>
+  <section class="section">
+    <div class="wrap">
+
+      <nav class="breadcrumb">
+        <a href="/learn/">All certifications</a>
+        <span>›</span>
+        <a href={`/course/${cert}/`}>{course.title}</a>
+        <span>›</span>
+        <span>{mod.title}</span>
+      </nav>
+
+      <div class="module-hero" style={`border-left: 4px solid ${color}`}>
+        <div class="module-num">Module {modIndex}</div>
+        <h1>{mod.title}</h1>
+        <p class="module-desc">{mod.description}</p>
+        {mod.examWeight && (
+          <span class="weight-badge">{mod.examWeight}% of exam</span>
+        )}
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="mod-progress" style="width:0%"></div></div>
+        <span class="progress-label" id="mod-progress-label">0 / {chapterIds.length} chapters done</span>
+      </div>
+
+      <div class="chapter-list">
+        {mod.chapters.map((ch, ci) => (
+          <a class="chapter-card" href={`/course/${cert}/${moduleId}/${ch.id}/`}>
+            <div class="ch-num">{ci + 1}</div>
+            <div class="ch-body">
+              <div class="ch-title">{ch.title}</div>
+              <div class="ch-meta">
+                <span>{ch.sections.length} sections</span>
+                {ch.flashcards.length > 0 && <span>{ch.flashcards.length} flashcards</span>}
+                {ch.knowledgeChecks.length > 0 && <span>{ch.knowledgeChecks.length} quiz Qs</span>}
+                {ch.labExercise && <span class="lab-badge">Lab: {ch.labExercise.tool}</span>}
+              </div>
+              {ch.examTip && <div class="exam-tip-preview">Exam tip included</div>}
+            </div>
+            <div class="ch-status" data-chid={ch.id}>○</div>
+          </a>
+        ))}
+      </div>
+
+      <div class="module-nav">
+        {prevMod
+          ? <a class="nav-btn prev" href={`/course/${cert}/${prevMod.id}/`}>← {prevMod.title}</a>
+          : <a class="nav-btn prev" href={`/course/${cert}/`}>← Course overview</a>
+        }
+        {nextMod
+          ? <a class="nav-btn next" href={`/course/${cert}/${nextMod.id}/`}>{nextMod.title} →</a>
+          : <a class="nav-btn next" href={`/course/${cert}/`}>Back to overview →</a>
+        }
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ cert, moduleId, chapterIds }}>
+  let done = 0;
+  for (const id of chapterIds) {
+    if (localStorage.getItem(`rr_course_${cert}_ch_${id}_done`) === '1') {
+      done++;
+      const el = document.querySelector(`[data-chid="${id}"]`);
+      if (el) { el.textContent = '✓'; el.classList.add('done'); }
+    }
+  }
+  const pct = chapterIds.length ? Math.round((done / chapterIds.length) * 100) : 0;
+  const fill = document.getElementById('mod-progress');
+  const label = document.getElementById('mod-progress-label');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = `${done} / ${chapterIds.length} chapters done`;
+</script>
+
+<style>
+  .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #6a8499; margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--accent, #2f6f92); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .module-hero { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 2rem; margin-bottom: 1.5rem; }
+  .module-num { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #8fa6b8; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+  .module-hero h1 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+  .module-desc { color: #5a7a8e; margin: 0 0 0.75rem; }
+  .weight-badge { font-size: 0.75rem; font-weight: 700; background: #e8eef3; color: #4a6478; padding: 0.25rem 0.6rem; border-radius: 4px; }
+
+  .progress-bar-wrap { margin-bottom: 2rem; }
+  .progress-bar { height: 6px; background: #d1d9e0; border-radius: 3px; margin-bottom: 0.4rem; }
+  .progress-fill { height: 100%; background: var(--accent, #2f6f92); border-radius: 3px; transition: width 0.4s ease; }
+  .progress-label { font-size: 0.8rem; color: #6a8499; }
+
+  .chapter-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .chapter-card { display: flex; align-items: flex-start; gap: 1rem; background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 1.25rem; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s; }
+  .chapter-card:hover { border-color: var(--accent, #2f6f92); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .ch-num { flex-shrink: 0; width: 2rem; height: 2rem; background: #e8eef3; color: #4a6478; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+  .ch-body { flex: 1; }
+  .ch-title { font-weight: 600; color: #0e1a24; margin-bottom: 0.3rem; }
+  .ch-meta { display: flex; gap: 0.75rem; font-size: 0.75rem; color: #6a8499; flex-wrap: wrap; }
+  .lab-badge { color: #e85d26; font-weight: 600; }
+  .exam-tip-preview { font-size: 0.7rem; color: #7b68ee; margin-top: 0.3rem; font-weight: 600; }
+  .ch-status { font-size: 1.1rem; color: #8fa6b8; flex-shrink: 0; }
+  .ch-status.done { color: #22c55e; }
+
+  .module-nav { display: flex; justify-content: space-between; gap: 1rem; }
+  .nav-btn { display: inline-block; padding: 0.6rem 1.2rem; border: 1px solid #d1d9e0; border-radius: 8px; font-size: 0.875rem; color: #2f6f92; text-decoration: none; background: #fff; }
+  .nav-btn:hover { background: #f0f5f9; }
+  .nav-btn.next { margin-left: auto; }
+</style>

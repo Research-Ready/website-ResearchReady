@@ -1,0 +1,389 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { coursesBySlug, courseSlugs } from '../../../../data/courses/index';
+
+export function getStaticPaths() {
+  const paths: { params: { cert: string; module: string; chapter: string } }[] = [];
+  for (const cert of courseSlugs) {
+    const course = coursesBySlug[cert]!;
+    for (const mod of course.modules) {
+      for (const ch of mod.chapters) {
+        paths.push({ params: { cert, module: mod.id, chapter: ch.id } });
+      }
+    }
+  }
+  return paths;
+}
+
+const { cert, module: moduleId, chapter: chapterId } = Astro.params;
+const course = coursesBySlug[cert!]!;
+const mod = course.modules.find(m => m.id === moduleId)!;
+const chIdx = mod.chapters.findIndex(c => c.id === chapterId);
+const ch = mod.chapters[chIdx]!;
+
+// prev/next within module first, then cross-module
+const allChapters = course.modules.flatMap(m =>
+  m.chapters.map(c => ({ cert, modId: m.id, chId: c.id, title: c.title }))
+);
+const flatIdx = allChapters.findIndex(c => c.modId === moduleId && c.chId === chapterId);
+const prevCh = flatIdx > 0 ? allChapters[flatIdx - 1] : null;
+const nextCh = flatIdx < allChapters.length - 1 ? allChapters[flatIdx + 1] : null;
+
+const accent: Record<string, string> = { 'itil4': '#7b68ee', 'sec-plus': '#e85d26' };
+const color = accent[cert!] ?? 'var(--accent)';
+
+// Data for client script
+const flashcards = ch.flashcards;
+const knowledgeChecks = ch.knowledgeChecks;
+---
+
+<BaseLayout locale="en" title={`${ch.title} — ${course.title}`} description={ch.summary[0] ?? ''}>
+  <section class="section">
+    <div class="wrap">
+
+      <nav class="breadcrumb">
+        <a href="/learn/">All certs</a>
+        <span>›</span>
+        <a href={`/course/${cert}/`}>{course.examCode}</a>
+        <span>›</span>
+        <a href={`/course/${cert}/${moduleId}/`}>{mod.title}</a>
+        <span>›</span>
+        <span>{ch.title}</span>
+      </nav>
+
+      <!-- CHAPTER HEADER -->
+      <div class="ch-hero" style={`border-left: 4px solid ${color}`}>
+        <h1>{ch.title}</h1>
+        {ch.learningObjectives.length > 0 && (
+          <div class="objectives">
+            <strong>Learning objectives</strong>
+            <ul>
+              {ch.learningObjectives.map(lo => (
+                <li><span class={`bloom bloom-${lo.level}`}>{lo.level}</span> {lo.text}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <!-- SECTIONS -->
+      {ch.sections.map(sec => (
+        <div class="section-block">
+          <h2>{sec.title}</h2>
+          <p class="section-content">{sec.contentPlaceholder}</p>
+          {sec.keyTakeaway && (
+            <div class="takeaway">
+              <strong>Key takeaway:</strong> {sec.keyTakeaway}
+            </div>
+          )}
+        </div>
+      ))}
+
+      <!-- FLASHCARDS -->
+      {flashcards.length > 0 && (
+        <div class="flashcard-section">
+          <h2>Flashcards <span class="count-badge" id="fc-counter">1 / {flashcards.length}</span></h2>
+          <div class="flashcard-deck">
+            <div class="flashcard" id="fc-card">
+              <div class="fc-inner">
+                <div class="fc-front"><span id="fc-term"></span></div>
+                <div class="fc-back"><span id="fc-def"></span></div>
+              </div>
+            </div>
+            <div class="fc-controls">
+              <button class="fc-btn" id="fc-prev">←</button>
+              <button class="fc-btn fc-flip" id="fc-flip">Flip</button>
+              <button class="fc-btn" id="fc-next">→</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <!-- KNOWLEDGE CHECK -->
+      {knowledgeChecks.length > 0 && (
+        <div class="quiz-section">
+          <h2>Knowledge Check</h2>
+          <div id="quiz-container"></div>
+          <div id="quiz-result" class="quiz-result hidden"></div>
+        </div>
+      )}
+
+      <!-- LAB EXERCISE -->
+      {ch.labExercise && (
+        <div class="lab-section">
+          <div class="lab-header">
+            <span class="lab-icon">⚗</span>
+            <div>
+              <h2>{ch.labExercise.title}</h2>
+              <span class="lab-tool">{ch.labExercise.tool}</span>
+              <span class={`lab-difficulty diff-${ch.labExercise.difficulty}`}>{ch.labExercise.difficulty}</span>
+            </div>
+          </div>
+          <p class="lab-objective"><strong>Objective:</strong> {ch.labExercise.objective}</p>
+          <ol class="lab-steps">
+            {ch.labExercise.steps.map(step => <li>{step}</li>)}
+          </ol>
+          <div class="lab-expected">
+            <strong>Expected output:</strong> {ch.labExercise.expectedOutput}
+          </div>
+          {ch.labExercise.toolUrl && (
+            <a class="lab-open-btn" href={ch.labExercise.toolUrl} target="_blank" rel="noopener">
+              Open {ch.labExercise.tool} →
+            </a>
+          )}
+        </div>
+      )}
+
+      <!-- SUMMARY -->
+      <div class="summary-section">
+        <h2>Chapter Summary</h2>
+        <ul class="summary-list">
+          {ch.summary.map(point => <li>{point}</li>)}
+        </ul>
+      </div>
+
+      <!-- EXAM TIP -->
+      {ch.examTip && (
+        <div class="exam-tip">
+          <span class="tip-icon">💡</span>
+          <div><strong>Exam tip:</strong> {ch.examTip}</div>
+        </div>
+      )}
+
+      <!-- MARK DONE + NAV -->
+      <div class="chapter-footer">
+        <button class="mark-done-btn" id="mark-done">Mark chapter done</button>
+        <div class="ch-nav">
+          {prevCh
+            ? <a class="nav-btn" href={`/course/${prevCh.cert}/${prevCh.modId}/${prevCh.chId}/`}>← {prevCh.title}</a>
+            : <a class="nav-btn" href={`/course/${cert}/${moduleId}/`}>← Module overview</a>
+          }
+          {nextCh
+            ? <a class="nav-btn next" href={`/course/${nextCh.cert}/${nextCh.modId}/${nextCh.chId}/`}>{nextCh.title} →</a>
+            : <a class="nav-btn next" href={`/course/${cert}/`}>Course complete →</a>
+          }
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ cert, chapterId, flashcards, knowledgeChecks }}>
+  // --- Mark done ---
+  const DONE_KEY = `rr_course_${cert}_ch_${chapterId}_done`;
+  const markBtn = document.getElementById('mark-done');
+  function updateMarkBtn() {
+    const done = localStorage.getItem(DONE_KEY) === '1';
+    if (markBtn) {
+      markBtn.textContent = done ? '✓ Chapter complete' : 'Mark chapter done';
+      markBtn.classList.toggle('is-done', done);
+    }
+  }
+  updateMarkBtn();
+  markBtn?.addEventListener('click', () => {
+    const isDone = localStorage.getItem(DONE_KEY) === '1';
+    localStorage.setItem(DONE_KEY, isDone ? '0' : '1');
+    updateMarkBtn();
+  });
+
+  // --- Flashcards ---
+  if (flashcards.length > 0) {
+    let fcIdx = 0;
+    let flipped = false;
+
+    const card = document.getElementById('fc-card');
+    const termEl = document.getElementById('fc-term');
+    const defEl = document.getElementById('fc-def');
+    const counter = document.getElementById('fc-counter');
+
+    function renderCard() {
+      const fc = flashcards[fcIdx];
+      if (termEl) termEl.textContent = fc.term;
+      if (defEl) defEl.textContent = fc.definition;
+      if (counter) counter.textContent = `${fcIdx + 1} / ${flashcards.length}`;
+      if (card) card.classList.remove('flipped');
+      flipped = false;
+    }
+
+    renderCard();
+
+    document.getElementById('fc-flip')?.addEventListener('click', () => {
+      flipped = !flipped;
+      card?.classList.toggle('flipped', flipped);
+    });
+    document.getElementById('fc-prev')?.addEventListener('click', () => {
+      fcIdx = (fcIdx - 1 + flashcards.length) % flashcards.length;
+      renderCard();
+    });
+    document.getElementById('fc-next')?.addEventListener('click', () => {
+      fcIdx = (fcIdx + 1) % flashcards.length;
+      renderCard();
+    });
+    card?.addEventListener('click', () => {
+      flipped = !flipped;
+      card.classList.toggle('flipped', flipped);
+    });
+  }
+
+  // --- Knowledge check quiz ---
+  if (knowledgeChecks.length > 0) {
+    const container = document.getElementById('quiz-container');
+    const resultEl = document.getElementById('quiz-result');
+    const answers = new Array(knowledgeChecks.length).fill(null);
+
+    function renderQuiz() {
+      if (!container) return;
+      container.innerHTML = '';
+      knowledgeChecks.forEach((q, qi) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'quiz-q';
+
+        const qText = document.createElement('p');
+        qText.className = 'q-text';
+        qText.textContent = `${qi + 1}. ${q.question}`;
+        qDiv.appendChild(qText);
+
+        q.options.forEach((opt, oi) => {
+          const label = document.createElement('label');
+          label.className = 'q-option';
+
+          const radio = document.createElement('input');
+          radio.type = 'radio';
+          radio.name = `q${qi}`;
+          radio.value = String(oi);
+          if (answers[qi] === oi) radio.checked = true;
+          radio.addEventListener('change', () => { answers[qi] = oi; });
+
+          label.appendChild(radio);
+          label.appendChild(document.createTextNode(opt));
+          qDiv.appendChild(label);
+        });
+
+        container.appendChild(qDiv);
+      });
+
+      const submitBtn = document.createElement('button');
+      submitBtn.className = 'quiz-submit-btn';
+      submitBtn.textContent = 'Check answers';
+      submitBtn.addEventListener('click', gradeQuiz);
+      container.appendChild(submitBtn);
+    }
+
+    function gradeQuiz() {
+      let correct = 0;
+      knowledgeChecks.forEach((q, qi) => {
+        if (answers[qi] === q.correct) correct++;
+      });
+
+      if (!resultEl) return;
+      resultEl.classList.remove('hidden');
+      const pct = Math.round((correct / knowledgeChecks.length) * 100);
+      resultEl.innerHTML = `
+        <strong>${correct} / ${knowledgeChecks.length} correct (${pct}%)</strong>
+        <div class="explanations">
+          ${knowledgeChecks.map((q, qi) => `
+            <div class="exp-block ${answers[qi] === q.correct ? 'exp-correct' : 'exp-wrong'}">
+              <strong>Q${qi+1}:</strong> ${answers[qi] === q.correct ? '✓ Correct' : `✗ Correct answer: ${q.options[q.correct]}`}
+              <p>${q.explanation}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    renderQuiz();
+  }
+</script>
+
+<style>
+  .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #6a8499; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--accent, #2f6f92); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  /* Chapter hero */
+  .ch-hero { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 2rem; margin-bottom: 2rem; }
+  .ch-hero h1 { margin: 0 0 1rem; font-size: 1.6rem; }
+  .objectives strong { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: #4a6478; text-transform: uppercase; letter-spacing: 0.05em; }
+  .objectives ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+  .objectives li { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.9rem; }
+  .bloom { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 0.15rem 0.4rem; border-radius: 3px; flex-shrink: 0; }
+  .bloom-remember { background: #dbeafe; color: #1e40af; }
+  .bloom-understand { background: #dcfce7; color: #166534; }
+  .bloom-apply { background: #fef3c7; color: #92400e; }
+  .bloom-analyze { background: #fce7f3; color: #9d174d; }
+
+  /* Sections */
+  .section-block { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .section-block h2 { margin: 0 0 0.75rem; font-size: 1.15rem; }
+  .section-content { color: #374151; line-height: 1.7; margin: 0 0 1rem; }
+  .takeaway { background: #f0f9ff; border-left: 3px solid #0ea5e9; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.875rem; color: #0c4a6e; }
+
+  /* Flashcards */
+  .flashcard-section { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .flashcard-section h2 { margin: 0 0 1rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.75rem; }
+  .count-badge { font-size: 0.75rem; font-weight: 500; color: #6a8499; background: #e8eef3; padding: 0.15rem 0.5rem; border-radius: 10px; }
+  .flashcard-deck { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .flashcard { width: 100%; max-width: 520px; height: 180px; perspective: 800px; cursor: pointer; }
+  .fc-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.4s ease; border-radius: 10px; }
+  .flashcard.flipped .fc-inner { transform: rotateY(180deg); }
+  .fc-front, .fc-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 1.5rem; text-align: center; font-size: 1rem; }
+  .fc-front { background: #f0f5f9; border: 1px solid #d1d9e0; color: #0e1a24; font-weight: 600; }
+  .fc-back { background: #fff8f0; border: 1px solid #e8d5c0; color: #374151; transform: rotateY(180deg); }
+  .fc-controls { display: flex; gap: 0.75rem; }
+  .fc-btn { padding: 0.5rem 1.25rem; border: 1px solid #d1d9e0; background: #fff; border-radius: 6px; cursor: pointer; font-size: 0.875rem; color: #374151; }
+  .fc-btn:hover { background: #f0f5f9; }
+  .fc-flip { font-weight: 600; color: var(--accent, #2f6f92); border-color: var(--accent, #2f6f92); }
+
+  /* Quiz */
+  .quiz-section { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .quiz-section h2 { margin: 0 0 1.25rem; font-size: 1.15rem; }
+  .quiz-q { margin-bottom: 1.5rem; }
+  .q-text { font-weight: 600; color: #0e1a24; margin: 0 0 0.6rem; }
+  .q-option { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.9rem; color: #374151; padding: 0.3rem 0; cursor: pointer; }
+  .q-option input { flex-shrink: 0; cursor: pointer; }
+  .quiz-submit-btn { margin-top: 0.5rem; padding: 0.6rem 1.5rem; background: var(--accent, #2f6f92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-weight: 600; }
+  .quiz-submit-btn:hover { opacity: 0.9; }
+  .quiz-result { margin-top: 1.5rem; padding: 1rem 1.25rem; border-radius: 8px; background: #f0f5f9; border: 1px solid #d1d9e0; }
+  .quiz-result.hidden { display: none; }
+  .explanations { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .exp-block { padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.875rem; }
+  .exp-correct { background: #dcfce7; border-left: 3px solid #16a34a; }
+  .exp-wrong { background: #fee2e2; border-left: 3px solid #dc2626; }
+  .exp-block p { margin: 0.4rem 0 0; color: #374151; }
+
+  /* Lab */
+  .lab-section { background: #fff8f0; border: 1px solid #f0d9c0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .lab-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+  .lab-icon { font-size: 1.5rem; }
+  .lab-header h2 { margin: 0 0 0.35rem; font-size: 1.1rem; }
+  .lab-tool { font-size: 0.75rem; font-weight: 700; background: #fed7aa; color: #c2410c; padding: 0.15rem 0.5rem; border-radius: 4px; margin-right: 0.5rem; }
+  .lab-difficulty { font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px; }
+  .diff-easy { background: #dcfce7; color: #15803d; }
+  .diff-medium { background: #fef3c7; color: #b45309; }
+  .diff-hard { background: #fee2e2; color: #b91c1c; }
+  .lab-objective { margin: 0 0 1rem; font-size: 0.9rem; color: #374151; }
+  .lab-steps { padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; color: #374151; }
+  .lab-expected { margin-top: 1rem; background: #fff; border: 1px solid #e8d5c0; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.875rem; }
+  .lab-open-btn { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.25rem; background: #e85d26; color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.875rem; font-weight: 600; }
+  .lab-open-btn:hover { opacity: 0.9; }
+
+  /* Summary */
+  .summary-section { background: #f9fafb; border: 1px solid #d1d9e0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .summary-section h2 { margin: 0 0 0.75rem; font-size: 1.1rem; }
+  .summary-list { padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0.4rem; color: #374151; }
+
+  /* Exam tip */
+  .exam-tip { display: flex; gap: 0.75rem; background: #fefce8; border: 1px solid #fde68a; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: #78350f; }
+  .tip-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  /* Footer nav */
+  .chapter-footer { display: flex; flex-direction: column; gap: 1rem; }
+  .mark-done-btn { align-self: flex-start; padding: 0.6rem 1.5rem; border: 2px solid var(--accent, #2f6f92); background: #fff; color: var(--accent, #2f6f92); border-radius: 8px; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+  .mark-done-btn.is-done { background: var(--accent, #2f6f92); color: #fff; }
+  .mark-done-btn:hover { opacity: 0.85; }
+  .ch-nav { display: flex; justify-content: space-between; gap: 1rem; }
+  .nav-btn { display: inline-block; padding: 0.6rem 1.2rem; border: 1px solid #d1d9e0; border-radius: 8px; font-size: 0.875rem; color: #2f6f92; text-decoration: none; background: #fff; }
+  .nav-btn:hover { background: #f0f5f9; }
+  .nav-btn.next { margin-left: auto; }
+</style>
