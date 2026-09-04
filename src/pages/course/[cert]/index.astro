@@ -44,8 +44,14 @@ const color = accent[cert!] ?? 'var(--accent)';
       </div>
 
       <div class="course-actions">
-        <a class="action-btn diag" href={`/course/${cert}/diag/`} style={`border-color: ${color}; color: ${color}`}>🔍 Diagnostic quiz</a>
-        <a class="action-btn exam" href={`/course/${cert}/exam/`} style={`border-color: ${color}; color: ${color}`}>📝 Full mock exam</a>
+        <a class="action-btn diag" href={`/course/${cert}/diag/`} style={`border-color: ${color}; color: ${color}`}>
+          🔍 Diagnostic quiz
+          <span class="action-status" id="diag-status"></span>
+        </a>
+        <a class="action-btn exam" href={`/course/${cert}/exam/`} style={`border-color: ${color}; color: ${color}`}>
+          📝 Full mock exam
+          <span class="action-status" id="exam-status"></span>
+        </a>
       </div>
 
       <div class="module-list">
@@ -89,6 +95,21 @@ const color = accent[cert!] ?? 'var(--accent)';
   const label = document.getElementById('course-progress-label');
   if (fill) fill.style.width = pct + '%';
   if (label) label.textContent = `${done} / ${chapterIds.length} chapters done`;
+
+  // Diag/exam badges
+  const diagDone = localStorage.getItem(`rr_course_${cert}_diag_done`) === '1';
+  const diagScore = localStorage.getItem(`rr_course_${cert}_diag_score`);
+  const diagEl = document.getElementById('diag-status');
+  if (diagEl && diagDone) diagEl.textContent = diagScore ? `${diagScore}%` : '✓';
+
+  try {
+    const examResult = JSON.parse(localStorage.getItem(`rr_course_${cert}_exam_result`) || 'null');
+    const examEl = document.getElementById('exam-status');
+    if (examEl && examResult) {
+      examEl.textContent = `${examResult.pct}% ${examResult.passed ? '✓' : '✗'}`;
+      examEl.className = 'action-status ' + (examResult.passed ? 'status-pass' : 'status-fail');
+    }
+  } catch (_) {}
 </script>
 
 <style>
@@ -110,8 +131,11 @@ const color = accent[cert!] ?? 'var(--accent)';
   .progress-label { font-size: 0.8rem; color: #6a8499; }
 
   .course-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
-  .action-btn { display: inline-block; padding: 0.6rem 1.25rem; border: 2px solid; border-radius: 20px; font-size: 0.875rem; font-weight: 700; text-decoration: none; background: #fff; transition: opacity 0.15s; }
+  .action-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; border: 2px solid; border-radius: 20px; font-size: 0.875rem; font-weight: 700; text-decoration: none; background: #fff; transition: opacity 0.15s; }
   .action-btn:hover { opacity: 0.8; }
+  .action-status { font-size: 0.75rem; font-weight: 700; background: rgba(0,0,0,0.08); padding: 0.1rem 0.4rem; border-radius: 10px; }
+  .status-pass { background: #dcfce7; color: #15803d; }
+  .status-fail { background: #fee2e2; color: #b91c1c; }
 
   .module-list { display: flex; flex-direction: column; gap: 1.25rem; }
   .module-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; overflow: hidden; }
