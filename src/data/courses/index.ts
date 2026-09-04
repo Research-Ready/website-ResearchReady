@@ -2,8 +2,20 @@
 // Sprint D: populate section content in BookStack, then link pages here.
 // Sprint E: fill examBank and mockExam arrays.
 
-export { itil4Course } from './itil4';
-export { secPlusCourse } from './sec-plus';
+import { itil4Course } from './itil4';
+import { secPlusCourse } from './sec-plus';
+import type { Course } from './types';
+
+export { itil4Course, secPlusCourse };
+
+// URL slug → Course. Used by /course/[cert] pages.
+export const coursesBySlug: Record<string, Course> = {
+  'itil4': itil4Course,
+  'sec-plus': secPlusCourse,
+};
+
+export const courseSlugs = Object.keys(coursesBySlug);
+
 export type {
   Course,
   Module,
