@@ -638,7 +638,6 @@ const mod4: Module = {
       labExercise: dvwaLab('lab4-1', 'Analyzing Malware Behavior in DVWA'),
       summary: ['Virus: needs host file, user action to spread. Worm: self-replicating, no host file. Trojan: disguised as legitimate software.', 'Ransomware = availability attack (encrypts files). Double extortion adds confidentiality threat (data leak).', 'Rootkits hide in the kernel — standard AV cannot detect them. EDR with memory scanning is required.'],
       examTip: 'Fileless malware is a growing exam topic — it lives only in RAM and uses legitimate OS tools (PowerShell, WMI), leaving minimal disk artifacts. EDR with memory scanning is the primary detection control.',
-      examTip: 'Know the key distinction: a virus needs a host file, a worm is self-replicating and needs no host. Ransomware encrypts data and demands payment; fileless malware lives in memory only.',
     },
     {
       id: 'ch4-social-engineering',
@@ -666,7 +665,6 @@ const mod4: Module = {
       labExercise: dvwaLab('lab4-2', 'Identifying Phishing Indicators in DVWA'),
       summary: ['Phishing types: generic (mass), spear (targeted), whaling (executives), vishing (voice), smishing (SMS).', 'Pretexting fabricates a scenario; baiting uses physical/digital lures; watering hole compromises sites visited by targets.', 'Key psychological triggers: urgency + authority = most effective combination. Train users to pause and verify out-of-band.'],
       examTip: 'Business Email Compromise (BEC) is a form of whaling where attackers impersonate executives to authorise fraudulent financial transactions — one of the highest-dollar attack types. MFA and out-of-band verification are the primary controls.',
-      examTip: 'Spear phishing targets specific individuals with tailored content. Whaling targets executives. Vishing is voice-based. Smishing is SMS-based. The "urgency + authority" combo is the most effective manipulation tactic.',
     },
     {
       id: 'ch4-app-attacks',
@@ -695,7 +693,6 @@ const mod4: Module = {
       labExercise: dvwaLab('lab4-3', 'SQL Injection and XSS in DVWA'),
       summary: ['SQL injection: parameterised queries are the fix. XSS: output encoding is the fix. CSRF: anti-CSRF tokens + SameSite cookies.', 'Buffer overflow mitigations: ASLR, DEP/NX, stack canaries — implemented at OS and compiler level.', 'OWASP Top 10 is the reference for web application attacks — know the top items for the exam.'],
       examTip: 'The OWASP Top 10 is directly referenced in SY0-701. Key entries: Injection (#1 historically), Broken Access Control (#1 in 2021), Cryptographic Failures, Insecure Design. Know that parameterised queries prevent injection and output encoding prevents XSS.',
-      examTip: 'Parameterized queries (prepared statements) prevent SQL injection. XSS is mitigated by output encoding. CSRF is mitigated by anti-CSRF tokens. Input validation prevents most injection attacks.',
     },
     {
       id: 'ch4-network-attacks',
@@ -724,7 +721,6 @@ const mod4: Module = {
       labExercise: dvwaLab('lab4-4', 'Simulating Network Attack Patterns in DVWA'),
       summary: ['DDoS types: volumetric (bandwidth), protocol (TCP state tables), application layer (HTTP requests).', 'ARP poisoning → on-path attack on LAN. Mitigation: Dynamic ARP Inspection (DAI).', 'DNS poisoning → redirect to fake sites. Mitigation: DNSSEC. On-path attack = current Security+ term for MITM.'],
       examTip: '"On-path attack" is the current SY0-701 terminology for Man-in-the-Middle. If you see "MitM" in an answer option alongside "on-path attack," select the more current term. ARP poisoning is the mechanism that enables on-path attacks on local networks.',
-      examTip: 'On-path attack is the current Security+ terminology for Man-in-the-Middle. ARP poisoning enables on-path attacks on local networks. DNSSEC mitigates DNS poisoning.',
     },
     {
       id: 'ch4-threat-intel',
@@ -752,7 +748,6 @@ const mod4: Module = {
       labExercise: dvwaLab('lab4-5', 'Identifying IOCs in DVWA Logs'),
       summary: ['Intelligence types: strategic (trends), tactical (TTPs), operational (campaigns), technical (IOCs).', 'STIX = TI format, TAXII = TI transport. MITRE ATT&CK = TTP framework for hunting and detection.', 'IOCs detect known threats reactively. TTP-based detection catches behaviour regardless of tooling — more resilient.'],
       examTip: 'MITRE ATT&CK is heavily tested in SY0-701. Know that it organises adversary behaviour into 14 tactics (Reconnaissance through Impact) with hundreds of techniques. It is used for threat hunting, red team planning, and mapping detection coverage.',
-      examTip: 'MITRE ATT&CK framework maps adversary TTPs. STIX is the format for sharing threat intel; TAXII is the transport protocol. IOCs include IP addresses, file hashes, domain names, and registry keys.',
     },
   ],
 };
@@ -793,7 +788,6 @@ const mod5: Module = {
       labExercise: dvwaLab('lab5-1', 'Running a Vulnerability Scan Against DVWA'),
       summary: ['Credentialed scans see inside the OS (accurate, fewer false positives). Non-credentialed show the attacker\'s external view.', 'Scanning identifies vulnerabilities — it does NOT exploit them. Penetration testing does.', 'Scan frequency: critical assets monthly minimum; internet-facing assets weekly or continuously.'],
       examTip: 'Credentialed vs non-credentialed is a high-frequency exam topic. Remember: credentialed = more accurate (fewer false positives, more false negative reduction). The exam will present scenarios asking which scan type achieves the stated goal.',
-      examTip: 'Credentialed scans produce more accurate results (fewer false positives) because the scanner logs in and checks installed software versions. Non-credentialed scans show attacker\'s view from outside.',
     },
     {
       id: 'ch5-assessment',
@@ -821,7 +815,6 @@ const mod5: Module = {
       labExercise: dvwaLab('lab5-2', 'Analyzing and Triaging Scan Results in DVWA'),
       summary: ['False positive = vulnerability reported that does not exist. False negative = real vulnerability not detected (more dangerous).', 'Penetration test phases: Reconnaissance, Scanning, Exploitation, Post-exploitation, Reporting.', 'Prioritise remediation: CVSS score + asset criticality + exploitability + exposure level.'],
       examTip: 'Written authorisation (rules of engagement) is MANDATORY before a penetration test. The exam will present scenarios where a tester "finds out they tested the wrong IP range" — the correct answer always involves pre-test scoping and written authorisation to prevent this.',
-      examTip: 'A false positive is a reported vulnerability that does not exist — wastes time. A false negative is a real vulnerability not detected — far more dangerous. Credentialed scans reduce both.',
     },
     {
       id: 'ch5-cvss',
@@ -849,7 +842,6 @@ const mod5: Module = {
       labExercise: dvwaLab('lab5-3', 'Looking Up CVEs and CVSS Scores for DVWA Vulnerabilities'),
       summary: ['CVSS 9.0–10.0 = Critical, 7.0–8.9 = High, 4.0–6.9 = Medium, 0.1–3.9 = Low.', 'Environmental score adjusts Base score for your context — a Critical in software you don\'t run is zero risk.', 'CVE = vulnerability ID, NVD = database with CVSS scores, EPSS = probability of exploitation in 30 days.'],
       examTip: 'Do not use CVSS Base score alone to prioritise — always factor in: is it in your environment? Is it internet-facing? Is there a public exploit? The exam presents scenarios requiring you to apply this contextual thinking rather than defaulting to the highest CVSS score.',
-      examTip: 'CVSS 9.0-10.0 = Critical, 7.0-8.9 = High, 4.0-6.9 = Medium, 0.1-3.9 = Low. Environmental score adjusts for your specific context — a critical score for software you don\'t run is effectively zero risk.',
     },
     {
       id: 'ch5-pentest',
@@ -877,7 +869,6 @@ const mod5: Module = {
       labExercise: dvwaLab('lab5-4', 'Simulating Pentest Reconnaissance Against DVWA'),
       summary: ['Pentest phases: Reconnaissance, Scanning, Exploitation, Post-exploitation, Reporting.', 'Black box = no knowledge, White box = full knowledge, Grey box = partial knowledge (most common enterprise model).', 'Written authorisation and rules of engagement are mandatory — testing without them is illegal.'],
       examTip: 'Bug bounty programs are an extension of black box penetration testing — external researchers test public-facing assets within defined scope. The exam may contrast bug bounty (ongoing, crowdsourced) with penetration testing (time-bounded, scoped engagement). Both require authorisation.',
-      examTip: 'Always get written authorization before starting a pentest — verbal permission is not enough. Rules of engagement define scope, timing, and out-of-bounds systems. Pentest ≠ vulnerability scan (pentest exploits, scan only identifies).',
     },
   ],
 };
@@ -917,7 +908,6 @@ const mod6: Module = {
       ],
       summary: ['DMZ: screened subnet between two firewalls for public-facing services — compromise does not expose internal network.', 'VLANs segment the network; NAC checks device posture before granting VLAN access.', 'Jump servers are the single authorised admin access point — all sessions are logged through them.'],
       examTip: 'DMZ architecture always has firewalls on BOTH sides — not just the external side. A single firewall with separate interfaces is a screened host architecture, less secure than a true dual-firewall DMZ. Know this distinction for architecture questions.',
-      examTip: 'A DMZ sits between the internet and internal network, hosting public-facing services. Both external and internal firewalls protect it. Jump servers (bastion hosts) provide controlled access to sensitive network segments.',
     },
     {
       id: 'ch6-firewalls-ids-ips',
@@ -944,7 +934,6 @@ const mod6: Module = {
       ],
       summary: ['IDS = detect + alert only (out-of-band/passive). IPS = detect + block (inline, active).', 'Signature-based: low false positives, misses zero-days. Anomaly-based: detects zero-days, higher false positives.', 'NGFW adds application awareness and integrated IPS to stateful firewalling. WAF specifically protects web applications.'],
       examTip: 'IDS vs IPS is one of the most tested distinctions in Security+. IDS is always OUT-OF-BAND (passive mirror/tap) — it cannot block. IPS is always INLINE — traffic passes through it. If a question says the device "blocks" traffic, it is an IPS. If it only "alerts," it is an IDS.',
-      examTip: 'IDS is out-of-band (passive, alerts only). IPS is inline (active, blocks traffic). Signature-based = known threats only. Anomaly-based = detects zero-days but has higher false positive rate.',
     },
     {
       id: 'ch6-vpn',
@@ -971,7 +960,6 @@ const mod6: Module = {
       ],
       summary: ['Site-to-site VPN: connects two networks. Remote access: individual users. Full tunnel: all traffic via VPN.', 'IPSec tunnel mode (site-to-site) encrypts entire packet. Transport mode (host-to-host) encrypts payload only.', 'Split tunneling = security risk — internet traffic bypasses corporate controls. Full tunnel = more secure, more latency.'],
       examTip: 'IPSec uses two protocols: AH (authentication + integrity only, no encryption) and ESP (authentication + integrity + encryption). Always use ESP for VPNs where confidentiality is required — which is virtually all real-world cases. AH alone is essentially useless for most VPN scenarios.',
-      examTip: 'IPSec tunnel mode encrypts the entire packet (used for site-to-site VPNs). Transport mode encrypts only the payload (used between hosts). Full tunnel routes all traffic through VPN; split tunnel only routes internal traffic.',
     },
     {
       id: 'ch6-wireless',
@@ -998,7 +986,6 @@ const mod6: Module = {
       ],
       summary: ['WEP = broken. WPA/TKIP = deprecated. WPA2-AES = current minimum. WPA3-SAE = preferred (forward secrecy).', 'WPA2-Enterprise + 802.1X + RADIUS = per-user authentication, no shared password. EAP-TLS = strongest.', 'Evil twin = rogue AP with same SSID. Deauth forces clients to reconnect. WPA3 resists offline dictionary attacks.'],
       examTip: 'WPA2-Enterprise is ALWAYS better than WPA2-Personal for corporate environments — it provides individual user credentials and eliminates the shared key problem. The exam will present scenarios asking for the MOST secure wireless implementation — always choose WPA3-Enterprise or WPA2-Enterprise over any PSK option.',
-      examTip: 'WEP is completely broken — crackable in minutes. WPA2-Enterprise uses 802.1X and RADIUS for per-user authentication. WPA3 uses SAE (Simultaneous Authentication of Equals) which resists offline dictionary attacks.',
     },
     {
       id: 'ch6-dns-email',
@@ -1025,7 +1012,6 @@ const mod6: Module = {
       ],
       summary: ['SPF: authorises sending servers (DNS TXT). DKIM: cryptographic signature on email. DMARC: policy on failure (none/quarantine/reject).', 'All three are required for full anti-spoofing protection — SPF and DKIM alone are insufficient without DMARC.', 'DNSSEC signs DNS records cryptographically. DNS tunnelling is a covert channel through DNS — detected by monitoring query volume and entropy.'],
       examTip: 'SPF stops IP spoofing of the sending server. DKIM stops header tampering and validates domain ownership. DMARC ties them together and enforces policy. The order of protection: SPF → DKIM → DMARC reject. Configure in that order and start with DMARC=none before moving to reject.',
-      examTip: 'SPF authorizes sending mail servers (DNS TXT record). DKIM adds a cryptographic signature to email headers. DMARC tells receivers what to do when SPF/DKIM fail (none/quarantine/reject). You need all three for full protection.',
     },
   ],
 };
@@ -1065,7 +1051,6 @@ const mod7: Module = {
       ],
       summary: ['IaaS: customer manages OS up. PaaS: customer manages apps up. SaaS: customer manages data and users only.', 'Shared responsibility: provider always secures physical infrastructure; everything above depends on service model.', 'Biggest cloud risks: misconfigured storage, overpermissive IAM, missing MFA, insecure APIs.'],
       examTip: 'The shared responsibility model is the most important cloud security concept on the exam. Draw a stack: physical → hypervisor → OS → middleware → application → data → users. The dividing line between provider and customer responsibility moves down the stack from SaaS to PaaS to IaaS.',
-      examTip: 'In IaaS, the customer manages OS, middleware, and applications. In PaaS, the provider manages those layers. In SaaS, the provider manages everything except data and user access. Security responsibility shifts up the stack.',
     },
     {
       id: 'ch7-cloud-security',
@@ -1092,7 +1077,6 @@ const mod7: Module = {
       ],
       summary: ['CASB: visibility and DLP for SaaS usage. CSPM: detect cloud misconfigurations. CWPP: runtime workload protection.', 'Cloud IAM: use least privilege roles, temporary credentials, MFA on privileged accounts.', 'Never store secrets in code or IaC — use dedicated secrets managers (AWS Secrets Manager, Azure Key Vault).'],
       examTip: 'CASB, CSPM, and CWPP are frequently confused. CASB = controls access to EXTERNAL cloud services (SaaS). CSPM = monitors YOUR OWN cloud environment for misconfigurations. CWPP = protects running workloads (containers, VMs). Know which problem each tool solves.',
-      examTip: 'CASB sits between users and cloud services and can enforce DLP, access control, and threat protection. It can be deployed as a proxy (inline) or API-based. Both modes have different capabilities.',
     },
     {
       id: 'ch7-virtualization',
@@ -1119,7 +1103,6 @@ const mod7: Module = {
       ],
       summary: ['Type 1 (bare-metal) hypervisors are more secure than Type 2 (hosted). Cloud providers use Type 1.', 'VM escape = attacker breaks out of guest VM to hypervisor — critical vulnerability. Keep hypervisor patched.', 'Containers are lighter than VMs but share the OS kernel — less isolation. Scan images, run non-root, use network policies.'],
       examTip: 'Know the security trade-off: VMs have stronger isolation (full hypervisor boundary) but are heavier. Containers are lightweight but share the kernel — if the kernel is exploited, all containers on the host are at risk. The exam will test whether you can identify which isolation model is more appropriate for a given security requirement.',
-      examTip: 'Type 1 hypervisors (bare-metal: ESXi, Hyper-V) are more secure because they run directly on hardware. Type 2 (hosted: VirtualBox, VMware Workstation) share the host OS. VM escape is a critical vulnerability where a VM breaks containment.',
     },
     {
       id: 'ch7-iac',
@@ -1146,7 +1129,6 @@ const mod7: Module = {
       ],
       summary: ['IaC stores infrastructure as code (Terraform, CloudFormation, Ansible) — version-controlled, reproducible.', 'Never store secrets in IaC files — use secrets managers. Scan with git-secrets/Gitleaks for accidental commits.', 'Policy-as-code (Checkov, tfsec) validates IaC before deployment. Immutable infrastructure prevents configuration drift.'],
       examTip: 'IaC introduces a new attack vector: the CI/CD pipeline. Compromise of the build system allows an attacker to inject malicious infrastructure changes. Protect build systems like production systems: access controls, audit logging, secrets management, and code signing for deployment artefacts.',
-      examTip: 'Never store secrets (passwords, API keys) in IaC files or version control. Use a secrets manager (HashiCorp Vault, AWS Secrets Manager). Scan IaC templates with tools like Checkov or tfsec before deployment.',
     },
   ],
 };
@@ -1185,7 +1167,6 @@ const mod8: Module = {
       ],
       summary: ['Traditional AV: signature-based — misses zero-days, fileless malware, and polymorphic threats.', 'EDR: behavioural detection + memory analysis + automated response — detects what AV misses.', 'Allow list = only approved apps run (most restrictive). Deny list = known bad apps blocked (everything else permitted).'],
       examTip: 'XDR (Extended Detection and Response) is the evolution of EDR — it correlates data across endpoints, network, email, cloud, and identity for a unified attack view. The exam may ask about the difference: EDR = endpoint only, XDR = cross-domain correlation. Both are threat detection and response platforms.',
-      examTip: 'EDR provides behavioral analysis, threat hunting, and forensic capabilities beyond signature-based AV. XDR (Extended Detection and Response) adds network, email, and cloud telemetry to endpoint data.',
     },
     {
       id: 'ch8-mdm',
@@ -1212,7 +1193,6 @@ const mod8: Module = {
       ],
       summary: ['BYOD = user device, lowest control. COPE = corporate device, full control. CYOD = user choice from approved list.', 'MDM = full device management. MAM = manage only corporate apps/data — preferred for BYOD privacy.', 'Selective wipe removes only corporate data (BYOD). Full wipe erases everything (appropriate for corporate-owned devices).'],
       examTip: 'BYOD security trade-off question pattern: "company wants to protect corporate data on employee personal phones WITHOUT monitoring personal usage." The answer is always MAM (containerisation) — not full MDM, not remote wipe of the entire device, not COPE.',
-      examTip: 'BYOD gives users freedom but limits corporate control. COPE (Corporate-Owned, Personally Enabled) gives IT full control. MDM can enforce encryption, remote wipe, and screen lock. MAM manages only corporate apps, not the whole device.',
     },
     {
       id: 'ch8-hardening',
@@ -1239,7 +1219,6 @@ const mod8: Module = {
       ],
       summary: ['Hardening: disable unnecessary services, change default credentials, patch, apply least privilege, enable logging.', 'CIS Benchmarks provide OS-specific hardening checklists — Level 1 (basic) and Level 2 (defence-in-depth).', 'Disable SMBv1 on all Windows systems — it enabled WannaCry ransomware lateral spread.'],
       examTip: 'Hardening questions often ask for the FIRST or MOST important action. The answer hierarchy: (1) change default credentials, (2) disable unnecessary services and ports, (3) patch, (4) configure security settings. CompTIA treats credential hygiene as the most foundational hardening step.',
-      examTip: 'First hardening step: change default credentials. Disable all unnecessary services and ports. Apply patches immediately for critical vulnerabilities. CIS Benchmarks provide OS-specific hardening checklists.',
     },
     {
       id: 'ch8-sdlc',
@@ -1266,7 +1245,6 @@ const mod8: Module = {
       ],
       summary: ['Secure SDLC: security at every phase — requirements, threat modelling, secure code, testing, secure deployment, monitoring.', 'SAST: static code analysis (no execution). DAST: dynamic testing (running app). SCA: third-party dependency CVEs.', 'Shift-left: security in development is 6-100x cheaper to fix than in production.'],
       examTip: 'SAST vs DAST timing: SAST = during development (code not yet running). DAST = after deployment to a test environment (app is running). They are complementary — use both. SCA is the third tool that addresses third-party library vulnerabilities like Log4Shell.',
-      examTip: 'SAST = static analysis (source code, before runtime — finds issues early). DAST = dynamic analysis (running application — finds runtime issues). Shift-left means moving security earlier in SDLC (cheaper to fix bugs in development than production).',
     },
     {
       id: 'ch8-iot',
@@ -1293,7 +1271,6 @@ const mod8: Module = {
       ],
       summary: ['IoT risks: default credentials, no patch cycles, insecure comms, limited compute for security agents.', 'Network segmentation (IoT VLAN) is the primary IoT security control — contains blast radius of compromised devices.', 'OT/ICS security uses Purdue Model, air gaps, and OT-specific monitoring — attacks can cause physical harm.'],
       examTip: 'IoT security questions almost always have "network segmentation" as the best answer for containment. The secondary answer for device-level security is "change default credentials." Firmware updates are important but IoT devices often cannot be updated — segmentation protects even unpatched devices.',
-      examTip: 'IoT devices rarely receive security patches and often ship with default credentials. Best practice: network segmentation (IoT VLAN), change default credentials, disable unnecessary services, and monitor traffic.',
     },
   ],
 };
@@ -1356,7 +1333,6 @@ const mod9: Module = {
       labExercise: hiveLab('lab9-1', 'Creating and Managing an Incident in TheHive'),
       summary: ['PICERL: Preparation, Identification, Containment, Eradication, Recovery, Lessons Learned (NIST SP 800-61).', 'Containment BEFORE eradication — stop the spread first, then remove the threat.', 'Lessons learned must be held within 2 weeks — update IR plan, playbooks, and detection rules from every incident.'],
       examTip: 'The most common IR sequencing trap: candidates want to jump to Eradication (removing malware) before Containment (stopping spread). The correct order is always Containment → Eradication → Recovery. Also: Preparation happens BEFORE any incident — it is not a reactive phase.',
-      examTip: 'PICERL: Preparation, Identification, Containment, Eradication, Recovery, Lessons Learned. Containment comes before eradication — stop the bleeding before removing the cause. Never skip lessons learned.',
     },
     {
       id: 'ch9-forensics',
@@ -1385,7 +1361,6 @@ const mod9: Module = {
       labExercise: hiveLab('lab9-2', 'Documenting Forensic Evidence in TheHive'),
       summary: ['Order of volatility: CPU → RAM → swap → disk → remote logs → backups. Collect most volatile first.', 'Forensic image = bit-for-bit copy. Hash before and after to verify integrity. Analyse the copy, never the original.', 'Chain of custody: document every person who touched evidence. Gaps make evidence inadmissible in court.'],
       examTip: 'Order of volatility is a top exam topic. Memorise the sequence: registers/cache → RAM → swap → disk → remote logs → backups. The exam will present a scenario and ask which data should be collected FIRST — always RAM (most volatile, lost on power off).',
-      examTip: 'Order of volatility (most volatile first): CPU registers/cache → RAM → swap/pagefile → disk → remote logs → archive/backups. Collect most volatile evidence first before it disappears.',
     },
     {
       id: 'ch9-siem',
@@ -1413,7 +1388,6 @@ const mod9: Module = {
       labExercise: hiveLab('lab9-3', 'Correlating Alerts and Creating Cases in TheHive'),
       summary: ['SIEM: aggregates and correlates logs from across the environment — rule-based threat detection and alerting.', 'SOAR: automates analyst response workflows — reduces MTTD and MTTR.', 'UEBA: behavioural baseline + deviation detection — catches insider threats and compromised accounts.'],
       examTip: 'SIEM vs SOAR: SIEM = detect + alert (reactive visibility). SOAR = automate + respond (workflow automation). They are complementary: SIEM generates alerts that SOAR responds to automatically. The exam will test whether you can identify which tool is appropriate for detection vs automated response.',
-      examTip: 'SIEM aggregates and correlates logs (detection focus). SOAR adds orchestration and automated response (response focus). Together they close the loop: detect → investigate → respond. Know the difference for exam scenarios.',
     },
     {
       id: 'ch9-threat-hunting',
@@ -1441,7 +1415,6 @@ const mod9: Module = {
       labExercise: hiveLab('lab9-4', 'Threat Hunting Investigation in TheHive'),
       summary: ['Threat hunting is proactive — assumes compromise and actively searches. Monitoring is reactive (alert-driven).', 'Hypothesis sources: threat intelligence, MITRE ATT&CK, log anomalies. Process: hypothesise → hunt → analyse → respond.', 'Reducing dwell time is the primary goal — average is 21+ days. Earlier detection = less damage.'],
       examTip: 'Threat hunting and incident response are frequently confused. IR is REACTIVE — triggered by an alert or reported incident. Threat hunting is PROACTIVE — assumes the attacker is already present and looks for them without a prior alert. Hunting findings that confirm compromise then trigger the IR process.',
-      examTip: 'Threat hunting is proactive — you assume adversaries are already inside and go looking. Unlike IR (triggered by an alert), hunting starts with a hypothesis. Reducing dwell time (attacker\'s time undetected) is the primary goal.',
     },
     {
       id: 'ch9-dlp',
@@ -1469,7 +1442,6 @@ const mod9: Module = {
       labExercise: hiveLab('lab9-5', 'Investigating DLP Alert in TheHive'),
       summary: ['DLP data states: in motion (network), at rest (storage), in use (endpoint/clipboard).', 'DLP types: network (email/web), endpoint (USB/print/clipboard), cloud (CASB for SaaS uploads).', 'Data classification is required before DLP — DLP enforces classification labels, it does not create them.'],
       examTip: 'DLP requires data classification as a prerequisite — a common exam scenario asks what must be done BEFORE implementing DLP. The answer is always data classification. Without knowing what is sensitive, DLP cannot identify what to protect or generate meaningful policies.',
-      examTip: 'DLP monitors three data states: in motion (network), at rest (storage), in use (endpoint/clipboard). Network DLP can inspect and block email/web uploads. Endpoint DLP controls USB and clipboard. CASB extends DLP to cloud.',
     },
     {
       id: 'ch9-automation',
@@ -1497,7 +1469,6 @@ const mod9: Module = {
       labExercise: hiveLab('lab9-6', 'Building an Automated Response Workflow in TheHive'),
       summary: ['SOAR automates repetitive analyst tasks — alert enrichment, IOC lookup, ticket creation, endpoint isolation.', 'Playbooks = automated SOAR workflows. Runbooks = manual human procedure documents.', 'Automation reduces MTTD and MTTR. Require human approval for high-impact actions (production system changes).'],
       examTip: 'SOAR and SIEM together form the detection-to-response pipeline. SIEM = detection engine (generates alerts). SOAR = response engine (automates reaction to alerts). The exam will describe a scenario and ask whether SIEM or SOAR is the appropriate tool — SIEM for correlation/detection, SOAR for automated response.',
-      examTip: 'SOAR automates repetitive analyst tasks (alert triage, IOC enrichment, ticket creation). Playbooks define the automated steps for specific incident types. Automation reduces MTTR (Mean Time to Respond) — a key security metric.',
     },
   ],
 };
