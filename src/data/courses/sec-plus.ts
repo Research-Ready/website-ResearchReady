@@ -120,6 +120,7 @@ const mod1: Module = {
   chapters: [
     {
       id: 'ch1-cia-triad',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/cia-triad',
       title: 'CIA Triad',
       learningObjectives: [
         lo('remember', 'Student can define confidentiality, integrity, and availability.'),
@@ -150,6 +151,7 @@ const mod1: Module = {
     },
     {
       id: 'ch1-aaa',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/aaa-framework',
       title: 'AAA Framework',
       learningObjectives: [
         lo('remember', 'Student can define authentication, authorization, and accounting.'),
@@ -179,6 +181,7 @@ const mod1: Module = {
     },
     {
       id: 'ch1-controls',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/security-controls',
       title: 'Security Controls',
       learningObjectives: [
         lo('remember', 'Student can list the categories (preventive, detective, corrective, deterrent, compensating) and types (technical, operational, managerial, physical) of security controls.'),
@@ -208,6 +211,7 @@ const mod1: Module = {
     },
     {
       id: 'ch1-zero-trust',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/zero-trust-architecture',
       title: 'Zero Trust Architecture',
       learningObjectives: [
         lo('understand', 'Student can explain the Zero Trust principle of "never trust, always verify."'),
@@ -237,6 +241,7 @@ const mod1: Module = {
     },
     {
       id: 'ch1-physical-security',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/physical-security',
       title: 'Physical Security',
       learningObjectives: [
         lo('remember', 'Student can identify common physical security controls including mantraps, bollards, and access badges.'),
@@ -298,6 +303,7 @@ const mod2: Module = {
   chapters: [
     {
       id: 'ch2-symmetric',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/symmetric-encryption',
       title: 'Symmetric Encryption',
       learningObjectives: [
         lo('remember', 'Student can list common symmetric algorithms: AES, 3DES, RC4.'),
@@ -324,6 +330,7 @@ const mod2: Module = {
     },
     {
       id: 'ch2-asymmetric',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/asymmetric-encryption',
       title: 'Asymmetric Encryption',
       learningObjectives: [
         lo('remember', 'Student can identify RSA, ECC, and Diffie-Hellman as asymmetric algorithms.'),
@@ -350,6 +357,7 @@ const mod2: Module = {
     },
     {
       id: 'ch2-hashing',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/hashing-and-integrity',
       title: 'Hashing and Integrity',
       learningObjectives: [
         lo('remember', 'Student can list hashing algorithms: MD5, SHA-1, SHA-256, SHA-3.'),
@@ -376,6 +384,7 @@ const mod2: Module = {
     },
     {
       id: 'ch2-pki',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/pki-and-digital-certificates',
       title: 'PKI and Digital Certificates',
       learningObjectives: [
         lo('remember', 'Student can define Certificate Authority (CA), certificate, CRL, and OCSP.'),
@@ -402,6 +411,7 @@ const mod2: Module = {
     },
     {
       id: 'ch2-crypto-attacks',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/cryptographic-attacks',
       title: 'Cryptographic Attacks',
       learningObjectives: [
         lo('remember', 'Student can name cryptographic attacks: birthday, rainbow table, downgrade, side-channel.'),
@@ -440,6 +450,7 @@ const mod3: Module = {
   chapters: [
     {
       id: 'ch3-identity',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/identity-concepts',
       title: 'Identity Concepts',
       learningObjectives: [
         lo('remember', 'Student can define identity, account types, and the principle of least privilege.'),
@@ -464,6 +475,7 @@ const mod3: Module = {
     },
     {
       id: 'ch3-mfa',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/multi-factor-authentication',
       title: 'Multi-Factor Authentication',
       learningObjectives: [
         lo('remember', 'Student can identify the three authentication factors: something you know, have, and are.'),
@@ -489,6 +501,7 @@ const mod3: Module = {
     },
     {
       id: 'ch3-authorization-models',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/authorization-models',
       title: 'Authorization Models',
       learningObjectives: [
         lo('remember', 'Student can define DAC, MAC, RBAC, ABAC, and Rule-Based Access Control.'),
@@ -514,6 +527,7 @@ const mod3: Module = {
     },
     {
       id: 'ch3-federation',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/federation-and-single-sign-on',
       title: 'Federation and Single Sign-On',
       learningObjectives: [
         lo('remember', 'Student can define SSO, SAML, OAuth 2.0, and OpenID Connect.'),
@@ -539,6 +553,7 @@ const mod3: Module = {
     },
     {
       id: 'ch3-pam',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/privileged-access-management',
       title: 'Privileged Access Management',
       learningObjectives: [
         lo('remember', 'Student can define PAM, just-in-time access, and password vaulting.'),
@@ -598,6 +613,7 @@ const mod4: Module = {
   chapters: [
     {
       id: 'ch4-malware',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/malware',
       title: 'Malware',
       learningObjectives: [
         lo('remember', 'Student can identify malware types: virus, worm, trojan, ransomware, rootkit, keylogger, spyware, adware, botnet, logic bomb.'),
@@ -626,6 +642,7 @@ const mod4: Module = {
     },
     {
       id: 'ch4-social-engineering',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/social-engineering',
       title: 'Social Engineering',
       learningObjectives: [
         lo('remember', 'Student can identify social engineering techniques: phishing, vishing, smishing, pretexting, baiting, tailgating, quid pro quo.'),
@@ -653,6 +670,7 @@ const mod4: Module = {
     },
     {
       id: 'ch4-app-attacks',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/application-attacks',
       title: 'Application Attacks',
       learningObjectives: [
         lo('remember', 'Student can name common application attacks: SQL injection, XSS, CSRF, buffer overflow, directory traversal.'),
@@ -681,6 +699,7 @@ const mod4: Module = {
     },
     {
       id: 'ch4-network-attacks',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/network-attacks',
       title: 'Network Attacks',
       learningObjectives: [
         lo('remember', 'Student can identify network attacks: DDoS, MitM, ARP poisoning, DNS poisoning, replay attacks, VLAN hopping.'),
@@ -709,6 +728,7 @@ const mod4: Module = {
     },
     {
       id: 'ch4-threat-intel',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/threat-intelligence',
       title: 'Threat Intelligence',
       learningObjectives: [
         lo('remember', 'Student can define threat intelligence, IOC, TTPs, and STIX/TAXII.'),
@@ -749,6 +769,7 @@ const mod5: Module = {
   chapters: [
     {
       id: 'ch5-scanning',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/vulnerability-scanning',
       title: 'Vulnerability Scanning',
       learningObjectives: [
         lo('remember', 'Student can identify scanning types: credentialed vs non-credentialed, internal vs external, active vs passive.'),
@@ -776,6 +797,7 @@ const mod5: Module = {
     },
     {
       id: 'ch5-assessment',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/vulnerability-assessment',
       title: 'Vulnerability Assessment',
       learningObjectives: [
         lo('remember', 'Student can define false positive, false negative, true positive, and true negative in the context of vulnerability scanning.'),
@@ -803,6 +825,7 @@ const mod5: Module = {
     },
     {
       id: 'ch5-cvss',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/cvss-and-risk-scoring',
       title: 'CVSS and Risk Scoring',
       learningObjectives: [
         lo('remember', 'Student can define CVSS and its score range (0-10) and severity categories.'),
@@ -830,6 +853,7 @@ const mod5: Module = {
     },
     {
       id: 'ch5-pentest',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/penetration-testing-concepts',
       title: 'Penetration Testing Concepts',
       learningObjectives: [
         lo('remember', 'Student can define pentest phases: reconnaissance, scanning, exploitation, post-exploitation, reporting.'),
@@ -870,6 +894,7 @@ const mod6: Module = {
   chapters: [
     {
       id: 'ch6-architecture',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/secure-network-architecture',
       title: 'Secure Network Architecture',
       learningObjectives: [
         lo('remember', 'Student can identify network zones: DMZ, intranet, extranet, and their purposes.'),
@@ -896,6 +921,7 @@ const mod6: Module = {
     },
     {
       id: 'ch6-firewalls-ids-ips',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/firewalls-ids-and-ips',
       title: 'Firewalls, IDS, and IPS',
       learningObjectives: [
         lo('remember', 'Student can define packet filtering, stateful, NGFW, IDS, and IPS.'),
@@ -922,6 +948,7 @@ const mod6: Module = {
     },
     {
       id: 'ch6-vpn',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/vpn-technologies',
       title: 'VPN Technologies',
       learningObjectives: [
         lo('remember', 'Student can identify VPN types: site-to-site, remote access, split tunnel, full tunnel, SSL/TLS VPN, IPSec.'),
@@ -948,6 +975,7 @@ const mod6: Module = {
     },
     {
       id: 'ch6-wireless',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/wireless-security',
       title: 'Wireless Security',
       learningObjectives: [
         lo('remember', 'Student can identify wireless protocols: WEP, WPA, WPA2, WPA3, and their security properties.'),
@@ -974,6 +1002,7 @@ const mod6: Module = {
     },
     {
       id: 'ch6-dns-email',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/dns-and-email-security',
       title: 'DNS and Email Security',
       learningObjectives: [
         lo('remember', 'Student can define DNSSEC, SPF, DKIM, DMARC and their purpose.'),
@@ -1013,6 +1042,7 @@ const mod7: Module = {
   chapters: [
     {
       id: 'ch7-cloud-models',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/cloud-service-and-deployment-models',
       title: 'Cloud Service and Deployment Models',
       learningObjectives: [
         lo('remember', 'Student can define IaaS, PaaS, SaaS and public, private, hybrid, community cloud.'),
@@ -1039,6 +1069,7 @@ const mod7: Module = {
     },
     {
       id: 'ch7-cloud-security',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/cloud-security-controls',
       title: 'Cloud Security Controls',
       learningObjectives: [
         lo('remember', 'Student can identify cloud security controls: CASB, CSPM, CWPP, and cloud-native IAM.'),
@@ -1065,6 +1096,7 @@ const mod7: Module = {
     },
     {
       id: 'ch7-virtualization',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/virtualization-security',
       title: 'Virtualization Security',
       learningObjectives: [
         lo('remember', 'Student can define hypervisor types (Type 1 and Type 2) and virtual machine escape.'),
@@ -1091,6 +1123,7 @@ const mod7: Module = {
     },
     {
       id: 'ch7-iac',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/infrastructure-as-code-security',
       title: 'Infrastructure as Code Security',
       learningObjectives: [
         lo('remember', 'Student can define IaC and identify tools: Terraform, Ansible, CloudFormation.'),
@@ -1129,6 +1162,7 @@ const mod8: Module = {
   chapters: [
     {
       id: 'ch8-edr',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/endpoint-detection-and-response',
       title: 'Endpoint Detection and Response',
       learningObjectives: [
         lo('remember', 'Student can define EDR, AV, HIDS, and HIPS and their deployment models.'),
@@ -1155,6 +1189,7 @@ const mod8: Module = {
     },
     {
       id: 'ch8-mdm',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/mobile-device-management',
       title: 'Mobile Device Management',
       learningObjectives: [
         lo('remember', 'Student can define MDM, MAM, EMM, BYOD, COPE, and CYOD deployment models.'),
@@ -1181,6 +1216,7 @@ const mod8: Module = {
     },
     {
       id: 'ch8-hardening',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/system-hardening',
       title: 'System Hardening',
       learningObjectives: [
         lo('remember', 'Student can list hardening techniques: patch management, service disabling, default credential changes, configuration baselines.'),
@@ -1207,6 +1243,7 @@ const mod8: Module = {
     },
     {
       id: 'ch8-sdlc',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/secure-software-development-lifecycle',
       title: 'Secure Software Development Lifecycle',
       learningObjectives: [
         lo('remember', 'Student can identify SDLC phases and where security activities belong in each phase.'),
@@ -1233,6 +1270,7 @@ const mod8: Module = {
     },
     {
       id: 'ch8-iot',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/iot-security',
       title: 'IoT Security',
       learningObjectives: [
         lo('remember', 'Student can identify IoT security challenges: default credentials, limited patching, network exposure.'),
@@ -1292,6 +1330,7 @@ const mod9: Module = {
   chapters: [
     {
       id: 'ch9-ir-process',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/incident-response-process',
       title: 'Incident Response Process',
       learningObjectives: [
         lo('remember', 'Student can list the IR phases: preparation, detection, containment, eradication, recovery, lessons learned.'),
@@ -1321,6 +1360,7 @@ const mod9: Module = {
     },
     {
       id: 'ch9-forensics',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/digital-forensics',
       title: 'Digital Forensics',
       learningObjectives: [
         lo('remember', 'Student can define digital forensics, chain of custody, order of volatility, and forensic imaging.'),
@@ -1349,6 +1389,7 @@ const mod9: Module = {
     },
     {
       id: 'ch9-siem',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/siem-and-log-management',
       title: 'SIEM and Log Management',
       learningObjectives: [
         lo('remember', 'Student can define SIEM, SOAR, log aggregation, and correlation rules.'),
@@ -1376,6 +1417,7 @@ const mod9: Module = {
     },
     {
       id: 'ch9-threat-hunting',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/threat-hunting',
       title: 'Threat Hunting',
       learningObjectives: [
         lo('understand', 'Student can explain how threat hunting differs from reactive incident response.'),
@@ -1403,6 +1445,7 @@ const mod9: Module = {
     },
     {
       id: 'ch9-dlp',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/data-loss-prevention',
       title: 'Data Loss Prevention',
       learningObjectives: [
         lo('remember', 'Student can define DLP and identify DLP deployment types: network, endpoint, cloud.'),
@@ -1430,6 +1473,7 @@ const mod9: Module = {
     },
     {
       id: 'ch9-automation',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/security-automation-and-orchestration',
       title: 'Security Automation and Orchestration',
       learningObjectives: [
         lo('remember', 'Student can define SOAR, playbook, and runbook.'),
@@ -1470,6 +1514,7 @@ const mod10: Module = {
   chapters: [
     {
       id: 'ch10-risk-management',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/risk-management',
       title: 'Risk Management',
       learningObjectives: [
         lo('remember', 'Student can define risk, threat, vulnerability, likelihood, impact, and residual risk.'),
@@ -1509,6 +1554,7 @@ const mod10: Module = {
     },
     {
       id: 'ch10-compliance',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/compliance-frameworks',
       title: 'Compliance Frameworks',
       learningObjectives: [
         lo('remember', 'Student can identify major compliance frameworks: PCI DSS, HIPAA, GDPR, SOC 2, ISO 27001, NIST CSF.'),
@@ -1538,6 +1584,7 @@ const mod10: Module = {
     },
     {
       id: 'ch10-policies',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/security-policies-and-procedures',
       title: 'Security Policies and Procedures',
       learningObjectives: [
         lo('remember', 'Student can define AUP, data classification policy, password policy, and change management policy.'),
@@ -1567,6 +1614,7 @@ const mod10: Module = {
     },
     {
       id: 'ch10-privacy',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/privacy-and-data-protection',
       title: 'Privacy and Data Protection',
       learningObjectives: [
         lo('remember', 'Student can define PII, PHI, data sovereignty, data residency, and privacy by design.'),
@@ -1596,6 +1644,7 @@ const mod10: Module = {
     },
     {
       id: 'ch10-bcdr',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/business-continuity-and-disaster-recovery',
       title: 'Business Continuity and Disaster Recovery',
       learningObjectives: [
         lo('remember', 'Student can define BCP, DRP, RTO, RPO, MTTR, and MTBF.'),
@@ -1637,6 +1686,7 @@ const mod11: Module = {
   chapters: [
     {
       id: 'ch11-domain-review',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/domain-review',
       title: 'Domain Review',
       learningObjectives: [
         lo('remember', 'Student can recall key terms and concepts from all five Security+ SY0-701 domains.'),
@@ -1667,6 +1717,7 @@ const mod11: Module = {
     },
     {
       id: 'ch11-pbqs',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/performance-based-questions',
       title: 'Performance-Based Questions',
       learningObjectives: [
         lo('understand', 'Student can explain the types of PBQs: drag-and-drop, simulations, command-line, network diagrams.'),
@@ -1695,6 +1746,7 @@ const mod11: Module = {
     },
     {
       id: 'ch11-common-traps',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/common-exam-traps-and-tricky-topics',
       title: 'Common Exam Traps and Tricky Topics',
       learningObjectives: [
         lo('analyze', 'Student can analyze commonly missed Security+ question patterns and identify the distractor strategies used.'),
@@ -1723,6 +1775,7 @@ const mod11: Module = {
     },
     {
       id: 'ch11-mock-exam',
+  bookstackUrl: 'https://docs.research-ready.nl/books/comptia-security-sy0-701/page/full-mock-exam',
       title: 'Full Mock Exam',
       learningObjectives: [
         lo('apply', 'Student can complete a timed 90-question mock exam under simulated conditions.'),

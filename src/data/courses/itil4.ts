@@ -40,6 +40,7 @@ function kc(
 
 const mod0Ch1: Chapter = {
   id: 'itil4-mod0-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/exam-format-and-logistics',
   title: 'Exam Format and Logistics',
   learningObjectives: [
     lo('remember', 'Student can recall that the ITIL 4 Foundation exam has 40 questions in 60 minutes with a 65% pass mark.'),
@@ -65,6 +66,7 @@ const mod0Ch1: Chapter = {
 
 const mod0Ch2: Chapter = {
   id: 'itil4-mod0-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/pre-assessment',
   title: 'Pre-Assessment',
   learningObjectives: [
     lo('remember', 'Student can identify their current knowledge gaps across ITIL 4 domains.'),
@@ -100,6 +102,7 @@ const module0: Module = {
 
 const mod1Ch1: Chapter = {
   id: 'itil4-mod1-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/what-is-a-service',
   title: 'What Is a Service?',
   learningObjectives: [
     lo('remember', 'Student can recall the ITIL 4 definition of a service.'),
@@ -139,6 +142,7 @@ const mod1Ch1: Chapter = {
 
 const mod1Ch2: Chapter = {
   id: 'itil4-mod1-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/value-outcomes-costs-and-risks',
   title: 'Value, Outcomes, Costs, and Risks',
   learningObjectives: [
     lo('remember', 'Student can recall the definitions of value, outcomes, outputs, costs, and risks in ITIL 4.'),
@@ -178,6 +182,7 @@ const mod1Ch2: Chapter = {
 
 const mod1Ch3: Chapter = {
   id: 'itil4-mod1-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/service-relationships',
   title: 'Service Relationships',
   learningObjectives: [
     lo('remember', 'Student can recall the roles of service provider, service consumer, and service relationship.'),
@@ -229,6 +234,7 @@ const module1: Module = {
 
 const mod2Ch1: Chapter = {
   id: 'itil4-mod2-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/itil-history-and-evolution',
   title: 'ITIL History and Evolution',
   learningObjectives: [
     lo('remember', 'Student can recall the major versions of ITIL and when they were published.'),
@@ -254,6 +260,7 @@ const mod2Ch1: Chapter = {
 
 const mod2Ch2: Chapter = {
   id: 'itil4-mod2-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/itsm-today',
   title: 'ITSM Today',
   learningObjectives: [
     lo('remember', 'Student can recall what IT Service Management (ITSM) means and its scope.'),
@@ -278,6 +285,7 @@ const mod2Ch2: Chapter = {
 
 const mod2Ch3: Chapter = {
   id: 'itil4-mod2-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/itil-4-as-a-framework',
   title: 'ITIL 4 as a Framework',
   learningObjectives: [
     lo('remember', 'Student can recall the two key structural components introduced in ITIL 4: the SVS and the Four Dimensions.'),
@@ -314,6 +322,7 @@ const module2: Module = {
 
 const mod3Ch1: Chapter = {
   id: 'itil4-mod3-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/organizations-and-people',
   title: 'Organizations and People',
   learningObjectives: [
     lo('remember', 'Student can recall that Organizations and People is one of the Four Dimensions of ITIL 4.'),
@@ -338,6 +347,7 @@ const mod3Ch1: Chapter = {
 
 const mod3Ch2: Chapter = {
   id: 'itil4-mod3-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/information-and-technology',
   title: 'Information and Technology',
   learningObjectives: [
     lo('remember', 'Student can recall examples of what falls under the Information and Technology dimension.'),
@@ -362,6 +372,7 @@ const mod3Ch2: Chapter = {
 
 const mod3Ch3: Chapter = {
   id: 'itil4-mod3-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/partners-and-suppliers',
   title: 'Partners and Suppliers',
   learningObjectives: [
     lo('remember', 'Student can recall what the Partners and Suppliers dimension covers in ITIL 4.'),
@@ -386,6 +397,7 @@ const mod3Ch3: Chapter = {
 
 const mod3Ch4: Chapter = {
   id: 'itil4-mod3-ch4',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/value-streams-and-processes',
   title: 'Value Streams and Processes',
   learningObjectives: [
     lo('remember', 'Student can recall the definition of a value stream in ITIL 4.'),
@@ -422,6 +434,7 @@ const module3: Module = {
 
 const mod4Ch1: Chapter = {
   id: 'itil4-mod4-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/focus-on-value',
   title: 'Focus on Value',
   learningObjectives: [
     lo('remember', 'Student can recall that "Focus on Value" is one of the seven ITIL 4 guiding principles.'),
@@ -446,6 +459,7 @@ const mod4Ch1: Chapter = {
 
 const mod4Ch2: Chapter = {
   id: 'itil4-mod4-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/start-where-you-are',
   title: 'Start Where You Are',
   learningObjectives: [
     lo('remember', 'Student can recall the "Start Where You Are" guiding principle.'),
@@ -470,6 +484,7 @@ const mod4Ch2: Chapter = {
 
 const mod4Ch3: Chapter = {
   id: 'itil4-mod4-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/progress-iteratively-with-feedback',
   title: 'Progress Iteratively with Feedback',
   learningObjectives: [
     lo('remember', 'Student can recall the "Progress Iteratively with Feedback" guiding principle.'),
@@ -494,6 +509,7 @@ const mod4Ch3: Chapter = {
 
 const mod4Ch4: Chapter = {
   id: 'itil4-mod4-ch4',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/collaborate-and-promote-visibility',
   title: 'Collaborate and Promote Visibility',
   learningObjectives: [
     lo('remember', 'Student can recall the "Collaborate and Promote Visibility" guiding principle.'),
@@ -518,6 +534,7 @@ const mod4Ch4: Chapter = {
 
 const mod4Ch5: Chapter = {
   id: 'itil4-mod4-ch5',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/think-and-work-holistically',
   title: 'Think and Work Holistically',
   learningObjectives: [
     lo('remember', 'Student can recall the "Think and Work Holistically" guiding principle.'),
@@ -542,6 +559,7 @@ const mod4Ch5: Chapter = {
 
 const mod4Ch6: Chapter = {
   id: 'itil4-mod4-ch6',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/keep-it-simple-and-practical',
   title: 'Keep It Simple and Practical',
   learningObjectives: [
     lo('remember', 'Student can recall the "Keep It Simple and Practical" guiding principle.'),
@@ -566,6 +584,7 @@ const mod4Ch6: Chapter = {
 
 const mod4Ch7: Chapter = {
   id: 'itil4-mod4-ch7',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/optimize-and-automate',
   title: 'Optimize and Automate',
   learningObjectives: [
     lo('remember', 'Student can recall the "Optimize and Automate" guiding principle.'),
@@ -602,6 +621,7 @@ const module4: Module = {
 
 const mod5Ch1: Chapter = {
   id: 'itil4-mod5-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/svs-overview',
   title: 'SVS Overview',
   learningObjectives: [
     lo('remember', 'Student can recall the five components of the ITIL 4 Service Value System.'),
@@ -626,6 +646,7 @@ const mod5Ch1: Chapter = {
 
 const mod5Ch2: Chapter = {
   id: 'itil4-mod5-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/opportunity-and-demand',
   title: 'Opportunity and Demand',
   learningObjectives: [
     lo('remember', 'Student can recall that opportunity and demand are the inputs to the SVS.'),
@@ -650,6 +671,7 @@ const mod5Ch2: Chapter = {
 
 const mod5Ch3: Chapter = {
   id: 'itil4-mod5-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/governance',
   title: 'Governance',
   learningObjectives: [
     lo('remember', 'Student can recall the role of governance in the ITIL 4 SVS.'),
@@ -674,6 +696,7 @@ const mod5Ch3: Chapter = {
 
 const mod5Ch4: Chapter = {
   id: 'itil4-mod5-ch4',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/continual-improvement',
   title: 'Continual Improvement',
   learningObjectives: [
     lo('remember', 'Student can recall the seven steps of the Continual Improvement Model.'),
@@ -710,6 +733,7 @@ const module5: Module = {
 
 const mod6Ch1: Chapter = {
   id: 'itil4-mod6-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/plan',
   title: 'Plan',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the "Plan" activity in the Service Value Chain.'),
@@ -734,6 +758,7 @@ const mod6Ch1: Chapter = {
 
 const mod6Ch2: Chapter = {
   id: 'itil4-mod6-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/improve',
   title: 'Improve',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the "Improve" activity in the Service Value Chain.'),
@@ -758,6 +783,7 @@ const mod6Ch2: Chapter = {
 
 const mod6Ch3: Chapter = {
   id: 'itil4-mod6-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/engage',
   title: 'Engage',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the "Engage" activity in the Service Value Chain.'),
@@ -782,6 +808,7 @@ const mod6Ch3: Chapter = {
 
 const mod6Ch4: Chapter = {
   id: 'itil4-mod6-ch4',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/design-and-transition',
   title: 'Design and Transition',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the "Design and Transition" activity in the Service Value Chain.'),
@@ -806,6 +833,7 @@ const mod6Ch4: Chapter = {
 
 const mod6Ch5: Chapter = {
   id: 'itil4-mod6-ch5',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/obtainbuild',
   title: 'Obtain/Build',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the "Obtain/Build" activity in the Service Value Chain.'),
@@ -830,6 +858,7 @@ const mod6Ch5: Chapter = {
 
 const mod6Ch6: Chapter = {
   id: 'itil4-mod6-ch6',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/deliver-and-support',
   title: 'Deliver and Support',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the "Deliver and Support" activity in the Service Value Chain.'),
@@ -866,6 +895,7 @@ const module6: Module = {
 
 const mod7Ch1: Chapter = {
   id: 'itil4-mod7-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/incident-management',
   title: 'Incident Management ★',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Incident Management practice.'),
@@ -891,6 +921,7 @@ const mod7Ch1: Chapter = {
 
 const mod7Ch2: Chapter = {
   id: 'itil4-mod7-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/problem-management',
   title: 'Problem Management ★',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Problem Management practice and define problem, known error, and workaround.'),
@@ -916,6 +947,7 @@ const mod7Ch2: Chapter = {
 
 const mod7Ch3: Chapter = {
   id: 'itil4-mod7-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/change-enablement',
   title: 'Change Enablement ★',
   learningObjectives: [
     lo('remember', 'Student can recall the three change types in ITIL 4: standard, normal, and emergency.'),
@@ -941,6 +973,7 @@ const mod7Ch3: Chapter = {
 
 const mod7Ch4: Chapter = {
   id: 'itil4-mod7-ch4',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/service-request-management',
   title: 'Service Request Management ★',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Service Request Management practice.'),
@@ -965,6 +998,7 @@ const mod7Ch4: Chapter = {
 
 const mod7Ch5: Chapter = {
   id: 'itil4-mod7-ch5',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/service-desk',
   title: 'Service Desk ★',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Service Desk practice.'),
@@ -989,6 +1023,7 @@ const mod7Ch5: Chapter = {
 
 const mod7Ch6: Chapter = {
   id: 'itil4-mod7-ch6',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/service-level-management',
   title: 'Service Level Management ★',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of Service Level Management and define SLA.'),
@@ -1013,6 +1048,7 @@ const mod7Ch6: Chapter = {
 
 const mod7Ch7: Chapter = {
   id: 'itil4-mod7-ch7',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/continual-improvement-practice',
   title: 'Continual Improvement (Practice) ★',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Continual Improvement practice.'),
@@ -1037,6 +1073,7 @@ const mod7Ch7: Chapter = {
 
 const mod7Ch8: Chapter = {
   id: 'itil4-mod7-ch8',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/it-asset-management',
   title: 'IT Asset Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the IT Asset Management practice.'),
@@ -1061,6 +1098,7 @@ const mod7Ch8: Chapter = {
 
 const mod7Ch9: Chapter = {
   id: 'itil4-mod7-ch9',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/monitoring-and-event-management',
   title: 'Monitoring and Event Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of Monitoring and Event Management.'),
@@ -1085,6 +1123,7 @@ const mod7Ch9: Chapter = {
 
 const mod7Ch10: Chapter = {
   id: 'itil4-mod7-ch10',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/release-management',
   title: 'Release Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of Release Management.'),
@@ -1109,6 +1148,7 @@ const mod7Ch10: Chapter = {
 
 const mod7Ch11: Chapter = {
   id: 'itil4-mod7-ch11',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/service-configuration-management',
   title: 'Service Configuration Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of Service Configuration Management.'),
@@ -1133,6 +1173,7 @@ const mod7Ch11: Chapter = {
 
 const mod7Ch12: Chapter = {
   id: 'itil4-mod7-ch12',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/deployment-management',
   title: 'Deployment Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of Deployment Management.'),
@@ -1157,6 +1198,7 @@ const mod7Ch12: Chapter = {
 
 const mod7Ch13: Chapter = {
   id: 'itil4-mod7-ch13',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/service-catalogue-management',
   title: 'Service Catalogue Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of Service Catalogue Management.'),
@@ -1181,6 +1223,7 @@ const mod7Ch13: Chapter = {
 
 const mod7Ch14: Chapter = {
   id: 'itil4-mod7-ch14',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/availability-management',
   title: 'Availability Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Availability Management practice.'),
@@ -1205,6 +1248,7 @@ const mod7Ch14: Chapter = {
 
 const mod7Ch15: Chapter = {
   id: 'itil4-mod7-ch15',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/supplier-management',
   title: 'Supplier Management',
   learningObjectives: [
     lo('remember', 'Student can recall the purpose of the Supplier Management practice.'),
@@ -1257,6 +1301,7 @@ const module7: Module = {
 
 const mod8Ch1: Chapter = {
   id: 'itil4-mod8-ch1',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/quick-domain-review',
   title: 'Quick Domain Review',
   learningObjectives: [
     lo('remember', 'Student can recall the key terms and models from all seven content modules.'),
@@ -1281,6 +1326,7 @@ const mod8Ch1: Chapter = {
 
 const mod8Ch2: Chapter = {
   id: 'itil4-mod8-ch2',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/common-traps-and-trick-questions',
   title: 'Common Traps and Trick Questions',
   learningObjectives: [
     lo('remember', 'Student can recall the most frequent ITIL 4 Foundation exam traps.'),
@@ -1305,6 +1351,7 @@ const mod8Ch2: Chapter = {
 
 const mod8Ch3: Chapter = {
   id: 'itil4-mod8-ch3',
+  bookstackUrl: 'https://docs.research-ready.nl/books/itil-4-foundation/page/full-mock-exam',
   title: 'Full Mock Exam',
   learningObjectives: [
     lo('remember', 'Student can recall exam conditions: 40 questions, 60 minutes, closed book.'),

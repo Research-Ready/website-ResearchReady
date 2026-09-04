@@ -1,0 +1,14 @@
+[
+  {
+    "id": "task-itil4-content-fill",
+    "key": "itil4-content-fill",
+    "content": "Task completed: itil4-content-fill",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1788474553485
+  }
+]

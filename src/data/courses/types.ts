@@ -58,6 +58,7 @@ export interface Chapter {
   labExercise?: LabExercise;
   summary: string[];  // 3-5 bullet points
   examTip?: string;
+  bookstackUrl?: string;
 }
 
 export interface Module {
