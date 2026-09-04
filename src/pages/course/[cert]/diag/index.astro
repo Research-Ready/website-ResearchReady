@@ -166,11 +166,16 @@ const diagQuestions = course.modules.flatMap(mod => {
   function renderResult() {
     const correct = answers.filter((a, i) => a === questions[i].correct).length;
     const total = questions.length;
+    const pctOverall = Math.round((correct / total) * 100);
+    try {
+      localStorage.setItem(`rr_course_${cert}_diag_done`, '1');
+      localStorage.setItem(`rr_course_${cert}_diag_score`, String(pctOverall));
+    } catch (_) {}
     const headingEl = document.getElementById('result-heading');
     if (headingEl) headingEl.textContent = `${correct} / ${total} correct`;
 
     const subEl = document.getElementById('result-sub');
-    if (subEl) subEl.textContent = `${Math.round((correct / total) * 100)}% overall`;
+    if (subEl) subEl.textContent = `${pctOverall}% overall`;
 
     const moduleMap = {};
     questions.forEach((q, i) => {

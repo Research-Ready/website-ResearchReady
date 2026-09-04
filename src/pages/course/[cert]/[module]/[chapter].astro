@@ -231,6 +231,24 @@ const knowledgeChecks = ch.knowledgeChecks;
       flipped = !flipped;
       card.classList.toggle('flipped', flipped);
     });
+
+    document.addEventListener('keydown', e => {
+      // Only handle keys when flashcard section is visible
+      const section = card?.closest('.flashcard-section');
+      if (!section) return;
+      if (e.target && ['INPUT','TEXTAREA','BUTTON','LABEL'].includes(e.target.tagName)) return;
+      if (e.key === 'ArrowRight') {
+        fcIdx = (fcIdx + 1) % flashcards.length;
+        renderCard();
+      } else if (e.key === 'ArrowLeft') {
+        fcIdx = (fcIdx - 1 + flashcards.length) % flashcards.length;
+        renderCard();
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        flipped = !flipped;
+        card?.classList.toggle('flipped', flipped);
+      }
+    });
   }
 
   // --- Knowledge check quiz ---
