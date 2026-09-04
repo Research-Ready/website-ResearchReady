@@ -1,0 +1,399 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { coursesBySlug, courseSlugs } from '../../../../data/courses/index';
+
+export function getStaticPaths() {
+  return courseSlugs.map(cert => ({ params: { cert } }));
+}
+
+const { cert } = Astro.params;
+const course = coursesBySlug[cert!]!;
+
+const accent: Record<string, string> = {
+  'itil4': '#7b68ee',
+  'sec-plus': '#e85d26',
+};
+const color = accent[cert!] ?? '#2f6f92';
+
+const allKCs = course.modules.flatMap(mod =>
+  mod.chapters.flatMap(ch =>
+    ch.knowledgeChecks.map(kc => ({
+      ...kc,
+      moduleTitle: mod.title,
+      moduleId: mod.id,
+    }))
+  )
+);
+const examQuestions = allKCs.slice(0, course.totalExamQuestions);
+const durationSec = course.examDuration * 60;
+---
+
+<BaseLayout locale="en" title={`Mock Exam — ${course.title}`} description={`Full timed mock exam for ${course.title}. ${examQuestions.length} questions, ${course.examDuration} minutes.`}>
+  <section class="section">
+    <div class="wrap" style={`--accent-color: ${color}`}>
+
+      <!-- PRE-EXAM SCREEN -->
+      <div id="screen-pre" class="screen">
+        <a class="back-link" href={`/course/${cert}/`}>← Back to course</a>
+        <div class="intro-card">
+          <div class="intro-badge">{course.examCode}</div>
+          <h1>Mock Exam</h1>
+          <p class="intro-title">{course.title}</p>
+          <div class="exam-stats">
+            <div class="stat"><span class="stat-val">{examQuestions.length}</span><span class="stat-label">Questions</span></div>
+            <div class="stat"><span class="stat-val">{course.examDuration}</span><span class="stat-label">Minutes</span></div>
+            <div class="stat"><span class="stat-val">{course.passScore}%</span><span class="stat-label">Pass score</span></div>
+          </div>
+          <div class="rules">
+            <h2>Rules</h2>
+            <ul>
+              <li>One question at a time — you can navigate back and forward.</li>
+              <li>Flag questions to mark them for review before submitting.</li>
+              <li>Timer starts when you click "Start exam". Submit before time runs out.</li>
+              <li>Results are saved locally in your browser.</li>
+            </ul>
+          </div>
+          <button class="start-btn" id="btn-start">Start exam →</button>
+        </div>
+      </div>
+
+      <!-- EXAM SCREEN -->
+      <div id="screen-exam" class="screen hidden">
+        <div class="exam-topbar">
+          <span class="topbar-code">{course.examCode}</span>
+          <div class="topbar-right">
+            <span class="topbar-progress" id="topbar-progress">Q1 / {examQuestions.length}</span>
+            <span class="timer-badge" id="timer">--:--</span>
+          </div>
+        </div>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="exam-progress-fill" style="width:0%"></div></div>
+        </div>
+
+        <div class="question-card" id="question-card">
+          <div class="question-meta" id="question-meta"></div>
+          <p class="question-text" id="question-text"></p>
+          <div class="options-list" id="options-list"></div>
+        </div>
+
+        <div class="exam-controls">
+          <button class="ctrl-btn" id="btn-prev">← Prev</button>
+          <div class="ctrl-mid">
+            <button class="flag-btn" id="btn-flag">Flag</button>
+            <button class="jump-btn hidden" id="btn-jump-flagged">Review flagged (<span id="flagged-count">0</span>)</button>
+          </div>
+          <button class="ctrl-btn" id="btn-next">Next →</button>
+          <button class="ctrl-btn submit-btn hidden" id="btn-submit">Submit exam</button>
+        </div>
+      </div>
+
+      <!-- RESULT SCREEN -->
+      <div id="screen-result" class="screen hidden">
+        <a class="back-link" href={`/course/${cert}/`}>← Back to course</a>
+        <div class="result-card">
+          <div class="score-display" id="result-score"></div>
+          <div class="pass-label" id="result-pass-label"></div>
+          <p class="result-sub" id="result-sub"></p>
+
+          <h2 class="breakdown-heading">Score by module</h2>
+          <div class="module-breakdown" id="module-breakdown"></div>
+
+          <div class="result-actions">
+            <button class="start-btn" id="btn-retry">Retry exam</button>
+            <a class="back-link-btn" href={`/course/${cert}/`}>Back to course</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ cert, examQuestions, durationSec, totalQ: examQuestions.length, passScore: course.passScore }}>
+  // Fisher-Yates shuffle
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  let questions = [];
+  let answers = [];
+  let flagged = new Set();
+  let currentIdx = 0;
+  let timerInterval = null;
+  let secondsLeft = durationSec;
+
+  function showScreen(id) {
+    ['screen-pre', 'screen-exam', 'screen-result'].forEach(s => {
+      document.getElementById(s)?.classList.toggle('hidden', s !== id);
+    });
+  }
+
+  function startExam() {
+    questions = shuffle(examQuestions);
+    answers = new Array(questions.length).fill(null);
+    flagged = new Set();
+    currentIdx = 0;
+    secondsLeft = durationSec;
+    showScreen('screen-exam');
+    renderQuestion();
+    startTimer();
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    const timerEl = document.getElementById('timer');
+    function tick() {
+      if (timerEl) {
+        timerEl.textContent = formatTime(secondsLeft);
+        timerEl.classList.toggle('timer-red', secondsLeft <= 300);
+      }
+      if (secondsLeft <= 0) {
+        clearInterval(timerInterval);
+        submitExam();
+      } else {
+        secondsLeft--;
+      }
+    }
+    tick();
+    timerInterval = setInterval(tick, 1000);
+  }
+
+  function renderQuestion() {
+    const q = questions[currentIdx];
+    const total = questions.length;
+
+    const isFlagged = flagged.has(currentIdx);
+    const metaEl = document.getElementById('question-meta');
+    if (metaEl) {
+      metaEl.innerHTML = `<span class="q-num">Question ${currentIdx + 1} / ${total}${isFlagged ? ' <span class="flag-indicator">&#x2691; flagged</span>' : ''}</span><span class="q-module">${q.moduleTitle}</span>`;
+    }
+
+    const textEl = document.getElementById('question-text');
+    if (textEl) textEl.textContent = q.question;
+
+    const optionsEl = document.getElementById('options-list');
+    if (optionsEl) {
+      optionsEl.innerHTML = '';
+      const labels = ['A', 'B', 'C', 'D'];
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn' + (answers[currentIdx] === i ? ' selected' : '');
+        btn.innerHTML = `<span class="opt-label">${labels[i]}</span><span class="opt-text">${opt}</span>`;
+        btn.addEventListener('click', () => {
+          answers[currentIdx] = i;
+          renderQuestion();
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    const progressEl = document.getElementById('exam-progress-fill');
+    const answered = answers.filter(a => a !== null).length;
+    if (progressEl) progressEl.style.width = `${Math.round((answered / total) * 100)}%`;
+
+    const topbarEl = document.getElementById('topbar-progress');
+    if (topbarEl) topbarEl.textContent = `Q${currentIdx + 1} / ${total}`;
+
+    const prevBtn = document.getElementById('btn-prev');
+    const nextBtn = document.getElementById('btn-next');
+    const submitBtn = document.getElementById('btn-submit');
+    const flagBtn = document.getElementById('btn-flag');
+
+    if (prevBtn) prevBtn.disabled = currentIdx === 0;
+    if (nextBtn) nextBtn.classList.toggle('hidden', currentIdx === total - 1);
+    if (submitBtn) submitBtn.classList.toggle('hidden', currentIdx !== total - 1);
+    if (flagBtn) {
+      flagBtn.textContent = isFlagged ? 'Unflag' : 'Flag';
+      flagBtn.classList.toggle('flagged', isFlagged);
+    }
+
+    updateJumpFlagged();
+  }
+
+  function updateJumpFlagged() {
+    const unansweredFlagged = [...flagged].filter(i => answers[i] === null).length;
+    const jumpBtn = document.getElementById('btn-jump-flagged');
+    const countEl = document.getElementById('flagged-count');
+    if (jumpBtn) jumpBtn.classList.toggle('hidden', unansweredFlagged === 0);
+    if (countEl) countEl.textContent = String(unansweredFlagged);
+  }
+
+  function jumpToNextFlagged() {
+    const unansweredFlagged = [...flagged].filter(i => answers[i] === null);
+    if (unansweredFlagged.length > 0) {
+      currentIdx = unansweredFlagged[0];
+      renderQuestion();
+    }
+  }
+
+  function submitExam() {
+    clearInterval(timerInterval);
+    let correct = 0;
+    const moduleScores = {};
+
+    questions.forEach((q, i) => {
+      if (!moduleScores[q.moduleId]) {
+        moduleScores[q.moduleId] = { title: q.moduleTitle, correct: 0, total: 0 };
+      }
+      moduleScores[q.moduleId].total++;
+      if (answers[i] === q.correct) {
+        correct++;
+        moduleScores[q.moduleId].correct++;
+      }
+    });
+
+    const pct = Math.round((correct / questions.length) * 100);
+    const passed = pct >= passScore;
+
+    const result = { pct, correct, total: questions.length, passed, timestamp: Date.now() };
+    try { localStorage.setItem(`rr_course_${cert}_exam_result`, JSON.stringify(result)); } catch (_) {}
+
+    renderResult(pct, correct, questions.length, passed, moduleScores);
+    showScreen('screen-result');
+  }
+
+  function renderResult(pct, correct, total, passed, moduleScores) {
+    const scoreEl = document.getElementById('result-score');
+    if (scoreEl) scoreEl.textContent = `${pct}%`;
+
+    const passEl = document.getElementById('result-pass-label');
+    if (passEl) {
+      passEl.textContent = passed ? 'PASS' : 'FAIL';
+      passEl.className = 'pass-label ' + (passed ? 'pass' : 'fail');
+    }
+
+    const subEl = document.getElementById('result-sub');
+    if (subEl) subEl.textContent = `${correct} / ${total} correct · Pass score: ${passScore}%`;
+
+    const breakdownEl = document.getElementById('module-breakdown');
+    if (!breakdownEl) return;
+
+    const sorted = Object.values(moduleScores).sort((a, b) => {
+      const pctA = a.total ? a.correct / a.total : 0;
+      const pctB = b.total ? b.correct / b.total : 0;
+      return pctA - pctB;
+    });
+
+    breakdownEl.innerHTML = sorted.map(mod => {
+      const modPct = mod.total ? Math.round((mod.correct / mod.total) * 100) : 0;
+      const barColor = modPct >= 70 ? '#16a34a' : modPct >= 50 ? '#d97706' : '#dc2626';
+      return `
+        <div class="mod-row">
+          <div class="mod-row-header">
+            <span class="mod-row-title">${mod.title}</span>
+            <span class="mod-row-score">${mod.correct}/${mod.total} &middot; ${modPct}%</span>
+          </div>
+          <div class="mod-bar-bg"><div class="mod-bar-fill" style="width:${modPct}%;background:${barColor}"></div></div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Wire up buttons
+  document.getElementById('btn-start')?.addEventListener('click', startExam);
+  document.getElementById('btn-retry')?.addEventListener('click', () => { showScreen('screen-pre'); });
+  document.getElementById('btn-prev')?.addEventListener('click', () => { if (currentIdx > 0) { currentIdx--; renderQuestion(); } });
+  document.getElementById('btn-next')?.addEventListener('click', () => { if (currentIdx < questions.length - 1) { currentIdx++; renderQuestion(); } });
+  document.getElementById('btn-submit')?.addEventListener('click', submitExam);
+  document.getElementById('btn-flag')?.addEventListener('click', () => {
+    if (flagged.has(currentIdx)) flagged.delete(currentIdx); else flagged.add(currentIdx);
+    renderQuestion();
+  });
+  document.getElementById('btn-jump-flagged')?.addEventListener('click', jumpToNextFlagged);
+</script>
+
+<style>
+  .wrap { --accent-color: #2f6f92; }
+  .screen.hidden { display: none; }
+
+  .back-link { font-size: 0.875rem; color: var(--accent-color, #2f6f92); text-decoration: none; display: inline-block; margin-bottom: 1.5rem; }
+  .back-link:hover { text-decoration: underline; }
+
+  /* Pre-exam */
+  .intro-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 12px; padding: 2.5rem; max-width: 600px; margin: 0 auto; }
+  .intro-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; background: #e8eef3; color: #4a6478; padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.75rem; font-family: monospace; }
+  .intro-card h1 { margin: 0 0 0.2rem; font-size: 1.75rem; }
+  .intro-title { color: #5a7a8e; margin: 0 0 1.5rem; }
+  .exam-stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; align-items: center; }
+  .stat-val { font-size: 2rem; font-weight: 700; color: var(--accent-color); }
+  .stat-label { font-size: 0.75rem; color: #6a8499; text-transform: uppercase; letter-spacing: 0.05em; }
+  .rules { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .rules h2 { margin: 0 0 0.6rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6a8499; }
+  .rules ul { margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.3rem; color: #374151; font-size: 0.875rem; }
+  .start-btn { display: inline-block; padding: 0.75rem 2rem; background: var(--accent-color); color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+  .start-btn:hover { opacity: 0.9; }
+
+  /* Exam topbar */
+  .exam-topbar { display: flex; justify-content: space-between; align-items: center; background: #fff; border: 1px solid #d1d9e0; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+  .topbar-code { font-family: monospace; font-size: 0.875rem; font-weight: 700; color: #4a6478; }
+  .topbar-right { display: flex; align-items: center; gap: 1rem; }
+  .topbar-progress { font-size: 0.8rem; color: #6a8499; }
+  .timer-badge { font-family: monospace; font-size: 1.1rem; font-weight: 700; background: #e8eef3; color: #0e1a24; padding: 0.25rem 0.75rem; border-radius: 6px; min-width: 5ch; text-align: center; }
+  .timer-badge.timer-red { background: #fee2e2; color: #b91c1c; }
+
+  /* Progress bar */
+  .progress-bar-wrap { margin-bottom: 1rem; }
+  .progress-bar { height: 4px; background: #d1d9e0; border-radius: 2px; }
+  .progress-fill { height: 100%; background: var(--accent-color); border-radius: 2px; transition: width 0.3s ease; }
+
+  /* Question card */
+  .question-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; padding: 1.75rem; margin-bottom: 1rem; }
+  .question-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #6a8499; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+  .q-num { font-weight: 600; }
+  .flag-indicator { color: #d97706; margin-left: 0.25rem; }
+  .q-module { font-size: 0.75rem; background: #e8eef3; color: #4a6478; padding: 0.15rem 0.5rem; border-radius: 4px; }
+  .question-text { font-size: 1.05rem; font-weight: 600; color: #0e1a24; margin: 0 0 1.25rem; line-height: 1.5; }
+  .options-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .option-btn { display: flex; align-items: flex-start; gap: 0.75rem; width: 100%; text-align: left; padding: 0.75rem 1rem; border: 2px solid #d1d9e0; border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.9rem; color: #374151; transition: border-color 0.15s, background 0.15s; }
+  .option-btn:hover { border-color: var(--accent-color); background: #f5f3ff; }
+  .option-btn.selected { border-color: var(--accent-color); background: #f0eeff; color: #0e1a24; }
+  .opt-label { flex-shrink: 0; font-weight: 700; color: var(--accent-color); min-width: 1.2rem; }
+
+  /* Controls */
+  .exam-controls { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .ctrl-btn { padding: 0.6rem 1.25rem; border: 1px solid #d1d9e0; background: #fff; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; color: #374151; }
+  .ctrl-btn:hover:not(:disabled) { background: #f0f5f9; }
+  .ctrl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .ctrl-btn.hidden { display: none; }
+  .submit-btn { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+  .submit-btn:hover:not(:disabled) { opacity: 0.9; background: var(--accent-color); }
+  .ctrl-mid { display: flex; gap: 0.5rem; margin-left: auto; }
+  .flag-btn { padding: 0.5rem 1rem; border: 1px solid #d97706; background: #fff; color: #d97706; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+  .flag-btn.flagged { background: #fef3c7; }
+  .flag-btn:hover { background: #fef9ed; }
+  .jump-btn { padding: 0.5rem 1rem; border: 1px solid #6a8499; background: #fff; color: #4a6478; border-radius: 8px; font-size: 0.8rem; cursor: pointer; }
+  .jump-btn.hidden { display: none; }
+  .jump-btn:hover { background: #f0f5f9; }
+
+  /* Result */
+  .result-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 12px; padding: 2.5rem; max-width: 700px; margin: 0 auto; }
+  .score-display { font-size: 5rem; font-weight: 900; color: #0e1a24; text-align: center; line-height: 1; }
+  .pass-label { text-align: center; font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em; margin: 0.4rem 0 0.25rem; }
+  .pass-label.pass { color: #16a34a; }
+  .pass-label.fail { color: #dc2626; }
+  .result-sub { text-align: center; color: #6a8499; font-size: 0.9rem; margin: 0 0 2rem; }
+  .breakdown-heading { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #4a6478; margin: 0 0 1rem; }
+  .module-breakdown { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2rem; }
+  .mod-row { display: flex; flex-direction: column; gap: 0.3rem; }
+  .mod-row-header { display: flex; justify-content: space-between; font-size: 0.875rem; flex-wrap: wrap; gap: 0.25rem; }
+  .mod-row-title { font-weight: 600; color: #0e1a24; }
+  .mod-row-score { color: #6a8499; }
+  .mod-bar-bg { height: 8px; background: #e5e7eb; border-radius: 4px; }
+  .mod-bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+  .result-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .back-link-btn { padding: 0.75rem 1.5rem; border: 1px solid #d1d9e0; border-radius: 8px; font-size: 0.9rem; color: #374151; text-decoration: none; }
+  .back-link-btn:hover { background: #f0f5f9; }
+</style>

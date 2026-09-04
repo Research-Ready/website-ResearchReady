@@ -43,6 +43,11 @@ const color = accent[cert!] ?? 'var(--accent)';
         <span class="progress-label" id="course-progress-label">0 / {course.modules.flatMap(m => m.chapters).length} chapters done</span>
       </div>
 
+      <div class="course-actions">
+        <a class="action-btn diag" href={`/course/${cert}/diag/`} style={`border-color: ${color}; color: ${color}`}>🔍 Diagnostic quiz</a>
+        <a class="action-btn exam" href={`/course/${cert}/exam/`} style={`border-color: ${color}; color: ${color}`}>📝 Full mock exam</a>
+      </div>
+
       <div class="module-list">
         {course.modules.map((mod, mi) => (
           <div class="module-card">
@@ -103,6 +108,10 @@ const color = accent[cert!] ?? 'var(--accent)';
   .progress-bar { height: 6px; background: #d1d9e0; border-radius: 3px; margin-bottom: 0.4rem; }
   .progress-fill { height: 100%; background: var(--accent, #2f6f92); border-radius: 3px; transition: width 0.4s ease; }
   .progress-label { font-size: 0.8rem; color: #6a8499; }
+
+  .course-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .action-btn { display: inline-block; padding: 0.6rem 1.25rem; border: 2px solid; border-radius: 20px; font-size: 0.875rem; font-weight: 700; text-decoration: none; background: #fff; transition: opacity 0.15s; }
+  .action-btn:hover { opacity: 0.8; }
 
   .module-list { display: flex; flex-direction: column; gap: 1.25rem; }
   .module-card { background: #fff; border: 1px solid #d1d9e0; border-radius: 10px; overflow: hidden; }

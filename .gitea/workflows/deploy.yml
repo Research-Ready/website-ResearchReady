@@ -1,0 +1,61 @@
+name: Build and deploy website
+
+# Runs on the self-hosted Gitea Actions runner (act_runner, host-execution
+# mode — no Docker). The runner is ci-runner-01 on CT200 (10.0.2.200),
+# registered with label ubuntu-latest:host.
+#
+# Deploy target: /opt/gitea-runner/website-ResearchReady/ on CT200.
+# The website-researchready systemd unit serves that directory via
+# python3 http.server on 0.0.0.0:8100.
+# Traefik on CT110 routes Host(`research-ready.nl`) → http://10.0.2.200:8100.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (manual git clone — host runner has no Node.js actions)
+        env:
+          WEBSITE_CI_TOKEN: ${{ secrets.WEBSITE_CI_TOKEN }}
+        run: |
+          set -euo pipefail
+          rm -rf repo
+          git clone --depth 1 --branch main \
+            "http://admin:${WEBSITE_CI_TOKEN}@localhost:3000/ResearchReady/website-ResearchReady.git" repo
+
+      - name: Install bun
+        run: |
+          set -euo pipefail
+          if ! command -v bun &>/dev/null; then
+            curl -fsSL https://bun.sh/install | bash
+            export BUN_INSTALL="$HOME/.bun"
+            echo "$BUN_INSTALL/bin" >> "$GITHUB_PATH"
+            export PATH="$BUN_INSTALL/bin:$PATH"
+          fi
+          bun --version
+
+      - name: Install dependencies
+        working-directory: repo
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun install --frozen-lockfile
+
+      - name: Build Astro site
+        working-directory: repo
+        run: |
+          export PATH="$HOME/.bun/bin:$PATH"
+          bun run build
+
+      - name: Deploy dist/ to static file server
+        working-directory: repo
+        run: |
+          set -euo pipefail
+          DEST=/opt/gitea-runner/website-ResearchReady
+          find "$DEST" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          cp -a dist/. "$DEST/"
+          echo "Deployed to $DEST — served by website-researchready.service on :8100"
+          echo "Traefik routes research-ready.nl -> http://10.0.2.200:8100"

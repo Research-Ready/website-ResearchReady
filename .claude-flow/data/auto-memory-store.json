@@ -10,5 +10,17 @@
       "quality": 0.85
     },
     "createdAt": 1788474553485
+  },
+  {
+    "id": "task-gitea-deploy-workflow",
+    "key": "gitea-deploy-workflow",
+    "content": "Task completed: gitea-deploy-workflow",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1788564081591
   }
 ]
