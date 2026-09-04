@@ -52,7 +52,7 @@ const color = accent[cert!] ?? 'var(--accent)';
         {course.modules.map((mod, mi) => (
           <div class="module-card">
             <a class="module-header" href={`/course/${cert}/${mod.id}/`}>
-              <div class="module-num">Module {mi}</div>
+              <div class="module-num">Module {mi + 1}</div>
               <h2 class="module-title">{mod.title}</h2>
               {mod.examWeight && <span class="weight-badge">{mod.examWeight}% exam</span>}
             </a>

@@ -53,6 +53,7 @@ const durationSec = course.examDuration * 60;
               <li>Results are saved locally in your browser.</li>
             </ul>
           </div>
+          <div id="prev-result-banner" class="prev-result-banner hidden"></div>
           <button class="start-btn" id="btn-start">Start exam →</button>
         </div>
       </div>
@@ -103,6 +104,11 @@ const durationSec = course.examDuration * 60;
             <button class="start-btn" id="btn-retry">Retry exam</button>
             <a class="back-link-btn" href={`/course/${cert}/`}>Back to course</a>
           </div>
+
+          <details class="review-details">
+            <summary>Review answers</summary>
+            <div id="answer-review" class="answer-review"></div>
+          </details>
         </div>
       </div>
 
@@ -280,6 +286,29 @@ const durationSec = course.examDuration * 60;
     const breakdownEl = document.getElementById('module-breakdown');
     if (!breakdownEl) return;
 
+    // Answer review
+    const reviewEl = document.getElementById('answer-review');
+    if (reviewEl) {
+      const labels = ['A', 'B', 'C', 'D'];
+      reviewEl.innerHTML = questions.map((q, i) => {
+        const userAns = answers[i];
+        const isCorrect = userAns === q.correct;
+        const userLabel = userAns !== null ? labels[userAns] : '—';
+        return `<div class="review-q ${isCorrect ? 'review-correct' : 'review-wrong'}">
+          <div class="review-q-header">
+            <span class="review-num">Q${i + 1}</span>
+            <span class="review-module-tag">${q.moduleTitle}</span>
+            <span class="review-verdict">${isCorrect ? '✓ Correct' : `✗ You: ${userLabel} · Correct: ${labels[q.correct]}`}</span>
+          </div>
+          <p class="review-q-text">${q.question}</p>
+          <div class="review-options">
+            ${q.options.map((opt, oi) => `<div class="review-opt ${oi === q.correct ? 'review-opt-correct' : (oi === userAns && !isCorrect ? 'review-opt-wrong' : '')}">${labels[oi]}. ${opt}</div>`).join('')}
+          </div>
+          <div class="review-exp">${q.explanation}</div>
+        </div>`;
+      }).join('');
+    }
+
     const sorted = Object.values(moduleScores).sort((a, b) => {
       const pctA = a.total ? a.correct / a.total : 0;
       const pctB = b.total ? b.correct / b.total : 0;
@@ -300,6 +329,20 @@ const durationSec = course.examDuration * 60;
       `;
     }).join('');
   }
+
+  // Show previous result on pre-screen
+  try {
+    const prev = JSON.parse(localStorage.getItem(`rr_course_${cert}_exam_result`) || 'null');
+    if (prev) {
+      const banner = document.getElementById('prev-result-banner');
+      if (banner) {
+        banner.className = `prev-result-banner ${prev.passed ? 'prev-pass' : 'prev-fail'}`;
+        const d = new Date(prev.timestamp);
+        const when = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        banner.textContent = `Last attempt ${when}: ${prev.correct}/${prev.total} — ${prev.pct}% (${prev.passed ? 'PASS' : 'FAIL'})`;
+      }
+    }
+  } catch (_) {}
 
   // Wire up buttons
   document.getElementById('btn-start')?.addEventListener('click', startExam);
@@ -396,4 +439,31 @@ const durationSec = course.examDuration * 60;
   .result-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
   .back-link-btn { padding: 0.75rem 1.5rem; border: 1px solid #d1d9e0; border-radius: 8px; font-size: 0.9rem; color: #374151; text-decoration: none; }
   .back-link-btn:hover { background: #f0f5f9; }
+
+  /* Prev result banner */
+  .prev-result-banner { margin-bottom: 1.5rem; padding: 0.6rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; }
+  .prev-result-banner.hidden { display: none; }
+  .prev-pass { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+  .prev-fail { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+
+  /* Answer review */
+  .review-details { margin-top: 2rem; border: 1px solid #d1d9e0; border-radius: 10px; overflow: hidden; }
+  .review-details summary { padding: 1rem 1.25rem; font-weight: 700; font-size: 0.9rem; cursor: pointer; color: #4a6478; background: #f6f8f9; }
+  .review-details summary:hover { background: #eef2f5; }
+  .answer-review { display: flex; flex-direction: column; gap: 0; }
+  .review-q { padding: 1.25rem; border-top: 1px solid #e5e7eb; font-size: 0.875rem; }
+  .review-correct { background: #f0fdf4; }
+  .review-wrong { background: #fff8f8; }
+  .review-q-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .review-num { font-weight: 700; color: #4a6478; }
+  .review-module-tag { font-size: 0.72rem; background: #e8eef3; color: #4a6478; padding: 0.15rem 0.5rem; border-radius: 4px; }
+  .review-verdict { font-weight: 600; margin-left: auto; }
+  .review-correct .review-verdict { color: #16a34a; }
+  .review-wrong .review-verdict { color: #dc2626; }
+  .review-q-text { font-weight: 600; color: #0e1a24; margin: 0 0 0.75rem; line-height: 1.4; }
+  .review-options { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.75rem; }
+  .review-opt { padding: 0.35rem 0.6rem; border-radius: 4px; color: #374151; background: #fff; border: 1px solid #e5e7eb; }
+  .review-opt-correct { background: #dcfce7; border-color: #86efac; color: #14532d; font-weight: 600; }
+  .review-opt-wrong { background: #fee2e2; border-color: #fca5a5; color: #7f1d1d; text-decoration: line-through; }
+  .review-exp { font-size: 0.82rem; color: #6a8499; line-height: 1.5; font-style: italic; }
 </style>
