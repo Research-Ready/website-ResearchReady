@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0f1b26"><title>Contact · Research-Ready</title><meta name="description" content="Get in touch, or book a call directly."><link rel="canonical" href="https://research-ready.nl/en/contact/"><link rel="alternate" hreflang="nl" href="https://research-ready.nl/contact/"><link rel="alternate" hreflang="en" href="https://research-ready.nl/en/contact/"><link rel="alternate" hreflang="x-default" href="https://research-ready.nl/contact/"><meta property="og:type" content="website"><meta property="og:title" content="Contact · Research-Ready"><meta property="og:description" content="Get in touch, or book a call directly."><meta property="og:url" content="https://research-ready.nl/en/contact/"><meta name="twitter:card" content="summary"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/_astro/contact.CuB_sXIf.css">
+<link rel="stylesheet" href="/_astro/contact.DUntO7EB.css"></head> <body> <a class="skip-link" href="#main">Skip to content</a> <header class="site-header"> <div class="wrap"> <a class="brand" href="/en/"> <svg class="brand-mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"> <path d="M8 22 L16 10 L24 22" stroke="#2f6f92" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="16" cy="10" r="3" fill="#2f6f92"></circle> <circle cx="8" cy="22" r="3" fill="#101c26"></circle> <circle cx="24" cy="22" r="3" fill="#101c26"></circle> </svg>
+Research-Ready
+</a> <div class="site-nav-row"> <nav class="nav-links" aria-label="Main"> <a href="/en/">Home</a> <a href="/en/pipelines/">Pipelines</a> <a href="/en/contact/" aria-current="page">Contact</a> <a class="btn btn-ghost nav-pitch-btn" href="/en/pitch/">Presentation</a> </nav> <a class="lang-toggle" href="/contact/" aria-label="Switch language">NL</a> </div> </div> </header> <main id="main">  <section class="section"> <div class="wrap split"> <div class="split-copy"> <span class="eyebrow">Contact</span> <h1>Contact</h1> <p class="lede">Get in touch, or book a call directly.</p> <div class="contact-block"> <p>Prefer email first? Reach us at <a href="mailto:info@research-ready.nl">info@research-ready.nl</a></p> </div> </div> <div class="contact-card"> <h2>Book a call</h2> <div id="cal-inline"></div> <script>(function(){const calLink = "research-ready/intro";
+const brandColor = "#3c5a72";
+
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal, ar = arguments;
+      if (!cal.loaded) {
+        cal.ns = {};
+        cal.q = cal.q || [];
+        d.head.appendChild(d.createElement('script')).src = A;
+        cal.loaded = true;
+      }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1];
+        api.q = api.q || [];
+        if (typeof namespace === 'string') {
+          cal.ns[namespace] = cal.ns[namespace] || api;
+          p(cal.ns[namespace], ar);
+          p(cal, ['initNamespace', namespace]);
+        } else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+  Cal('init', { origin: 'https://cal.com' });
+
+  Cal('inline', {
+    elementOrSelector: '#cal-inline',
+    calLink: calLink,
+    layout: 'month_view',
+  });
+
+  Cal('ui', {
+    styles: { branding: { brandColor: brandColor } },
+    hideEventTypeDetails: false,
+    layout: 'month_view',
+  });
+})();</script> </div> </div> </section>  </main> <footer class="site-footer"> <div class="wrap footer-top"> <div class="footer-brand"> <a class="brand" href="/en/"> <svg class="brand-mark" width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"> <path d="M8 22 L16 10 L24 22" stroke="#7fb8d6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="16" cy="10" r="3" fill="#7fb8d6"></circle> <circle cx="8" cy="22" r="3" fill="#eaf1f4"></circle> <circle cx="24" cy="22" r="3" fill="#eaf1f4"></circle> </svg>
+Research-Ready
+</a> <p>Reproducible, forensically grounded AI pipelines — self-hosted and fully under European control.</p> </div> <div class="footer-links"> <div class="footer-col"> <h4>Navigation</h4> <a href="/en/">Home</a> <a href="/en/pipelines/">Pipelines</a> <a href="/en/contact/">Contact</a> </div> <div class="footer-col"> <h4>Research-Ready</h4> <a href="https://github.com/Research-Ready" target="_blank" rel="noopener">Research-Ready on GitHub</a> <a href="mailto:info@research-ready.nl">info@research-ready.nl</a> </div> </div> </div> <div class="wrap footer-bottom"> <span>© 2026 Research-Ready</span> <span>research-ready.nl</span> </div> </footer> </body></html>

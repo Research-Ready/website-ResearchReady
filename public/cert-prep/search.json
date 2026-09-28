@@ -1,0 +1,512 @@
+[
+  {
+    "objectID": "az-500.html",
+    "href": "az-500.html",
+    "title": "AZ-500: Microsoft Azure Security Technologies",
+    "section": "",
+    "text": "Mid-level Microsoft Azure €165",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "AZ-500: Microsoft Azure Security Technologies"
+    ]
+  },
+  {
+    "objectID": "az-500.html#examenoverzicht",
+    "href": "az-500.html#examenoverzicht",
+    "title": "AZ-500: Microsoft Azure Security Technologies",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\nSlagingsdrempel\n700/1000\n\n\nDuur\n120 minuten\n\n\nVragen\n40–60\n\n\nAanbevolen voorkennis\nAZ-900, SC-900, of Azure-werkervaring\n\n\nGeldigheid\n1 jaar\n\n\n\n\nExamendomeinen\n\n\n\nDomein\nGewicht\n\n\n\n\nManage identity & access\n25–30%\n\n\nSecure networking\n20–25%\n\n\nSecure compute, storage & databases\n20–25%\n\n\nManage security operations\n25–30%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "AZ-500: Microsoft Azure Security Technologies"
+    ]
+  },
+  {
+    "objectID": "az-500.html#kernconcepten",
+    "href": "az-500.html#kernconcepten",
+    "title": "AZ-500: Microsoft Azure Security Technologies",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nIdentity & Access\n\nEntra ID RBAC: built-in rollen (Owner, Contributor, Reader), custom roles, scope (management group → subscription → resource group → resource)\nManaged Identities: system-assigned vs. user-assigned — geen credentials in code\nService Principals: app-registraties, certificaat vs. client secret\nPIM in Azure: tijdgebonden activatie van Azure RBAC-rollen\nAzure Policy: deny, audit, modify, deployIfNotExists — compliance afdwingen\nMicrosoft Entra ID Governance: access reviews voor Azure-resources\n\n\n\nSecure Networking\n\nAzure Firewall: Premium vs. Standard, DNAT/SNAT-regels, threat intelligence feed\nAzure DDoS Protection: Basic (gratis) vs. Standard (bescherming + SLA)\nNetwork Security Groups (NSG): inbound/outbound regels, effectieve regels debuggen\nAzure Bastion: RDP/SSH zonder publiek IP op VM’s\nPrivate Endpoints & Private Link: service bereikbaar via privénetwerk\nAzure Front Door + WAF: Layer 7 beveiliging, geo-filtering, rate limiting\nVNet peering & Hub-Spoke: netwerkisolatie en segmentatie\n\n\n\nCompute, Storage & Databases\n\nAzure Key Vault: secrets, keys, certificates — access policies vs. RBAC\nDisk encryption: Azure Disk Encryption (BitLocker/DM-Crypt) vs. Server-Side Encryption\nVM security: JIT-toegang (just-in-time VM access), endpoint protection\nContainer security: Azure Container Registry (ACR) — content trust, vulnerability scanning\nAKS security: pod identity, network policies, RBAC\nStorage security: SAS tokens, storage firewall, immutable blob, Defender for Storage\nSQL security: Azure Defender for SQL, Transparent Data Encryption, auditing, Always Encrypted\n\n\n\nSecurity Operations\n\nMicrosoft Defender for Cloud: Secure Score, aanbevelingen, workload protections\nDefender CSPM: attack paths, cloud security explorer\nMicrosoft Sentinel integratie: data connectors voor Azure-services\nAzure Monitor: Log Analytics, diagnostic settings, alerts\nMicrosoft Defender for Cloud regulatory compliance: CIS, NIST, PCI-DSS\nIncident response in Azure: isoleren van VM’s, NSG-blokkades, Key Vault-revocatie",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "AZ-500: Microsoft Azure Security Technologies"
+    ]
+  },
+  {
+    "objectID": "az-500.html#oefenvragen",
+    "href": "az-500.html#oefenvragen",
+    "title": "AZ-500: Microsoft Azure Security Technologies",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nJe wilt dat een Azure Function toegang heeft tot secrets in Key Vault zonder dat credentials in de code staan. Wat is de beste aanpak?\nA) Hardcode de client secret in de applicatiecode B) Gebruik een system-assigned managed identity + Key Vault RBAC ✓ C) Sla de secret op in een environment variable D) Gebruik een service principal met client secret in app settings\nUitleg: Managed Identity elimineert credential-beheer volledig. De Function krijgt automatisch een identiteit; Key Vault RBAC kent de rol “Key Vault Secrets User” toe. Geen secret in code, geen rotatieproblemen.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nEen VM is gecompromitteerd. Je wilt verdere schade beperken zonder de VM direct te stoppen (forensisch bewijs bewaren). Wat doe je als eerste?\nA) VM onmiddellijk dealloceren B) NSG-regel toevoegen die al inbound/outbound verkeer blokkeert ✓ C) VM-snapshot maken D) Defender for Cloud alert sluiten\nUitleg: NSG-isolatie stopt communicatie (inclusief C2) zonder de VM te stoppen, waardoor geheugeninhoud en lopende processen bewaard blijven voor forensisch onderzoek. Snapshot daarna.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "AZ-500: Microsoft Azure Security Technologies"
+    ]
+  },
+  {
+    "objectID": "az-500.html#studiestrategie",
+    "href": "az-500.html#studiestrategie",
+    "title": "AZ-500: Microsoft Azure Security Technologies",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 8–12 weken\n\nWeek 1-3 — Microsoft Learn AZ-500 leerpad (officieel, gratis)\nWeek 4-6 — Hands-on labs in Azure (free account €200 credit of Pay-As-You-Go)\nWeek 7-9 — John Savill AZ-500 Study Cram + oefenexamens\nWeek 10-12 — Whizlabs of MeasureUp, focus op zwakke domeinen\n\nAanbevolen labs om zelf te bouwen: - Key Vault + Managed Identity + Function App - Hub-Spoke netwerk met Azure Firewall - Defender for Cloud inschakelen op een subscription - JIT VM Access configureren en testen\n\n\n\n\n\n\nTip\n\n\n\nAzure free account is voldoende. De meeste AZ-500-labs draaien op gratis-tier resources (B1s VM’s, free Key Vault operations, gratis Log Analytics 5GB). Budget €5–15 voor de labs die net buiten de free tier vallen.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "AZ-500: Microsoft Azure Security Technologies"
+    ]
+  },
+  {
+    "objectID": "sc-200.html",
+    "href": "sc-200.html",
+    "title": "SC-200: Microsoft Security Operations Analyst",
+    "section": "",
+    "text": "Mid-level Microsoft SOC €165",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-200: Microsoft Security Operations Analyst"
+    ]
+  },
+  {
+    "objectID": "sc-200.html#examenoverzicht",
+    "href": "sc-200.html#examenoverzicht",
+    "title": "SC-200: Microsoft Security Operations Analyst",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\nSlagingsdrempel\n700/1000\n\n\nDuur\n120 minuten\n\n\nVragen\n40–60\n\n\nAanbevolen voorkennis\nSC-900, Security+, of SOC-werkervaring\n\n\nGeldigheid\n1 jaar\n\n\n\n\nExamendomeinen\n\n\n\nDomein\nGewicht\n\n\n\n\nMitigate threats using Microsoft Defender XDR\n25–30%\n\n\nMitigate threats using Defender for Cloud\n15–20%\n\n\nMitigate threats using Microsoft Sentinel\n50–55%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-200: Microsoft Security Operations Analyst"
+    ]
+  },
+  {
+    "objectID": "sc-200.html#kernconcepten",
+    "href": "sc-200.html#kernconcepten",
+    "title": "SC-200: Microsoft Security Operations Analyst",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nMicrosoft Defender XDR\n\nMicrosoft 365 Defender portal: unified XDR — incidents, alerts, hunting\nDefender for Endpoint: onboarding, alert triage, live response\nDefender for Identity: AD-aanvalsdetectie (lateral movement, DCSync, pass-the-hash)\nDefender for Office 365: anti-phishing, safe links, safe attachments, ZAP\nDefender for Cloud Apps: CASB — schaduw-IT, beleid, sessiecontrole\nIncident correlatie: hoe Defender XDR alerts samenvoegt tot incidenten\n\n\n\nMicrosoft Defender for Cloud\n\nSecurity posture: Secure Score, aanbevelingen opvolgen\nWorkload protections: servers, containers, databases, storage\nDefender CSPM vs. Defender for Servers\nRegulatory compliance: CIS, NIST, ISO dashboards\n\n\n\nMicrosoft Sentinel (grootste domein)\n\nArchitectuur: Log Analytics Workspace, data connectors, parsers\nKQL (Kusto Query Language): dit is het meest kritische onderdeel\nAnalytics rules: scheduled, fusion, ML-based, NRT\nHunting: built-in queries, MITRE ATT&CK coverage\nAutomation: playbooks (Logic Apps), automation rules\nWorkbooks: dashboards en rapportage\nUEBA: User & Entity Behavior Analytics\nThreat Intelligence: TAXII/STIX feeds integreren\nContent hub: out-of-the-box oplossingen per product",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-200: Microsoft Security Operations Analyst"
+    ]
+  },
+  {
+    "objectID": "sc-200.html#kql-de-essentie",
+    "href": "sc-200.html#kql-de-essentie",
+    "title": "SC-200: Microsoft Security Operations Analyst",
+    "section": "KQL — De Essentie",
+    "text": "KQL — De Essentie\nKQL is het hart van het SC-200-examen. Basispatronen die je moet kennen:\n// Filter + project\nSecurityEvent\n| where EventID == 4625\n| where TimeGenerated &gt; ago(1h)\n| project TimeGenerated, Account, Computer, IpAddress\n\n// Aggregatie\nSigninLogs\n| where ResultType != 0\n| summarize FailCount = count() by UserPrincipalName\n| where FailCount &gt; 10\n| sort by FailCount desc\n\n// Join\nlet riskUsers = SigninLogs\n    | where RiskLevelDuringSignIn == \"high\"\n    | distinct UserPrincipalName;\nAuditLogs\n| where InitiatedBy.user.userPrincipalName in (riskUsers)\n| project TimeGenerated, ActivityDisplayName, InitiatedBy",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-200: Microsoft Security Operations Analyst"
+    ]
+  },
+  {
+    "objectID": "sc-200.html#oefenvragen",
+    "href": "sc-200.html#oefenvragen",
+    "title": "SC-200: Microsoft Security Operations Analyst",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nEen Sentinel-analytic rule genereert te veel false positives. Je wilt de rule aanpassen zonder hem uit te zetten. Wat doe je?\nA) Verwijder de rule en maak een nieuwe B) Pas de query aan en/of stel een suppression in ✓ C) Zet de rule op “disabled” D) Verhoog de alert threshold in Defender\nUitleg: Je kunt de KQL-query verfijnen (exclusies toevoegen) en/of een suppression instellen om gelijke alerts te groeperen. De rule blijft actief.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nJe wilt automatisch een Teams-bericht sturen wanneer Sentinel een P1-incident aanmaakt. Wat gebruik je?\nA) Analytics rule action B) Automation rule + Playbook (Logic App) ✓ C) Workbook alert D) Threat Intelligence indicator\nUitleg: Automation rules triggeren op incident-aanmaak/-update en kunnen playbooks starten. Een playbook (Logic App) bevat de Teams-connector-actie.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-200: Microsoft Security Operations Analyst"
+    ]
+  },
+  {
+    "objectID": "sc-200.html#studiestrategie",
+    "href": "sc-200.html#studiestrategie",
+    "title": "SC-200: Microsoft Security Operations Analyst",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 8–12 weken\n\nKQL eerst — Week 1-2: KQL-oefening via kql.guide of Microsoft Learn\nWeek 3-5 — Sentinel-labs via Microsoft Learn; gratis Sentinel-trial in Azure\nWeek 6-8 — Defender XDR portal verkennen via M365 Defender trial\nWeek 9-12 — John Savill SC-200 YouTube + oefenexamens\n\n\n\n\n\n\n\nTip\n\n\n\nGratis Sentinel-lab: Activeer een Azure free account (€200 credit) + deploy de “Microsoft Sentinel Training Lab” ARM-template uit de GitHub-repository van Microsoft. Dit geeft je een volledig werkende SIEM met voorbeelddata.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-200: Microsoft Security Operations Analyst"
+    ]
+  },
+  {
+    "objectID": "cysa-plus.html",
+    "href": "cysa-plus.html",
+    "title": "CompTIA CySA+ (CS0-003)",
+    "section": "",
+    "text": "Mid-level CompTIA SOC-gericht €392",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA CySA+ (CS0-003)"
+    ]
+  },
+  {
+    "objectID": "cysa-plus.html#examenoverzicht",
+    "href": "cysa-plus.html#examenoverzicht",
+    "title": "CompTIA CySA+ (CS0-003)",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\nSlagingsdrempel\n750/900\n\n\nDuur\n165 minuten\n\n\nVragen\nMax. 85 (MCQ + PBQ)\n\n\nAanbevolen voorkennis\nSecurity+, 3-4 jaar IT/security-ervaring\n\n\nGeldigheid\n3 jaar\n\n\n\n\nExamendomeinen (CS0-003)\n\n\n\nDomein\nGewicht\n\n\n\n\nSecurity Operations\n33%\n\n\nVulnerability Management\n30%\n\n\nIncident Response & Management\n20%\n\n\nReporting & Communication\n17%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA CySA+ (CS0-003)"
+    ]
+  },
+  {
+    "objectID": "cysa-plus.html#kernconcepten",
+    "href": "cysa-plus.html#kernconcepten",
+    "title": "CompTIA CySA+ (CS0-003)",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nSecurity Operations\n\nSIEM-gebruik: Splunk, Microsoft Sentinel — SPL-queries, KQL-queries lezen\nThreat hunting: hypothesis-driven zoeken naar verborgen bedreigingen\nIOC vs. IOA: Indicator of Compromise (bewijs achteraf) vs. Indicator of Attack (in-progress gedrag)\nMITRE ATT&CK framework: tactics, techniques, procedures (TTPs)\nLog-analyse: Windows Event IDs (4624, 4625, 4648, 4688), Sysmon, netflow\n\n\n\nVulnerability Management\n\nVulnerability scanning: Nessus, Qualys, OpenVAS — authenticated vs. unauthenticated\nPrioritering: CVSS + context (internet-facing? data-criticality?) + CISA KEV\nPatch management lifecycle\nAttack surface management\nRemediation vs. mitigatie vs. acceptatie\n\n\n\nIncident Response\n\nIR-fasen: Preparation, Detection, Analysis, Containment, Eradication, Recovery, Post-incident\nDigitale forensics: geheugen-acquisitie, disk imaging, chain of custody\nMalware-analyse: static vs. dynamic analysis\nNetwerk-forensics: Wireshark, Zeek/Bro, NetFlow\n\n\n\nReporting & Communication\n\nMetrics: MTTD, MTTR, false positive rate, SLA-naleving\nExectuive vs. technisch rapport\nVulnerability-aging en SLA\nRoot cause analysis communiceren",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA CySA+ (CS0-003)"
+    ]
+  },
+  {
+    "objectID": "cysa-plus.html#oefenvragen",
+    "href": "cysa-plus.html#oefenvragen",
+    "title": "CompTIA CySA+ (CS0-003)",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nEen SOC-analist ziet in Splunk dat een host elke 60 seconden een DNS-query stuurt naar een extern domein. Wat is de meest waarschijnlijke verklaring?\nA) Normaal Windows-updategedrag B) C2-beaconing via DNS ✓ C) NTP-synchronisatie D) LDAP-authenticatie\nUitleg: Regelmatige, periodieke outbound communicatie naar een extern domein is een klassiek C2-beaconingpatroon. DNS is populair omdat het zelden geblokkeerd wordt.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nEen kwetsbaarheid heeft CVSS 9.8 maar het getroffen systeem staat niet verbonden met internet en bevat geen gevoelige data. Hoe prioriteer je?\nA) Altijd onmiddellijk patchen — CVSS 9.8 is kritiek B) Lagere prioriteit op basis van context ✓ C) Accepteren zonder actie D) Mitigeren met firewall-regel\nUitleg: CVSS meet intrinsieke ernst, niet risico. Risico = kans × impact. Geen internet-exposure + geen gevoelige data verlaagt de kans significant. Context bepaalt prioriteit.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA CySA+ (CS0-003)"
+    ]
+  },
+  {
+    "objectID": "cysa-plus.html#studiestrategie",
+    "href": "cysa-plus.html#studiestrategie",
+    "title": "CompTIA CySA+ (CS0-003)",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 8–12 weken\n\nSecurity+ als basis — vereiste achtergrond\nWeeks 1-4 — Jason Dion CySA+ cursus (Udemy) + CompTIA studiemateriaal\nWeeks 5-8 — Hands-on: TryHackMe SOC Level 1 pad, SIEM-labs\nWeeks 9-12 — Oefenexamens, focus op CS0-003 PBQ-simulaties\n\n\n\n\n\n\n\nTip\n\n\n\nPraktijk is essentieel. CySA+ toetst analytisch denken, niet alleen kennis. Werk TryHackMe of LetsDefend SOC-labs door — je herkent PBQ-scenario’s dan direct.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA CySA+ (CS0-003)"
+    ]
+  },
+  {
+    "objectID": "sc-900.html",
+    "href": "sc-900.html",
+    "title": "SC-900: Microsoft Security, Compliance & Identity Fundamentals",
+    "section": "",
+    "text": "Beginner Microsoft €165",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-900: Microsoft Security, Compliance & Identity Fundamentals"
+    ]
+  },
+  {
+    "objectID": "sc-900.html#examenoverzicht",
+    "href": "sc-900.html#examenoverzicht",
+    "title": "SC-900: Microsoft Security, Compliance & Identity Fundamentals",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\nSlagingsdrempel\n700/1000\n\n\nDuur\n60 minuten\n\n\nVragen\n40–60 (MCQ + case study)\n\n\nGeldigheid\nLevenslang (no renewal)\n\n\nAanbevolen voorkennis\nGeen — echte instapper\n\n\n\n\nExamendomeinen\n\n\n\nDomein\nGewicht\n\n\n\n\nSecurity, compliance & identity concepts\n10–15%\n\n\nMicrosoft Entra capabilities\n25–30%\n\n\nMicrosoft security solutions\n35–40%\n\n\nMicrosoft compliance solutions\n25–30%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-900: Microsoft Security, Compliance & Identity Fundamentals"
+    ]
+  },
+  {
+    "objectID": "sc-900.html#kernconcepten",
+    "href": "sc-900.html#kernconcepten",
+    "title": "SC-900: Microsoft Security, Compliance & Identity Fundamentals",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nDomein 1 — Concepten\n\nCIA-triad: Confidentiality, Integrity, Availability\nZero Trust: Verify explicitly, least privilege, assume breach\nDefense in depth: lagen van beveiliging (fysiek → netwerk → applicatie → data)\nShared responsibility model: wat Microsoft beheert vs. wat jij beheert\nEncryption: at rest vs. in transit; symmetric vs. asymmetric\n\n\n\nDomein 2 — Microsoft Entra (Identity)\n\nEntra ID (voorheen Azure AD): cloud identity provider\nAuthenticatie: MFA, passwordless (FIDO2, Windows Hello, Authenticator app)\nConditional Access: if-then beleid (locatie, apparaat, risico → toegang blokkeren/toestaan)\nRBAC: Role-Based Access Control — least privilege\nIdentity Protection: risicosignalen, automatische remediation\nPrivileged Identity Management (PIM): just-in-time adminrechten\n\n\n\nDomein 3 — Microsoft Security Solutions\n\nMicrosoft Defender familie: Defender for Cloud, Endpoint, Identity, O365\nMicrosoft Sentinel: SIEM + SOAR in Azure\nAzure Firewall / NSG: netwerkbeveiliging\nMicrosoft 365 Defender: XDR-platform\n\n\n\nDomein 4 — Compliance\n\nMicrosoft Purview: data governance, compliance, DLP\nCompliance Manager: risicoscore, actie-items\nInformation Protection: labels, DLP-beleid\neDiscovery: juridische zoekfunctie in M365\nAudit logs: activiteitsregistratie in M365 en Azure",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-900: Microsoft Security, Compliance & Identity Fundamentals"
+    ]
+  },
+  {
+    "objectID": "sc-900.html#oefenvragen",
+    "href": "sc-900.html#oefenvragen",
+    "title": "SC-900: Microsoft Security, Compliance & Identity Fundamentals",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nEen organisatie wil dat medewerkers alleen toegang krijgen tot bedrijfssystemen als ze inloggen vanaf een beheerd apparaat. Welke Entra ID-functie passen ze toe?\nA) Identity Protection B) Conditional Access ✓ C) PIM D) SSPR\nUitleg: Conditional Access stelt if-then-beleid in. “Als apparaat onbeheerd → toegang blokkeren” is een klassiek CA-scenario.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nWelk model beschrijft dat Microsoft de fysieke datacenterbeveiligng beheert maar de klant verantwoordelijk is voor identiteitsbeheer?\nA) Zero Trust B) Defense in depth C) Shared responsibility ✓ D) Least privilege\nUitleg: In het shared responsibility model verschuift verantwoordelijkheid per servicelaag (IaaS/PaaS/SaaS). Identity is altijd de klant.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-900: Microsoft Security, Compliance & Identity Fundamentals"
+    ]
+  },
+  {
+    "objectID": "sc-900.html#studiestrategie",
+    "href": "sc-900.html#studiestrategie",
+    "title": "SC-900: Microsoft Security, Compliance & Identity Fundamentals",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 2–4 weken (1–2 uur/dag)\n\nWeek 1 — Microsoft Learn gratis leerpad SC-900 (officieel, gratis)\nWeek 2 — MeasureUp oefenexamen of Whizlabs; noteer zwakke domeinen\nWeek 3-4 — Focus op zwakke domeinen; nog twee oefenexamens\n\nGratis bronnen: - Microsoft Learn SC-900 - John Savill’s SC-900 YouTube series - Microsoft Virtual Training Days (gratis, met examenvoucher)\n\n\n\n\n\n\nTip\n\n\n\nTip: Microsoft geeft regelmatig gratis examenvouchers weg via Virtual Training Days. Zoek op “Microsoft Virtual Training Day SC-900” — je bespaart €165.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-900: Microsoft Security, Compliance & Identity Fundamentals"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Security Cert Prep",
+    "section": "",
+    "text": "Deze kennisbank helpt je studietraject voor de zeven meest gevraagde security-certifcaten. Elk document is automatisch gegenereerd en bijgehouden via de Research-Ready Quarto-pipeline.\n\n\n\n\n\n\nTip\n\n\n\nNieuw hier? Begin met SC-900 (Microsoft fundamentals) of Security+ (vendor-neutral basis), afhankelijk van of je Microsoft-gericht of breed wilt starten.",
+    "crumbs": [
+      "Overzicht",
+      "Security Cert Prep"
+    ]
+  },
+  {
+    "objectID": "index.html#welkom",
+    "href": "index.html#welkom",
+    "title": "Security Cert Prep",
+    "section": "",
+    "text": "Deze kennisbank helpt je studietraject voor de zeven meest gevraagde security-certifcaten. Elk document is automatisch gegenereerd en bijgehouden via de Research-Ready Quarto-pipeline.\n\n\n\n\n\n\nTip\n\n\n\nNieuw hier? Begin met SC-900 (Microsoft fundamentals) of Security+ (vendor-neutral basis), afhankelijk van of je Microsoft-gericht of breed wilt starten.",
+    "crumbs": [
+      "Overzicht",
+      "Security Cert Prep"
+    ]
+  },
+  {
+    "objectID": "index.html#certificeringskaart",
+    "href": "index.html#certificeringskaart",
+    "title": "Security Cert Prep",
+    "section": "Certificeringskaart",
+    "text": "Certificeringskaart\n\n\n\nCertificaat\nNiveau\nVendor\nDomein\nKosten (ca.)\n\n\n\n\nSC-900\nBeginner\nMicrosoft\nSecurity fundamentals\n€165\n\n\nSecurity+\nEntry\nCompTIA\nBrede security basis\n€392\n\n\nCCNA\nEntry-Mid\nCisco\nNetwerken + security\n€330\n\n\nSC-300\nMid\nMicrosoft\nIdentity & Access\n€165\n\n\nAZ-500\nMid\nMicrosoft\nAzure security\n€165\n\n\nCySA+\nMid\nCompTIA\nThreat detection / SOC\n€392\n\n\nSC-200\nMid\nMicrosoft\nMicrosoft Sentinel / SOC\n€165",
+    "crumbs": [
+      "Overzicht",
+      "Security Cert Prep"
+    ]
+  },
+  {
+    "objectID": "index.html#aanbevolen-leerpad",
+    "href": "index.html#aanbevolen-leerpad",
+    "title": "Security Cert Prep",
+    "section": "Aanbevolen leerpad",
+    "text": "Aanbevolen leerpad\nStap 1 — Fundament\n  └── SC-900 (2-4 weken) → Security+ (6-8 weken)\n\nStap 2 — Specialisatie: kies een richting\n  ├── Microsoft cloud-security: SC-300 → AZ-500 → SC-200\n  └── Vendor-neutraal SOC:      CCNA → CySA+\n\nStap 3 — Combineer\n  └── SC-200 + CySA+ = sterk SOC-analist profiel",
+    "crumbs": [
+      "Overzicht",
+      "Security Cert Prep"
+    ]
+  },
+  {
+    "objectID": "index.html#hoe-deze-studiehulp-werkt",
+    "href": "index.html#hoe-deze-studiehulp-werkt",
+    "title": "Security Cert Prep",
+    "section": "Hoe deze studiehulp werkt",
+    "text": "Hoe deze studiehulp werkt\nElk certifcaatdocument bevat:\n\nExamenoverzicht — domeinen, gewichten, slagingsdrempel\nKernconcepten per domein — beknopt, gericht op wat het examen toetst\nOefenvragen — scenario-gebaseerd, met uitleg\nStudiestrategie — tijdplanning, gratis + betaalde bronnen\nLabsuggesties — hands-on oefening zonder grote kosten\n\n\n\n\n\n\n\nNote\n\n\n\nResearch-Ready pipeline: De inhoud van deze kennisbank wordt bijgehouden via een geautomatiseerde Quarto-pipeline. Zodra examendoelstellingen wijzigen, kan de pipeline nieuwe content genereren en publiceren zonder handmatig werk.",
+    "crumbs": [
+      "Overzicht",
+      "Security Cert Prep"
+    ]
+  },
+  {
+    "objectID": "index.html#studietips",
+    "href": "index.html#studietips",
+    "title": "Security Cert Prep",
+    "section": "Studietips",
+    "text": "Studietips\n\nSla officiële doelstellingen op — Microsoft Learn en CompTIA publiceren exacte examendomeinen gratis. Dit is de enige “syllabus” die telt.\nBouw labs vroeg — zeker voor SC-200 en AZ-500. Lees + doe gelijktijdig.\nOefenexamens zijn de maatstaf — gebruik je score per domein om studiepriorieten te bepalen, niet je totaalscore.\nPlan je examen voor je klaar voelt — een deadline versnelt de voorbereiding aantoonbaar.\n\n\nGegenereerd door de Research-Ready Quarto-pipeline · research-ready.nl",
+    "crumbs": [
+      "Overzicht",
+      "Security Cert Prep"
+    ]
+  },
+  {
+    "objectID": "sec-plus.html",
+    "href": "sec-plus.html",
+    "title": "CompTIA Security+ (SY0-701)",
+    "section": "",
+    "text": "Entry CompTIA Vendor-neutraal €392",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA Security+ (SY0-701)"
+    ]
+  },
+  {
+    "objectID": "sec-plus.html#examenoverzicht",
+    "href": "sec-plus.html#examenoverzicht",
+    "title": "CompTIA Security+ (SY0-701)",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\nSlagingsdrempel\n750/900\n\n\nDuur\n90 minuten\n\n\nVragen\nMax. 90 (MCQ + PBQ)\n\n\nGeldigheid\n3 jaar (CE-punten of herexamen)\n\n\nAanbevolen voorkennis\nCompTIA Network+ of 2 jaar IT-ervaring\n\n\n\n\nExamendomeinen (SY0-701)\n\n\n\nDomein\nGewicht\n\n\n\n\nGeneral Security Concepts\n12%\n\n\nThreats, Vulnerabilities & Mitigations\n22%\n\n\nSecurity Architecture\n18%\n\n\nSecurity Operations\n28%\n\n\nSecurity Program Management & Oversight\n20%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA Security+ (SY0-701)"
+    ]
+  },
+  {
+    "objectID": "sec-plus.html#kernconcepten",
+    "href": "sec-plus.html#kernconcepten",
+    "title": "CompTIA Security+ (SY0-701)",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nDomein 1 — General Security Concepts\n\nAAA: Authentication, Authorization, Accounting\nCryptografie: hashing (SHA), symmetric (AES), asymmetric (RSA), PKI, certificates\nSecurity controls: preventive, detective, corrective, compensating\nPhysical security: badges, cameras, mantrap, Faraday cage\n\n\n\nDomein 2 — Threats & Vulnerabilities\n\nAanvalstypes: phishing, vishing, smishing, social engineering, malware (ransomware, RAT, rootkit)\nVulnerability scanning vs. penetration testing\nCVSS scoring: base, temporal, environmental\nOWASP Top 10: SQLi, XSS, IDOR, SSRF, etc.\nSupply chain attacks, zero-days, insider threats\n\n\n\nDomein 3 — Security Architecture\n\nNetwork segmentation: DMZ, VLAN, micro-segmentation\nCloud modellen: IaaS, PaaS, SaaS; security responsibilities per model\nZero Trust architecture: never trust, always verify\nVPN types: site-to-site, remote access, SSL vs. IPSec\nFirewall types: stateless, stateful, NGFW, WAF\n\n\n\nDomein 4 — Security Operations\n\nIncident response: Preparation → Identification → Containment → Eradication → Recovery → Lessons Learned\nSIEM: log aggregation, correlation, alerting\nEDR/XDR: endpoint detection and response\nVulnerability management lifecycle\nDigital forensics: chain of custody, order of volatility\n\n\n\nDomein 5 — Security Program Management\n\nFrameworks: NIST CSF, ISO 27001, SOC 2\nRisk management: risk appetite, BIA, BCP/DR\nData classification: public, internal, confidential, restricted\nCompliance: GDPR, HIPAA, PCI-DSS — wat elk beschermt\nSecurity awareness training",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA Security+ (SY0-701)"
+    ]
+  },
+  {
+    "objectID": "sec-plus.html#oefenvragen",
+    "href": "sec-plus.html#oefenvragen",
+    "title": "CompTIA Security+ (SY0-701)",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nEen medewerker ontvangt een e-mail die beweert van de CEO te zijn en vraagt dringend om een bankoverschrijving. Dit is een voorbeeld van:\nA) Vishing B) Whaling ✓ C) Pharming D) Pretexting\nUitleg: Whaling = spear phishing gericht op executives of hooggeplaatste personen (“grote vis”). De CEO-fraude is het meest voorkomende whaling-scenario.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nWelk concept zorgt dat een stuk data alleen te ontcijferen is door de ontvanger, terwijl iedereen de authenticiteit kan verifiëren?\nA) Symmetric encryption B) Hashing C) Public key encryption ✓ D) Steganography\nUitleg: Asymmetrische cryptografie: versleutelen met public key (alleen privésleutel kan ontcijferen), signeren met private key (iedereen kan verifiëren met public key).",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA Security+ (SY0-701)"
+    ]
+  },
+  {
+    "objectID": "sec-plus.html#studiestrategie",
+    "href": "sec-plus.html#studiestrategie",
+    "title": "CompTIA Security+ (SY0-701)",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 6–10 weken (1–2 uur/dag)\n\nWeeks 1-3 — Professor Messer gratis Security+ cursus (YouTube/website)\nWeeks 4-5 — Jason Dion’s oefenexamens (Udemy, vaak €12 in sale)\nWeeks 6-7 — Zwakke domeinen herhalen; focus op PBQ-types\nWeek 8+ — Dagelijks oefenexamen; score stabiel boven 80% = klaar\n\nGratis bronnen: - Professor Messer SY0-701 - CompTIA CertMaster Learn (betaald maar officieel) - TryHackMe “Jr Penetration Tester” pad (hands-on labs)\n\n\n\n\n\n\nTip\n\n\n\nPBQ-tip: Performance-based questions (simulaties) komen altijd aan het begin. Sla ze over als ze te lang duren — ga naar MCQ’s en kom terug. Ze kosten meer tijd maar leveren evenveel punten.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CompTIA Security+ (SY0-701)"
+    ]
+  },
+  {
+    "objectID": "sc-300.html",
+    "href": "sc-300.html",
+    "title": "SC-300: Microsoft Identity & Access Administrator",
+    "section": "",
+    "text": "Mid-level Microsoft €165",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-300: Microsoft Identity & Access Administrator"
+    ]
+  },
+  {
+    "objectID": "sc-300.html#examenoverzicht",
+    "href": "sc-300.html#examenoverzicht",
+    "title": "SC-300: Microsoft Identity & Access Administrator",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\nSlagingsdrempel\n700/1000\n\n\nDuur\n120 minuten\n\n\nVragen\n40–60\n\n\nAanbevolen voorkennis\nSC-900, AZ-900, of Entra ID-werkervaring\n\n\nGeldigheid\n1 jaar (renewal via gratis online assessment)\n\n\n\n\nExamendomeinen\n\n\n\nDomein\nGewicht\n\n\n\n\nImplement & manage user identities\n20–25%\n\n\nImplement authentication & access management\n25–30%\n\n\nImplement access management for applications\n15–20%\n\n\nPlan & implement identity governance\n25–30%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-300: Microsoft Identity & Access Administrator"
+    ]
+  },
+  {
+    "objectID": "sc-300.html#kernconcepten",
+    "href": "sc-300.html#kernconcepten",
+    "title": "SC-300: Microsoft Identity & Access Administrator",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nIdentiteitsbeheer\n\nEntra ID-tenants: structuur, directories, B2B vs. B2C\nGebruikers & groepen: typen, dynamische groepen, licenties\nHybrid identity: Entra Connect (sync van on-prem AD), Password Hash Sync, Pass-Through Auth, Federation\nExternal identities: B2B-gastgebruikers, B2C-consumentenidentiteit\n\n\n\nAuthenticatie & Access Management\n\nMFA-methoden: Authenticator app, FIDO2, SMS, voice, hardware tokens\nConditional Access (CA): Named locations, device compliance, sign-in risk, user risk\nIdentity Protection: risicodetectie, geautomatiseerde policies\nSSPR: Self-Service Password Reset — vereisten, registratie\nPasswordless: Windows Hello for Business, FIDO2 security keys\n\n\n\nApplication Access\n\nApp registrations vs. Enterprise apps\nOAuth 2.0 flows: authorization code, client credentials, implicit\nApp permissions: delegated (namens gebruiker) vs. application (namens app)\nManaged Identities: system-assigned vs. user-assigned voor Azure-resources\nSingle Sign-On (SSO): SAML, OIDC, password-based\n\n\n\nIdentity Governance\n\nAccess reviews: wie heeft welke toegang, periodiek herzien\nEntitlement management: access packages, catalogs\nPIM: Privileged Identity Management — just-in-time, tijdgebonden adminrollen\nLifecycle workflows: automatische onboarding/offboarding\nAudit logs & sign-in logs",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-300: Microsoft Identity & Access Administrator"
+    ]
+  },
+  {
+    "objectID": "sc-300.html#oefenvragen",
+    "href": "sc-300.html#oefenvragen",
+    "title": "SC-300: Microsoft Identity & Access Administrator",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nEen gebruiker meldt dat haar account als “at risk” is gemarkeerd in Identity Protection. Ze wil weten hoe ze dit zelf kan verhelpen. Welke functie gebruik je?\nA) Conditional Access blokkade B) SSPR met risk remediation ✓ C) PIM-activatie D) Global Admin-ingrijpen vereist\nUitleg: Identity Protection kan gebruikers verplichten hun wachtwoord via SSPR te resetten om het risico zelf op te lossen, zonder admin-interventie.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nJe wilt dat een applicatie zonder gebruikersinterventie toegang heeft tot de Microsoft Graph API. Welk OAuth 2.0 flow gebruik je?\nA) Authorization code flow B) Implicit flow C) Client credentials flow ✓ D) Device code flow\nUitleg: Client credentials flow = machine-to-machine, geen gebruiker betrokken. De app authenticeer met eigen client ID + secret of certificaat.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-300: Microsoft Identity & Access Administrator"
+    ]
+  },
+  {
+    "objectID": "sc-300.html#studiestrategie",
+    "href": "sc-300.html#studiestrategie",
+    "title": "SC-300: Microsoft Identity & Access Administrator",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 6–8 weken\n\nWeek 1-2 — Microsoft Learn SC-300 leerpad (gratis, officieel)\nWeek 3-4 — Hands-on in gratis Azure-tenant (M365 Developer Program = 90 dagen gratis)\nWeek 5-6 — MeasureUp of Whizlabs oefenexamens per domein\nWeek 7-8 — PIM, CA en governance-labs herhalen\n\n\n\n\n\n\n\nTip\n\n\n\nMaak een gratis M365 Developer-tenant via het Microsoft 365 Developer Program. Dit geeft je 25 testicenses en een volledige Entra ID-omgeving om alle SC-300-concepten hands-on te oefenen.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "SC-300: Microsoft Identity & Access Administrator"
+    ]
+  },
+  {
+    "objectID": "ccna.html",
+    "href": "ccna.html",
+    "title": "CCNA (200-301)",
+    "section": "",
+    "text": "Entry-Mid Cisco Netwerken €330",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CCNA (200-301)"
+    ]
+  },
+  {
+    "objectID": "ccna.html#examenoverzicht",
+    "href": "ccna.html#examenoverzicht",
+    "title": "CCNA (200-301)",
+    "section": "Examenoverzicht",
+    "text": "Examenoverzicht\n\n\n\n\n\n\n\nSlagingsdrempel\n~825/1000 (niet officieel gepubliceerd)\n\n\nDuur\n120 minuten\n\n\nVragen\n100–120 (MCQ + drag-drop + simlets)\n\n\nAanbevolen voorkennis\nBasiskennis netwerken of CompTIA Network+\n\n\nGeldigheid\n3 jaar\n\n\n\n\nExamendomeinen (200-301)\n\n\n\nDomein\nGewicht\n\n\n\n\nNetwork Fundamentals\n20%\n\n\nNetwork Access\n20%\n\n\nIP Connectivity\n25%\n\n\nIP Services\n10%\n\n\nSecurity Fundamentals\n15%\n\n\nAutomation & Programmability\n10%",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CCNA (200-301)"
+    ]
+  },
+  {
+    "objectID": "ccna.html#kernconcepten",
+    "href": "ccna.html#kernconcepten",
+    "title": "CCNA (200-301)",
+    "section": "Kernconcepten",
+    "text": "Kernconcepten\n\nNetwork Fundamentals\n\nOSI-model: alle 7 lagen, protocol per laag, encapsulation\nTCP vs. UDP: handshake, poorten, use cases\nIPv4 subnetting: CIDR, VLSM — dit moet razendsnel gaan\nIPv6: adrestypen (global unicast, link-local, multicast), dual-stack, tunnel\n\n\n\nNetwork Access (Switching)\n\nEthernet: MAC-adressen, collision domains, broadcast domains\nVLANs: access port vs. trunk port, 802.1Q tagging, native VLAN\nSTP / RSTP: root bridge election, port states, convergentie\nEtherChannel: LACP vs. PAgP\n\n\n\nIP Connectivity (Routing)\n\nStatic routing: default route, floating static\nOSPF (single-area): neighborrelatie, DR/BDR, LSA-types 1 en 2\nEIGRP (basiskennis): AD-waarden, feasible successor\nFirst Hop Redundancy: HSRP, VRRP\n\n\n\nIP Services\n\nNAT/PAT: static, dynamic, overload (PAT)\nDHCP: DORA-proces, relay agent\nDNS: A, AAAA, CNAME, MX records\nNTP: stratum, client/server config\nQoS: DSCP-markering, queuing (basiskennis)\n\n\n\nSecurity Fundamentals\n\nAAA: TACACS+ vs. RADIUS — verschil kennen\nACL: standard (bron-IP), extended (bron, bestemming, protocol, poort)\nPort security: max MAC, violation modes (shutdown, restrict, protect)\nDHCP snooping: trusted vs. untrusted ports\nDynamic ARP Inspection (DAI)\nVPN-concepten: site-to-site IPSec, remote access\n\n\n\nAutomation & Programmability\n\nREST API: GET, POST, PUT, DELETE, HTTP-statuscodes\nData formats: JSON, XML, YAML — lezen en interpreteren\nCisco DNA Center vs. traditioneel beheer\nAnsible basics: playbook, inventory, idempotency",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CCNA (200-301)"
+    ]
+  },
+  {
+    "objectID": "ccna.html#subnetting-snelle-methode",
+    "href": "ccna.html#subnetting-snelle-methode",
+    "title": "CCNA (200-301)",
+    "section": "Subnetting — Snelle methode",
+    "text": "Subnetting — Snelle methode\nGegeven: 192.168.10.0/26\n\nStap 1 — Subnetmasker: /26 = 255.255.255.192\nStap 2 — Blokgrootte: 256 - 192 = 64\nStap 3 — Subnetten: .0, .64, .128, .192\nStap 4 — Voor 192.168.10.75:\n  Subnet:    192.168.10.64\n  Broadcast: 192.168.10.127\n  Hosts:     .65 – .126 (62 bruikbaar)\nOefen tot je dit in &lt;30 seconden doet.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CCNA (200-301)"
+    ]
+  },
+  {
+    "objectID": "ccna.html#oefenvragen",
+    "href": "ccna.html#oefenvragen",
+    "title": "CCNA (200-301)",
+    "section": "Oefenvragen",
+    "text": "Oefenvragen\n\n\n\n\n\n\nNoteVraag 1\n\n\n\nEen switch-port staat in “err-disabled” state. Wat is de meest waarschijnlijke oorzaak?\nA) STP loop gedetecteerd B) Port security violation (shutdown mode) ✓ C) VLAN niet geconfigureerd D) Duplex mismatch\nUitleg: Bij port security violation mode “shutdown” zet de switch de port op err-disabled. Je moet de port handmatig resetten (shutdown + no shutdown) na de oorzaak te verhelpen.\n\n\n\n\n\n\n\n\nNoteVraag 2\n\n\n\nWelk verschil is essentieel tussen TACACS+ en RADIUS?\nA) RADIUS versleutelt het volledige pakket; TACACS+ alleen het wachtwoord B) TACACS+ versleutelt het volledige pakket; RADIUS alleen het wachtwoord ✓ C) TACACS+ gebruikt UDP; RADIUS TCP D) Ze zijn functioneel identiek\nUitleg: TACACS+ (TCP 49) versleutelt het volledige pakket en scheidt AAA-functies. RADIUS (UDP 1812/1813) versleutelt alleen het wachtwoord en combineert auth + authorization.",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CCNA (200-301)"
+    ]
+  },
+  {
+    "objectID": "ccna.html#studiestrategie",
+    "href": "ccna.html#studiestrategie",
+    "title": "CCNA (200-301)",
+    "section": "Studiestrategie",
+    "text": "Studiestrategie\nTijdsinvestering: 12–20 weken (zwaarste cert in de lijst)\n\nWeeks 1-6 — Jeremy’s IT Lab gratis CCNA-cursus (YouTube — beste gratis bron)\nWeeks 7-10 — Packet Tracer labs (gratis via Cisco NetAcad)\nWeeks 11-14 — Boson NetSim of GNS3 voor gevorderde labs\nWeeks 15+ — Boson ExSim oefenexamens (goudstandaard voor CCNA)\n\n\n\n\n\n\n\nTip\n\n\n\nSubnetting is het fundament. Als je subnetting niet blind kunt, oefen dan dagelijks via subnettingpractice.com tot het automatisch gaat. Het CCNA-examen geeft geen tijd voor langzame berekeningen.\n\n\n\n← Terug naar overzicht",
+    "crumbs": [
+      "Overzicht",
+      "Certifications",
+      "CCNA (200-301)"
+    ]
+  }
+]

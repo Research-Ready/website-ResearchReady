@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap');
+
+:root {
+  --rr-dark:  #25445a;
+  --rr-blue:  #2f6f92;
+  --rr-light: #7fb8d6;
+  --rr-bg:    #f5f8fa;
+}
+
+body { font-family: "Inter", sans-serif; color: #1a2d3a; }
+h1,h2,h3,h4 { font-family: "Space Grotesk", sans-serif; color: var(--rr-dark); }
+h1 { border-bottom: 3px solid var(--rr-blue); padding-bottom: .4em; }
+h2 { border-left: 4px solid var(--rr-light); padding-left: .5em; }
+a  { color: var(--rr-blue); }
+
+.navbar { background: var(--rr-dark) !important; }
+.navbar-brand, .navbar .nav-link { color: #e8f0f5 !important; }
+.navbar .nav-link:hover { color: var(--rr-light) !important; }
+
+table { border-collapse: collapse; width: 100%; margin: 1.2em 0; }
+thead tr { background: var(--rr-dark); color: #fff; }
+thead th { padding: .5em 1em; text-align: left; }
+tbody tr:nth-child(even) { background: var(--rr-bg); }
+tbody td { padding: .45em 1em; border-bottom: 1px solid #dde4ea; }
+
+.callout-note      { border-left-color: var(--rr-blue)  !important; }
+.callout-tip       { border-left-color: #27ae60         !important; }
+.callout-warning   { border-left-color: #f39c12         !important; }
+.callout-important { border-left-color: #e74c3c         !important; }
+
+.cert-badge {
+  display: inline-block;
+  background: var(--rr-blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: .75em;
+  padding: 2px 10px;
+  border-radius: 20px;
+  margin-right: .4em;
+}
