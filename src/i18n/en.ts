@@ -252,7 +252,7 @@ export const en = {
       title: 'Want to play?',
       body: 'Book a session for your team, class or organisation. Or grab the brochure first.',
       contact: 'Book a session',
-      pdf: 'Download brochure (PDF)',
+      pdf: 'View brochure',
     },
   },
 } as const;

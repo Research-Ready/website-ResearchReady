@@ -252,7 +252,7 @@ export const nl = {
       title: 'Speel je mee?',
       body: 'Plan een sessie voor je team, klas of organisatie. Of haal eerst de brochure op.',
       contact: 'Plan een sessie',
-      pdf: 'Download brochure (PDF)',
+      pdf: 'Bekijk brochure',
     },
   },
 } as const;
