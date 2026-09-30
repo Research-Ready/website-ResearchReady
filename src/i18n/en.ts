@@ -11,17 +11,17 @@ export const en = {
     containerCollision: 'Simulation games',
   },
   footer: {
-    blurb: 'Reproducible, forensically grounded AI pipelines — self-hosted and fully under European control.',
+    blurb: 'Reproducible, forensically grounded pipelines, self-hosted and fully under European control.',
     navTitle: 'Navigation',
     githubLabel: 'Research-Ready on GitHub',
     copyright: '© 2026 Research-Ready',
   },
   home: {
     title: 'Research-Ready',
-    tagline: 'Reproducible, forensically grounded AI research and documentation — self-hosted and fully under European control.',
+    tagline: 'Reproducible, forensically grounded research and documentation, self-hosted and fully under European control.',
     eyebrow: 'Reproducible, forensically grounded research',
-    headline: 'AI makes research faster. We make sure it still holds up.',
-    lede: 'AI makes research and documentation faster — and makes it easier to fabricate a source, lift someone else’s work without attribution, or lose track of how a conclusion was reached. Research-Ready builds software and a methodology that reverses that: research as traceable as forensic evidence, following the discipline of the Electronic Discovery Reference Model (EDRM) — self-hosted, so no one else can erase that trail.',
+    headline: 'Smart tooling makes research faster. We make sure it still holds up.',
+    lede: 'Automation makes research and documentation faster and makes it easier to fabricate a source, lift someone else\'s work without attribution, or lose track of how a conclusion was reached. Research-Ready builds software and a methodology that reverses that: research as traceable as forensic evidence, following the discipline of the Electronic Discovery Reference Model (EDRM), self-hosted so no one else can erase that trail.',
     ctaPrimary: 'View our pipelines',
     ctaSecondary: 'Book a call',
     stats: [
@@ -32,9 +32,9 @@ export const en = {
     sovereign: {
       eyebrow: 'The technical foundation',
       title: 'Self-hosted, because control is a precondition for accountability',
-      body: 'Every pipeline runs on a self-hosted AI stack. Reproducible means something concrete here: someone who wasn’t part of the project can reconstruct how a result came about from the stored data and the log alone — without asking the team. Data, source code, and models stay inside the environment you control, even while the pipeline makes decisions on its own.',
+      body: 'Every pipeline runs on a self-hosted stack. Reproducible means something concrete here: someone who was not part of the project can reconstruct how a result came about from the stored data and the log alone, without asking the team. Data, source code, and models stay inside the environment you control, even while the pipeline makes decisions on its own.',
       points: [
-        'Every step — who did what, when, based on what — sits in a version-controlled, timestamped archive',
+        'Every step, who did what, when, based on what, sits in a version-controlled, timestamped archive',
         'Services run with least privilege and verify each other before exchanging data',
         'Passwords and keys are stored encrypted, never in plain text',
         'No vendor lock-in: models and providers are interchangeable',
@@ -42,13 +42,13 @@ export const en = {
     },
     pipelinesTeaser: {
       title: 'Eight pipelines, one approach',
-      intro: 'From citable research to business creation — each pipeline is a self-contained, adaptable production line with its own repository.',
+      intro: 'From citable research to business creation. Each pipeline is a self-contained, adaptable production line with its own repository.',
       cta: 'View all eight pipelines',
     },
     approach: {
       eyebrow: 'The method',
       title: 'Research treated as evidence, not as claims',
-      intro: 'Every pipeline follows a forensic discipline for research and documentation — inspired by the chain-of-custody rigor of the Electronic Discovery Reference Model (EDRM), and developed through research into reproducible research infrastructure at the Value Chain Hackers Lab, Windesheim.',
+      intro: 'Every pipeline follows a forensic discipline for research and documentation, inspired by the chain-of-custody rigor of the Electronic Discovery Reference Model (EDRM), and developed through research into reproducible research infrastructure at the Value Chain Hackers Lab, Windesheim.',
       steps: [
         {
           title: 'A fixed workspace, upfront',
@@ -56,7 +56,7 @@ export const en = {
         },
         {
           title: 'Reasoning gets recorded, not just the result',
-          body: 'Every significant interpretive step is written down as it happens — not reconstructed afterward from the team’s memory.',
+          body: 'Every significant interpretive step is written down as it happens, not reconstructed afterward from the team\'s memory.',
         },
         {
           title: 'Nothing gets overwritten',
@@ -67,13 +67,13 @@ export const en = {
           body: 'Before a pipeline goes live, we test whether someone outside the team can follow the conclusions using only the stored data and the log.',
         },
       ],
-      closing: 'That way a citation stays a citation, a source stays a source — and a conclusion can be traced back to the evidence behind it.',
+      closing: 'That way a citation stays a citation, a source stays a source, and a conclusion can be traced back to the evidence behind it.',
       link: { label: 'More on where this comes from', href: '/en/pitch/' },
     },
     gettingStarted: {
       eyebrow: 'Cost and getting started',
       title: 'Fixed infrastructure, no per-user bill',
-      body: 'Compute is spread across a compact server setup — no data center required. Want language models running fully locally, with no external fallback at all? That can be added once the need arises.',
+      body: 'Compute is spread across a compact server setup. No data center required. Want language models running fully locally, with no external fallback at all? That can be added once the need arises.',
       points: [
         'Predictable infrastructure costs instead of a SaaS bill that grows with usage',
         'No per-user or per-seat pricing',
@@ -82,10 +82,10 @@ export const en = {
       pilot: {
         title: 'Start small, see results fast',
         phases: [
-          { range: 'Weeks 1–2', label: 'Intake', body: 'Pick an owner and one process or pipeline.' },
-          { range: 'Weeks 3–6', label: 'Setup', body: 'Connect the platform to existing systems and data.' },
-          { range: 'Weeks 7–10', label: 'Pilot live', body: 'Runs alongside the existing workflow, with human oversight.' },
-          { range: 'Weeks 11–13', label: 'Evaluation', body: 'On quality, time saved, and cost — then a decision on scaling up.' },
+          { range: 'Weeks 1-2', label: 'Intake', body: 'Pick an owner and one process or pipeline.' },
+          { range: 'Weeks 3-6', label: 'Setup', body: 'Connect the platform to existing systems and data.' },
+          { range: 'Weeks 7-10', label: 'Pilot live', body: 'Runs alongside the existing workflow, with human oversight.' },
+          { range: 'Weeks 11-13', label: 'Evaluation', body: 'On quality, time saved, and cost, then a decision on scaling up.' },
         ],
         asks: ['One process owner', 'A pilot budget', 'Access to one bounded process'],
         note: 'No long-term contract. No vendor lock-in. Visible from day one.',
@@ -100,12 +100,12 @@ export const en = {
   },
   pipelines: {
     title: 'Pipelines',
-    intro: 'Eight self-directed AI pipelines, each with its own private repository within the Research-Ready organization.',
+    intro: 'Eight self-directed pipelines, each with its own private repository within the Research-Ready organization.',
     items: [
       {
         title: 'Citable reproducible research',
         repo: 'uc1-research',
-        description: 'Takes a research question in plain language, searches the open web, and sets a three-agent team — researcher, analyst, writer — to work bundling findings with full citations. Every finding lands in a knowledge graph, so the next question builds on prior work. The output is a formatted report, committed to a version-controlled archive with a traceable trail.',
+        description: 'Takes a research question in plain language, searches the open web, and sets a three-agent team, researcher, analyst, writer, to work bundling findings with full citations. Every finding lands in a knowledge graph, so the next question builds on prior work. The output is a formatted report, committed to a version-controlled archive with a traceable trail.',
       },
       {
         title: 'App and serious games builder',
@@ -115,17 +115,17 @@ export const en = {
       {
         title: 'Chatbot with voice',
         repo: 'uc3-chatbot-voice',
-        description: 'Conversational AI with voice in and out: local speech recognition with a cloud fallback, memory that recalls earlier conversations, and optional image generation on request. Deployable for customer contact or internal services where voice is the natural interaction.',
+        description: 'Conversational assistant with voice in and out: local speech recognition with a cloud fallback, memory that recalls earlier conversations, and optional image generation on request. Deployable for customer contact or internal services where voice is the natural interaction.',
       },
       {
         title: 'Supply chain visualization',
         repo: 'uc4-supply-chain',
-        description: 'Maps a supply chain backward from a product or company name: who supplies this component, who supplies that supplier, where raw materials originate. Where direct data is missing, AI infers the missing links. The result is a searchable supply graph with dashboards for chain analysts.',
+        description: 'Maps a supply chain backward from a product or company name: who supplies this component, who supplies that supplier, where raw materials originate. Where direct data is missing, missing links are inferred from public sources. The result is a searchable supply graph with dashboards for chain analysts.',
       },
       {
         title: 'Business creation pipeline',
         repo: 'uc5-business-creation',
-        description: 'Turns a short intake form into a complete starter package for a new business: market research, a written business plan, a wiki page, structured data, and a translated version — all generated automatically and committed to a version-controlled archive.',
+        description: 'Turns a short intake form into a complete starter package for a new business: market research, a written business plan, a wiki page, structured data, and a translated version, all generated automatically and committed to a version-controlled archive.',
       },
       {
         title: 'Specialized model creation',
@@ -135,12 +135,12 @@ export const en = {
       {
         title: 'Careermaker',
         repo: 'uc7-careermaker',
-        description: 'Follows a job search from start to finish: gathering and scoring vacancies, company research, a tailored CV and cover letter, and interview prep — seven stages, each tracking its own status in one shared record.',
+        description: 'Follows a job search from start to finish: gathering and scoring vacancies, company research, a tailored CV and cover letter, and interview prep. Seven stages, each tracking its own status in one shared record.',
       },
       {
         title: 'Survey report',
         repo: 'uc8-survey-report',
-        description: 'Automatically turns raw survey exports into a clear report: open-ended answers get summarized by theme and patterns in the data are surfaced — without anyone manually reading through hundreds of individual responses.',
+        description: 'Automatically turns raw survey exports into a clear report: open-ended answers get summarized by theme and patterns in the data are surfaced, without anyone manually reading through hundreds of individual responses.',
       },
     ],
   },
@@ -154,11 +154,11 @@ export const en = {
     institution: 'Value Chain Hackers Lab · Windesheim University of Applied Sciences',
     problem: {
       eyebrow: 'The shared problem',
-      title: 'Applied AI is becoming infrastructure — on someone else’s terms',
-      body: 'Research groups, public institutions, and businesses are all being pulled onto the same handful of commercial AI clouds: closed models, opaque pricing, data leaving the institution by default.',
+      title: 'Applied software automation is becoming infrastructure, on someone else\'s terms',
+      body: 'Research groups, public institutions, and businesses are all being pulled onto the same handful of commercial cloud platforms: closed models, opaque pricing, data leaving the institution by default.',
       points: [
-        'Generated text fabricates sources and citations effortlessly — without a trail back to the evidence, that’s indistinguishable from a fact',
-        'Research needs pipelines that are reproducible and inspectable, not black-box APIs',
+        'Generated text fabricates sources and citations effortlessly. Without a trail back to the evidence, that is indistinguishable from a fact',
+        'Research needs pipelines that are reproducible and inspectable, not black-box services',
         'Public institutions need to know exactly where data and decisions happen',
         'Long-term dependency on external platforms is a structural risk, not just a cost line',
       ],
@@ -169,18 +169,18 @@ export const en = {
       groups: [
         { label: 'Research & knowledge', indices: [0, 7] },
         { label: 'Public & business services', indices: [2, 3, 4] },
-        { label: 'Applied AI tooling', indices: [1, 5, 6] },
+        { label: 'Automation tooling', indices: [1, 5, 6] },
       ],
     },
     closerLook: {
       eyebrow: 'A closer look',
-      title: 'Citable, reproducible research — end to end',
-      body: 'A research workflow that automatically makes results citable and reproducible, from data to publication — built around exactly the kind of reproducibility standard research institutions are expected to meet.',
+      title: 'Citable, reproducible research from end to end',
+      body: 'A research workflow that automatically makes results citable and reproducible, from data to publication. Built around exactly the kind of reproducibility standard research institutions are expected to meet.',
     },
     academic: {
       eyebrow: 'Where this comes from',
       title: 'Built inside applied research, not a pitch deck',
-      body: 'Research-Ready grew out of the Value Chain Hackers Lab at the Supply Chain Finance Lectorate, Windesheim University of Applied Sciences — an applied research program built around "revolutionizing the supply chain industry through relentless innovation, spirited collaboration, and hands-on practical application," working alongside industry partners including a European heavy-vehicle manufacturer. Pipelines first pass a formal reconstructability test — can someone outside the project follow the conclusions from the stored data alone? — before they become reusable products.',
+      body: 'Research-Ready grew out of the Value Chain Hackers Lab at the Supply Chain Finance Lectorate, Windesheim University of Applied Sciences, an applied research program built around "revolutionizing the supply chain industry through relentless innovation, spirited collaboration, and hands-on practical application," working alongside industry partners including a European heavy-vehicle manufacturer. Pipelines first pass a formal reconstructability test: can someone outside the project follow the conclusions from the stored data alone? Only then do they become reusable products.',
     },
     collaborate: {
       eyebrow: 'Ways to work together',
@@ -193,8 +193,8 @@ export const en = {
       ],
     },
     closing: {
-      title: 'Let’s explore what fits',
-      body: 'Book a short call, or send a message — we can look together at which pipeline, or which new one, makes sense for your institution.',
+      title: 'Let\'s explore what fits',
+      body: 'Book a short call, or send a message. We can look together at which pipeline, or which new one, makes sense for your institution.',
       primary: 'Book a call',
       secondary: 'Send an email',
     },
@@ -204,13 +204,13 @@ export const en = {
     description: 'A supply chain learning game where participants experience bullwhip dynamics, disruptions and coordination failures firsthand.',
     eyebrow: 'Supply chain learning game',
     headline: 'Container Collision',
-    lede: 'Experience how small decisions ripple into major disruptions — a hands-on learning game for anyone who manages, studies or improves supply chains.',
+    lede: 'Experience how small decisions ripple into major disruptions. A hands-on learning game for anyone who manages, studies or improves supply chains.',
     ctaLearn: 'See learning outcomes',
     ctaContact: 'Book a session',
     audience: {
       eyebrow: 'Who it is for',
       title: 'Anyone who touches supply chains',
-      body: 'Container Collision works for a broad audience — from students to executives. The game makes abstract chain principles tangible with no technical background required.',
+      body: 'Container Collision works for a broad audience, from students to executives. The game makes abstract chain principles tangible with no technical background required.',
       points: [
         'Students in logistics, business and supply chain management',
         'Buyers, planners and operations managers',
@@ -221,12 +221,12 @@ export const en = {
     outcomes: {
       eyebrow: 'Learning outcomes',
       title: 'What participants take away',
-      intro: 'After a session, participants don\'t just know what goes wrong in chains — they recognise the mechanisms and can name them.',
+      intro: 'After a session, participants do not just know what goes wrong in chains. They recognise the mechanisms and can name them.',
       items: [
         { title: 'Bullwhip effect', body: 'Why small demand variations amplify upstream into large inventory swings.' },
         { title: 'Information sharing', body: 'How poor communication between links leads to suboptimal decisions across the chain.' },
         { title: 'Inventory management', body: 'The tension between service level and safety stock under uncertain demand.' },
-        { title: 'Coordination and trust', body: 'Why collaboration in chains is harder than it sounds — and how to organise it anyway.' },
+        { title: 'Coordination and trust', body: 'Why collaboration in chains is harder than it sounds, and how to organise it anyway.' },
         { title: 'Disruption sensitivity', body: 'Which links are breaking points and how to build in resilience.' },
         { title: 'Deciding under uncertainty', body: 'How to make systematically good choices with limited information.' },
       ],
@@ -234,11 +234,11 @@ export const en = {
     howItWorks: {
       eyebrow: 'How to play',
       title: 'How the game works',
-      body: 'Each participant manages one link in a supply chain. Together they try to keep up with demand — but they cannot see each other\'s decisions. That is the point.',
+      body: 'Each participant manages one link in a supply chain. Together they try to keep up with demand, but they cannot see each other\'s decisions. That is the point.',
       steps: [
         'Participants each take a link role: retailer, distributor, wholesaler or manufacturer.',
         'Each round they receive orders, adjust their order quantity and manage their stock.',
-        'Information is limited — each link sees only its own position.',
+        'Information is limited. Each link sees only its own position.',
         'After the game, groups analyse together what went wrong and why.',
         'The facilitator connects observed patterns back to theory and real-world cases.',
       ],
@@ -246,11 +246,11 @@ export const en = {
     research: {
       eyebrow: 'Research base',
       title: 'A game that gets smarter every session',
-      body: 'Game results are stored anonymously and analysed. Patterns from previous sessions — common decision errors, group effects, learning curves — feed back into the materials. Every new group benefits from all previous ones.',
+      body: 'Game results are stored anonymously and analysed. Patterns from previous sessions, common decision errors, group effects, learning curves, feed back into the materials. Every new group benefits from all previous ones.',
     },
     cta: {
       title: 'Ready to play?',
-      body: 'Book a session for your team, class or organisation — or download the brochure for more information.',
+      body: 'Book a session for your team, class or organisation, or download the brochure for more information.',
       contact: 'Book a session',
       pdf: 'Download brochure (PDF)',
     },

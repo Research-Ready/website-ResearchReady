@@ -647,6 +647,14 @@ footer.site-footer {
   color: var(--on-dark-muted);
 }
 
+.footer-version a {
+  color: var(--on-dark-muted);
+  text-decoration: none;
+  font-family: var(--font-body);
+  opacity: 0.6;
+}
+.footer-version a:hover { opacity: 1; }
+
 /* Responsive */
 
 @media (max-width: 900px) {
