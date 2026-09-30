@@ -235,11 +235,12 @@ export const nl = {
       title: 'Hoe het werkt',
       body: 'Jij beheert één schakel. Je ziet alleen je eigen cijfers. De rest moet je raden. Dat is precies het punt.',
       steps: [
-        'Je kiest een rol: Zeehaventerminal, Inland terminal, Binnenvaart, Spoor of Wegvervoer.',
-        'Per ronde plan je je schakel en probeer je je eigen score omhoog te krijgen.',
-        'Verstoringen komen. Late schepen, IT-storingen, een dichte waterweg.',
-        'Later in het spel mag je samenwerken. Je merkt het verschil meteen.',
-        'De debriefing koppelt wat je voelde aan het echte onderzoek. Wat zou jij veranderen?',
+        'Kies een rol: Havenmeester, Inland Terminal, Binnenvaart, Spoor of Vervoerder. Elke rol heeft zijn eigen rolkaart, eigen LEGO-stukken en eigen KPI.',
+        'Ronde 1 en 2: lokale optimalisatie. De Havenmeester pakt containers uit de voorraad en zet ze op de yard. Als de yard vol is (8 containers), seint hij de Vervoerder. De Vervoerder kiest: vrachtwagen (2 containers), trein (3) of binnenvaart (4). Iedereen maximaliseert zijn eigen score, niemand kijkt naar de keten.',
+        'Ergens in ronde 1 of 2 loopt de keten vast terwijl jouw eigen score prima is. Dat moment is de kern van het spel.',
+        'Ronde 3 en 4: bilaterale afstemming. Aangrenzende schakels mogen beperkt informatie delen. Het begint te werken, maar je ziet ook meteen waar de volgende knoop zit.',
+        'Ronde 5 en 6: ketencoördinatie. Er komt een gedeeld planningsinstrument. Je kunt KPI-afspraken heronderhandelen. De ketenscore en je eigen score beginnen naar elkaar toe te groeien.',
+        'Na zes ronden: debriefing. Wat heb je veroorzaakt? Wat had je nodig gehad? Governance, data, bundeling: je plakt nu een naam op wat je hebt gevoeld.',
       ],
     },
     research: {

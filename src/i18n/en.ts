@@ -235,11 +235,12 @@ export const en = {
       title: 'How it works',
       body: 'You run one link. You see your own numbers. The rest you have to guess. That is the point.',
       steps: [
-        'Pick a role: Seaport Terminal, Inland Terminal, Barge Operator, Rail Operator or Road Haulier.',
-        'Each round you plan your link and try to push your own score up.',
-        'Disruptions hit: late vessels, IT outages, a closed waterway.',
-        'Later in the game you can coordinate. You notice the difference immediately.',
-        'The debrief connects what you felt to the actual research. What would you change?',
+        'Pick a role: Havenmeester, Inland Terminal, Barge Operator, Rail Operator, or Vervoerder. Each role has its own card, its own LEGO pieces, and its own KPI.',
+        'Rounds 1 and 2: local optimisation. The Havenmeester takes containers from supply and fills the yard. When the yard is full (8 containers), they signal the Vervoerder. The Vervoerder chooses: truck (2 containers), train (3), or barge (4). Everyone pushes their own score. Nobody watches the chain.',
+        'Somewhere in round 1 or 2, the chain grinds to a halt while your own score looks fine. That moment is the core of the game.',
+        'Rounds 3 and 4: bilateral negotiation. Adjacent links can share limited information. Things start to work, but you also see immediately where the next bottleneck sits.',
+        'Rounds 5 and 6: chain coordination. A shared planning tool is introduced. You can renegotiate KPI agreements. The chain score and your own score start converging.',
+        'After six rounds: debrief. What did you cause? What did you need? Governance, data, bundling: you now have a name for what you felt.',
       ],
     },
     research: {
