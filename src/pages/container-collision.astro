@@ -19,15 +19,8 @@ const t = nl.containerCollision;
           <a class="btn btn-ghost" href="/contact/">{t.ctaContact}</a>
         </div>
       </div>
-      <div class="hero-game-graphic" aria-hidden="true">
-        <svg width="300" height="220" viewBox="0 0 300 220">
-          <!-- Container ship silhouette — placeholder, replace with proper asset -->
-          <rect x="30" y="120" width="240" height="50" rx="6" fill="#2f6f92" opacity="0.3" />
-          <rect x="50" y="90" width="60" height="35" rx="4" fill="#2f6f92" opacity="0.6" />
-          <rect x="120" y="80" width="60" height="45" rx="4" fill="#235870" opacity="0.6" />
-          <rect x="190" y="95" width="60" height="30" rx="4" fill="#2f6f92" opacity="0.6" />
-          <path d="M20 170 Q150 155 280 170" stroke="#7fb8d6" stroke-width="2" fill="none" opacity="0.4" />
-        </svg>
+      <div class="hero-game-graphic">
+        <img src="/container-cascade/31026.jpg" alt="Container Cascade in spel: spelers bewegen containers over het bord, oranje puntenfiches zichtbaar" class="hero-photo" />
       </div>
     </div>
   </section>
@@ -72,6 +65,26 @@ const t = nl.containerCollision;
       <ol class="step-list">
         {t.howItWorks.steps.map((s: string) => <li>{s}</li>)}
       </ol>
+    </div>
+  </section>
+
+  <!-- Photo gallery -->
+  <section class="section" id="fotos">
+    <div class="wrap">
+      <div class="photo-grid">
+        <figure class="photo-item photo-wide">
+          <img src="/container-cascade/31020.jpg" alt="Spelopstelling: alle rollen klaar aan tafel, rol-kaarten zichtbaar" loading="lazy" />
+          <figcaption>Alle rollen aan tafel. Elke speler ziet alleen zijn eigen cijfers.</figcaption>
+        </figure>
+        <figure class="photo-item">
+          <img src="/container-cascade/31022.jpg" alt="Havenmeester rolkaart: containers naar de yard verplaatsen en de Vervoerder seinen" loading="lazy" />
+          <figcaption>De Havenmeester. Een volle yard geef je door aan de Vervoerder.</figcaption>
+        </figure>
+        <figure class="photo-item">
+          <img src="/container-cascade/31024.jpg" alt="Vervoerder rolkaart: drie vervoersmiddelen, drie capaciteiten" loading="lazy" />
+          <figcaption>De Vervoerder. Vrachtwagen, trein of binnenvaart, jij kiest.</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -139,9 +152,50 @@ const t = nl.containerCollision;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: .85;
+  }
+  .hero-photo {
+    width: 340px;
+    max-width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 32px rgba(0,0,0,.35);
+    object-fit: cover;
+    aspect-ratio: 3/4;
   }
   @media (max-width: 700px) {
     .hero-game-graphic { display: none; }
+  }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+  }
+  .photo-wide {
+    grid-column: 1 / -1;
+  }
+  .photo-item {
+    margin: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .photo-item img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-wide img {
+    height: 360px;
+  }
+  .photo-item figcaption {
+    padding: .6rem .8rem;
+    font-size: .85rem;
+    color: var(--ink-soft);
+    background: var(--surface);
+  }
+  @media (max-width: 600px) {
+    .photo-grid { grid-template-columns: 1fr; }
+    .photo-wide { grid-column: 1; }
   }
 </style>
