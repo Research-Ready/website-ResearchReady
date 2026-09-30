@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { nl } from '../i18n/nl';
+
+const t = nl.containerCollision;
+---
+
+<BaseLayout locale="nl" title={t.title} description={t.description}>
+
+  <!-- Hero -->
+  <section class="hero section-dark">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">{t.eyebrow}</span>
+        <h1>{t.headline}</h1>
+        <p class="lede">{t.lede}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#leeruitkomsten">{t.ctaLearn}</a>
+          <a class="btn btn-ghost" href="/contact/">{t.ctaContact}</a>
+        </div>
+      </div>
+      <div class="hero-game-graphic" aria-hidden="true">
+        <svg width="300" height="220" viewBox="0 0 300 220">
+          <!-- Container ship silhouette — placeholder, replace with proper asset -->
+          <rect x="30" y="120" width="240" height="50" rx="6" fill="#2f6f92" opacity="0.3" />
+          <rect x="50" y="90" width="60" height="35" rx="4" fill="#2f6f92" opacity="0.6" />
+          <rect x="120" y="80" width="60" height="45" rx="4" fill="#235870" opacity="0.6" />
+          <rect x="190" y="95" width="60" height="30" rx="4" fill="#2f6f92" opacity="0.6" />
+          <path d="M20 170 Q150 155 280 170" stroke="#7fb8d6" stroke-width="2" fill="none" opacity="0.4" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="section" id="voor-wie">
+    <div class="wrap split">
+      <div class="split-copy">
+        <span class="eyebrow">{t.audience.eyebrow}</span>
+        <h2>{t.audience.title}</h2>
+        <p>{t.audience.body}</p>
+      </div>
+      <ul class="check-list">
+        {t.audience.points.map((p: string) => <li>{p}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Learning outcomes -->
+  <section class="section section-alt" id="leeruitkomsten">
+    <div class="wrap">
+      <span class="eyebrow">{t.outcomes.eyebrow}</span>
+      <h2>{t.outcomes.title}</h2>
+      <p class="section-intro">{t.outcomes.intro}</p>
+      <div class="card-grid">
+        {t.outcomes.items.map((item: { title: string; body: string }) => (
+          <div class="card">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="spelverloop">
+    <div class="wrap">
+      <span class="eyebrow">{t.howItWorks.eyebrow}</span>
+      <h2>{t.howItWorks.title}</h2>
+      <p>{t.howItWorks.body}</p>
+      <ol class="step-list">
+        {t.howItWorks.steps.map((s: string) => <li>{s}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Research / evidence base -->
+  <section class="section section-alt" id="onderzoek">
+    <div class="wrap">
+      <span class="eyebrow">{t.research.eyebrow}</span>
+      <h2>{t.research.title}</h2>
+      <p>{t.research.body}</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-dark">
+    <div class="wrap" style="text-align:center; padding: 3rem 1.5rem;">
+      <h2 style="color: var(--on-dark);">{t.cta.title}</h2>
+      <p style="color: var(--on-dark-muted); max-width: 38rem; margin: 0 auto 2rem;">{t.cta.body}</p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a class="btn btn-primary" href="/contact/">{t.cta.contact}</a>
+        <a class="btn btn-ghost" href="/container-collision/brochure.pdf" target="_blank" rel="noopener">{t.cta.pdf}</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .section-alt {
+    background: var(--bg-alt);
+  }
+  .section-intro {
+    max-width: 42rem;
+    margin-bottom: 2rem;
+    color: var(--ink-soft);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: 1.4rem 1.5rem;
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    margin: 0 0 .5rem;
+  }
+  .card p {
+    margin: 0;
+    font-size: .95rem;
+    color: var(--muted);
+  }
+  .step-list {
+    max-width: 42rem;
+    padding-left: 1.4rem;
+  }
+  .step-list li {
+    margin-bottom: .75rem;
+  }
+  .hero-game-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: .85;
+  }
+  @media (max-width: 700px) {
+    .hero-game-graphic { display: none; }
+  }
+</style>
