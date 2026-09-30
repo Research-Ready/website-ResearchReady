@@ -8,7 +8,7 @@ export const nl = {
     docs: 'Documenten',
     learn: 'Leren',
     langToggle: 'EN',
-    containerCollision: 'Container Collision',
+    containerCollision: 'Simulatiespellen',
   },
   footer: {
     blurb: 'Reproduceerbare, forensisch onderbouwde AI-pipelines — zelf gehost en volledig onder Europese controle.',

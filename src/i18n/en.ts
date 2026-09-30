@@ -8,7 +8,7 @@ export const en = {
     docs: 'Documents',
     learn: 'Learn',
     langToggle: 'NL',
-    containerCollision: 'Container Collision',
+    containerCollision: 'Simulation games',
   },
   footer: {
     blurb: 'Reproducible, forensically grounded AI pipelines — self-hosted and fully under European control.',
