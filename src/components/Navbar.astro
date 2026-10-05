@@ -36,6 +36,7 @@ const isActive = (shape: string) => path === shape;
         <a href={locale === 'nl' ? '/contact/' : '/en/contact/'} aria-current={isActive('/contact/') ? 'page' : undefined}>{t.nav.contact}</a>
         <a href={locale === 'nl' ? '/docs/' : '/en/docs/'} aria-current={isActive('/docs/') ? 'page' : undefined}>{t.nav.docs}</a>
         <a href={locale === 'nl' ? '/learn/' : '/en/learn/'} aria-current={path.startsWith('/learn/') ? 'page' : undefined}>{t.nav.learn}</a>
+        <a href={locale === 'nl' ? '/container-collision/' : '/en/container-collision/'} aria-current={isActive('/container-collision/') ? 'page' : undefined}>{t.nav.containerCollision}</a>
         <a class="btn btn-ghost nav-pitch-btn" href={locale === 'nl' ? '/pitch/' : '/en/pitch/'} aria-current={isActive('/pitch/') ? 'page' : undefined}>{t.nav.pitch}</a>
       </nav>
       <a class="lang-toggle" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>

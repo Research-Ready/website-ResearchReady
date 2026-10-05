@@ -8,19 +8,20 @@ export const nl = {
     docs: 'Documenten',
     learn: 'Leren',
     langToggle: 'EN',
+    containerCollision: 'Simulatiespellen',
   },
   footer: {
-    blurb: 'Reproduceerbare, forensisch onderbouwde AI-pipelines — zelf gehost en volledig onder Europese controle.',
+    blurb: 'Reproduceerbare, forensisch onderbouwde pipelines, zelf gehost en volledig onder Europese controle.',
     navTitle: 'Navigatie',
     githubLabel: 'Research-Ready op GitHub',
     copyright: '© 2026 Research-Ready',
   },
   home: {
     title: 'Research-Ready',
-    tagline: 'Reproduceerbaar, forensisch onderbouwd onderzoek en documentatie met AI — zelf gehost en volledig onder Europese controle.',
+    tagline: 'Reproduceerbaar, forensisch onderbouwd onderzoek en documentatie, zelf gehost en volledig onder Europese controle.',
     eyebrow: 'Reproduceerbaar, forensisch onderbouwd onderzoek',
-    headline: 'AI versnelt onderzoek. Wij zorgen dat het overeind blijft.',
-    lede: 'AI maakt onderzoek en documentatie sneller — en maakt het ook makkelijker om een bron te verzinnen, andermans werk over te nemen zonder vermelding, of het spoor van een conclusie kwijt te raken. Research-Ready bouwt software en een methodologie die dat omkeert: onderzoek dat net zo natrekbaar is als forensisch bewijs, volgens de discipline van het Electronic Discovery Reference Model (EDRM) — zelf gehost, zodat niemand anders dat spoor kan wissen.',
+    headline: 'Slimme tooling versnelt onderzoek. Wij zorgen dat het overeind blijft.',
+    lede: 'Automatisering maakt onderzoek en documentatie sneller. Tegelijkertijd maakt het ook makkelijker om een bron te verzinnen, andermans werk over te nemen zonder vermelding, of het spoor van een conclusie kwijt te raken. Research-Ready bouwt software en een methodologie die dat omkeert: onderzoek dat net zo natrekbaar is als forensisch bewijs, volgens de discipline van het Electronic Discovery Reference Model (EDRM), zelf gehost zodat niemand anders dat spoor kan wissen.',
     ctaPrimary: 'Bekijk onze pipelines',
     ctaSecondary: 'Plan een gesprek',
     stats: [
@@ -31,9 +32,9 @@ export const nl = {
     sovereign: {
       eyebrow: 'De technische basis',
       title: 'Zelf gehost, omdat controle een voorwaarde is voor verantwoording',
-      body: 'Elke pipeline draait op een zelf-gehoste AI-stack. Reproduceerbaar betekent hier iets concreets: iemand die niet bij het project betrokken was, kan uit de opgeslagen data en het logboek reconstrueren hoe een resultaat tot stand kwam — zonder het team te hoeven vragen. Data, broncode en modellen blijven binnen de omgeving die u zelf beheert, ook wanneer de pipeline zelfstandig beslissingen neemt.',
+      body: 'Elke pipeline draait op een zelf-gehoste stack. Reproduceerbaar betekent hier iets concreets: iemand die niet bij het project betrokken was, kan uit de opgeslagen data en het logboek reconstrueren hoe een resultaat tot stand kwam, zonder het team te hoeven vragen. Data, broncode en modellen blijven binnen de omgeving die u zelf beheert, ook wanneer de pipeline zelfstandig beslissingen neemt.',
       points: [
-        'Elke stap — wie deed wat, wanneer, op basis waarvan — staat in een versiebeheerd, tijdgestempeld archief',
+        'Elke stap, wie deed wat, wanneer, op basis waarvan, staat in een versiebeheerd, tijdgestempeld archief',
         'Diensten draaien met minimale rechten en verifiëren elkaar onderling voordat ze data uitwisselen',
         'Wachtwoorden en sleutels staan versleuteld opgeslagen, nooit in platte tekst',
         'Geen vendor lock-in: modellen en providers zijn onderling inwisselbaar',
@@ -41,13 +42,13 @@ export const nl = {
     },
     pipelinesTeaser: {
       title: 'Acht pipelines, één aanpak',
-      intro: 'Van citeerbaar onderzoek tot bedrijfsoprichting — elke pipeline is een zelfstandige, aanpasbare productielijn met een eigen repository.',
+      intro: 'Van citeerbaar onderzoek tot bedrijfsoprichting. Elke pipeline is een zelfstandige, aanpasbare productielijn met een eigen repository.',
       cta: 'Bekijk alle acht pipelines',
     },
     approach: {
       eyebrow: 'De methode',
       title: 'Onderzoek behandeld als bewijs, niet als bewering',
-      intro: 'Elke pipeline volgt een forensische discipline voor onderzoek en documentatie — geïnspireerd op de ketenbewaking (chain of custody) uit het Electronic Discovery Reference Model (EDRM), en uitgewerkt in onderzoek naar reproduceerbare onderzoeksinfrastructuur aan het Value Chain Hackers Lab, Windesheim.',
+      intro: 'Elke pipeline volgt een forensische discipline voor onderzoek en documentatie, geïnspireerd op de ketenbewaking (chain of custody) uit het Electronic Discovery Reference Model (EDRM), en uitgewerkt in onderzoek naar reproduceerbare onderzoeksinfrastructuur aan het Value Chain Hackers Lab, Windesheim.',
       steps: [
         {
           title: 'Vaste werkruimte, vooraf',
@@ -55,7 +56,7 @@ export const nl = {
         },
         {
           title: 'Redenering wordt vastgelegd, niet alleen het resultaat',
-          body: 'Elke belangrijke interpretatieslag wordt onderbouwd op het moment dat hij gebeurt — niet achteraf gereconstrueerd uit het geheugen van het team.',
+          body: 'Elke belangrijke interpretatieslag wordt onderbouwd op het moment dat hij gebeurt, niet achteraf gereconstrueerd uit het geheugen van het team.',
         },
         {
           title: 'Niets wordt overschreven',
@@ -66,13 +67,13 @@ export const nl = {
           body: 'Voordat een pipeline live gaat, testen we of iemand buiten het team de conclusies kan navolgen op basis van alleen de opgeslagen data en het logboek.',
         },
       ],
-      closing: 'Zo blijft een citaat een citaat, een bron een bron — en een conclusie te herleiden tot het bewijs erachter.',
+      closing: 'Zo blijft een citaat een citaat, een bron een bron, en een conclusie te herleiden tot het bewijs erachter.',
       link: { label: 'Meer over waar dit vandaan komt', href: '/pitch/' },
     },
     gettingStarted: {
       eyebrow: 'Kosten en start',
       title: 'Vaste infrastructuur, geen rekening per gebruiker',
-      body: 'Rekenkracht wordt verdeeld over een compacte serveropstelling — geen datacenter nodig. Wilt u taalmodellen volledig lokaal draaien, zonder enige externe doorschakeling? Dat is uit te breiden zodra de behoefte ontstaat.',
+      body: 'Rekenkracht wordt verdeeld over een compacte serveropstelling. Geen datacenter nodig. Wilt u taalmodellen volledig lokaal draaien, zonder enige externe doorschakeling? Dat is uit te breiden zodra de behoefte ontstaat.',
       points: [
         'Voorspelbare infrastructuurkosten in plaats van meebewegende SaaS-facturen',
         'Geen kosten per gebruiker of per seat',
@@ -81,10 +82,10 @@ export const nl = {
       pilot: {
         title: 'Klein beginnen, snel resultaat zien',
         phases: [
-          { range: 'Week 1–2', label: 'Intake', body: 'Eigenaar en één proces of pipeline kiezen.' },
-          { range: 'Week 3–6', label: 'Inrichten', body: 'Platform koppelen aan bestaande systemen en data.' },
-          { range: 'Week 7–10', label: 'Pilot live', body: 'Draait naast de bestaande werkwijze, met menselijke controle.' },
-          { range: 'Week 11–13', label: 'Evaluatie', body: 'Op kwaliteit, tijdswinst en kosten — daarna een besluit om op te schalen.' },
+          { range: 'Week 1-2', label: 'Intake', body: 'Eigenaar en één proces of pipeline kiezen.' },
+          { range: 'Week 3-6', label: 'Inrichten', body: 'Platform koppelen aan bestaande systemen en data.' },
+          { range: 'Week 7-10', label: 'Pilot live', body: 'Draait naast de bestaande werkwijze, met menselijke controle.' },
+          { range: 'Week 11-13', label: 'Evaluatie', body: 'Op kwaliteit, tijdswinst en kosten, daarna een besluit om op te schalen.' },
         ],
         asks: ['Eén proceseigenaar', 'Een pilotbudget', 'Toegang tot één afgebakend proces'],
         note: 'Geen langjarig contract. Geen leverancierslock-in. Zichtbaar vanaf dag 1.',
@@ -99,12 +100,12 @@ export const nl = {
   },
   pipelines: {
     title: 'Pipelines',
-    intro: 'Acht zelfsturende AI-pipelines, elk met een eigen privé-repository binnen de Research-Ready organisatie.',
+    intro: 'Acht zelfsturende pipelines, elk met een eigen privé-repository binnen de Research-Ready organisatie.',
     items: [
       {
         title: 'Citeerbaar reproduceerbaar onderzoek',
         repo: 'uc1-research',
-        description: 'Neemt een onderzoeksvraag in gewone taal, doorzoekt het open web en zet een driekoppig team van AI-agents — onderzoeker, analist, schrijver — aan het werk om bevindingen met volledige bronvermelding te bundelen. Elke bevinding komt in een kennisgrafiek terecht, zodat een volgende vraag voortbouwt op eerder werk. Het eindresultaat is een geformatteerd rapport, vastgelegd in een versiebeheerd archief met een navolgbaar spoor.',
+        description: 'Neemt een onderzoeksvraag in gewone taal, doorzoekt het open web en zet een driekoppig team van gespecialiseerde agents, onderzoeker, analist, schrijver, aan het werk om bevindingen met volledige bronvermelding te bundelen. Elke bevinding komt in een kennisgrafiek terecht, zodat een volgende vraag voortbouwt op eerder werk. Het eindresultaat is een geformatteerd rapport, vastgelegd in een versiebeheerd archief met een navolgbaar spoor.',
       },
       {
         title: 'App- en serious games-bouwer',
@@ -114,32 +115,32 @@ export const nl = {
       {
         title: 'Chatbot met spraak',
         repo: 'uc3-chatbot-voice',
-        description: 'Conversationele AI met spraak in en uit: lokale spraakherkenning met een cloud-alternatief als vangnet, geheugen dat eerdere gesprekken onthoudt, en optioneel beeldgeneratie op verzoek. Inzetbaar voor klantcontact of interne dienstverlening waar spraak de natuurlijke interactievorm is.',
+        description: 'Conversationele assistent met spraak in en uit: lokale spraakherkenning met een cloud-alternatief als vangnet, geheugen dat eerdere gesprekken onthoudt, en optioneel beeldgeneratie op verzoek. Inzetbaar voor klantcontact of interne dienstverlening waar spraak de natuurlijke interactievorm is.',
       },
       {
         title: 'Supply chain-visualisatie',
         repo: 'uc4-supply-chain',
-        description: 'Brengt een toeleveringsketen in kaart vanaf een product of bedrijfsnaam: wie levert dit onderdeel, wie levert aan die leverancier, waar komen grondstoffen vandaan. Waar directe gegevens ontbreken, leidt de AI ontbrekende schakels af. Resultaat is een doorzoekbare ketengrafiek met dashboards voor ketenanalisten.',
+        description: 'Brengt een toeleveringsketen in kaart vanaf een product of bedrijfsnaam: wie levert dit onderdeel, wie levert aan die leverancier, waar komen grondstoffen vandaan. Waar directe gegevens ontbreken, worden ontbrekende schakels afgeleid op basis van openbare bronnen. Resultaat is een doorzoekbare ketengrafiek met dashboards voor ketenanalisten.',
       },
       {
         title: 'Bedrijfsoprichtingspipeline',
         repo: 'uc5-business-creation',
-        description: 'Zet een kort intakeformulier om in een compleet startpakket voor een nieuw bedrijf: marktonderzoek, een geschreven businessplan, een wiki-pagina, gestructureerde data en een Nederlandse vertaling — automatisch gegenereerd en vastgelegd in een versiebeheerd archief.',
+        description: 'Zet een kort intakeformulier om in een compleet startpakket voor een nieuw bedrijf: marktonderzoek, een geschreven businessplan, een wiki-pagina, gestructureerde data en een Nederlandse vertaling, automatisch gegenereerd en vastgelegd in een versiebeheerd archief.',
       },
       {
         title: 'Gespecialiseerde modelontwikkeling',
         repo: 'uc6-model-creation',
-        description: 'Traint een kleine, gespecialiseerde AI op uw eigen documenten: van ruwe tekst via annotatie naar een fijngeslepen model, met elk experiment bijgehouden en elk resultaat getoetst tegen het basismodel. Zo zet bijvoorbeeld één toepassing losse tekstbeschrijvingen om in consistente, gestructureerde data.',
+        description: 'Traint een klein, gespecialiseerd model op uw eigen documenten: van ruwe tekst via annotatie naar een fijngeslepen model, met elk experiment bijgehouden en elk resultaat getoetst tegen het basismodel. Zo zet bijvoorbeeld één toepassing losse tekstbeschrijvingen om in consistente, gestructureerde data.',
       },
       {
         title: 'Careermaker',
         repo: 'uc7-careermaker',
-        description: 'Volgt een sollicitatietraject van begin tot eind: vacatures verzamelen en beoordelen, bedrijfsonderzoek, een aangepast cv en motivatiebrief, en gespreksvoorbereiding — zeven stappen die elk hun eigen status bijhouden in één centrale administratie.',
+        description: 'Volgt een sollicitatietraject van begin tot eind: vacatures verzamelen en beoordelen, bedrijfsonderzoek, een aangepast cv en motivatiebrief, en gespreksvoorbereiding. Zeven stappen die elk hun eigen status bijhouden in één centrale administratie.',
       },
       {
         title: 'Survey-rapportage',
         repo: 'uc8-survey-report',
-        description: 'Verwerkt ruwe enquête-exports automatisch tot een overzichtelijk rapport: open antwoorden worden thematisch samengevat en patronen in de data worden uitgelicht — zonder dat iemand handmatig honderden losse antwoorden hoeft door te nemen.',
+        description: 'Verwerkt ruwe enquête-exports automatisch tot een overzichtelijk rapport: open antwoorden worden thematisch samengevat en patronen in de data worden uitgelicht, zonder dat iemand handmatig honderden losse antwoorden hoeft door te nemen.',
       },
     ],
   },
@@ -153,11 +154,11 @@ export const nl = {
     institution: 'Value Chain Hackers Lab · Windesheim',
     problem: {
       eyebrow: 'Het gedeelde probleem',
-      title: 'Toegepaste AI wordt infrastructuur — op andermans voorwaarden',
-      body: 'Onderzoeksgroepen, publieke instellingen en bedrijven komen allemaal terecht op dezelfde handvol commerciële AI-clouds: gesloten modellen, ondoorzichtige prijzen, data die standaard de instelling verlaat.',
+      title: 'Toegepaste softwareautomatisering wordt infrastructuur, op andermans voorwaarden',
+      body: 'Onderzoeksgroepen, publieke instellingen en bedrijven komen allemaal terecht op dezelfde handvol commerciële cloudplatformen: gesloten modellen, ondoorzichtige prijzen, data die standaard de instelling verlaat.',
       points: [
-        'Gegenereerde tekst verzint moeiteloos bronnen en citaten — zonder een spoor terug naar het bewijs is dat niet van een feit te onderscheiden',
-        'Onderzoek heeft reproduceerbare, inspecteerbare pipelines nodig, geen black-box API’s',
+        'Gegenereerde tekst verzint moeiteloos bronnen en citaten. Zonder een spoor terug naar het bewijs is dat niet van een feit te onderscheiden',
+        'Onderzoek heeft reproduceerbare, inspecteerbare pipelines nodig, geen black-box diensten',
         'Publieke instellingen moeten precies weten waar data en beslissingen plaatsvinden',
         'Langdurige afhankelijkheid van externe platformen is een structureel risico, geen kostenpost',
       ],
@@ -168,18 +169,18 @@ export const nl = {
       groups: [
         { label: 'Onderzoek & kennis', indices: [0, 7] },
         { label: 'Publieke & bedrijfsdiensten', indices: [2, 3, 4] },
-        { label: 'Toegepaste AI-tooling', indices: [1, 5, 6] },
+        { label: 'Automatiseringstooling', indices: [1, 5, 6] },
       ],
     },
     closerLook: {
       eyebrow: 'Uitgelicht',
-      title: 'Citeerbaar, reproduceerbaar onderzoek — van begin tot eind',
-      body: 'Een onderzoeksworkflow die resultaten automatisch citeerbaar en reproduceerbaar maakt, van data tot publicatie — gebouwd rond precies het soort reproduceerbaarheid dat van onderzoeksinstellingen wordt verwacht.',
+      title: 'Citeerbaar, reproduceerbaar onderzoek van begin tot eind',
+      body: 'Een onderzoeksworkflow die resultaten automatisch citeerbaar en reproduceerbaar maakt, van data tot publicatie. Gebouwd rond precies het soort reproduceerbaarheid dat van onderzoeksinstellingen wordt verwacht.',
     },
     academic: {
       eyebrow: 'Waar dit vandaan komt',
       title: 'Ontstaan binnen toegepast onderzoek, niet in een pitchdeck',
-      body: 'Research-Ready komt voort uit het Value Chain Hackers Lab bij het Lectoraat Supply Chain Finance, Windesheim — een onderzoeksprogramma gericht op “de supply chain-sector vernieuwen door relentless innovatie, gedreven samenwerking en praktische toepassing”, samen met industriepartners zoals een Europese fabrikant van zware voertuigen. Pipelines doorstaan eerst een formele reconstrueerbaarheidstoets — kan iemand buiten het project de conclusies navolgen uit alleen de opgeslagen data? — voordat ze herbruikbare producten worden.',
+      body: 'Research-Ready komt voort uit het Value Chain Hackers Lab bij het Lectoraat Supply Chain Finance, Windesheim, een onderzoeksprogramma gericht op "de supply chain-sector vernieuwen door relentless innovatie, gedreven samenwerking en praktische toepassing", samen met industriepartners zoals een Europese fabrikant van zware voertuigen. Pipelines doorstaan eerst een formele reconstrueerbaarheidstoets. Kan iemand buiten het project de conclusies navolgen uit alleen de opgeslagen data? Pas daarna worden ze herbruikbare producten.',
     },
     collaborate: {
       eyebrow: 'Manieren om samen te werken',
@@ -193,9 +194,65 @@ export const nl = {
     },
     closing: {
       title: 'Laten we kijken wat past',
-      body: 'Plan een kort gesprek, of stuur een bericht — dan bekijken we samen welke pipeline, of welke nieuwe, aansluit bij uw instelling.',
+      body: 'Plan een kort gesprek, of stuur een bericht. Dan bekijken we samen welke pipeline, of welke nieuwe, aansluit bij uw instelling.',
       primary: 'Plan een gesprek',
       secondary: 'Stuur een e-mail',
+    },
+  },
+  containerCollision: {
+    title: 'Container Collision',
+    description: 'Een simulatiespel over de achterlandcontainerketen. Je speelt mee, je voelt wat er misgaat, en je begrijpt daarna pas echt waarom de keten zo traag is.',
+    eyebrow: 'Simulatiespel achterlandketen',
+    headline: 'Container Collision',
+    lede: 'Jij beheert jouw schakel. De keten bepaalt je resultaat. Zo werkt het in Rotterdam, en zo werkt het in dit spel.',
+    ctaLearn: 'Wat leer je ervan?',
+    ctaContact: 'Plan een sessie',
+    audience: {
+      eyebrow: 'Voor wie',
+      title: 'Voor wie in de keten werkt of erover nadenkt',
+      body: 'Van student tot havenoperator tot beleidsmaker. Je hoeft geen expert te zijn, je wordt het wel na twee uur spelen.',
+      points: [
+        'Studenten logistiek, havenmanagement en supply chain management',
+        'Mensen bij terminals, rederijen, inland operators en vervoerders',
+        'Beleidsmakers die ketenbrede oplossingen ontwerpen',
+        'Onderzoekers en innovatieteams in de logistiek',
+      ],
+    },
+    outcomes: {
+      eyebrow: 'Leeruitkomsten',
+      title: 'Wat je meeneemt',
+      intro: 'Na het spel snap je niet alleen wat er misgaat. Je weet ook waarom, en wat je eraan kunt doen.',
+      items: [
+        { title: 'Iedereen doet het goed, toch gaat het mis', body: 'Dat is het moment in ronde één. Je maakt goede beslissingen. Jouw score is prima. Maar de keten loopt vast. Waarom? Dat is de les.' },
+        { title: 'Eén verstoring, drie schakels later nog steeds last', body: 'Een laat zeeschip. Binnenvaart staat te wachten. Spoor valt terug op trucks. Trucks staan in de file. Je ziet het live ontstaan.' },
+        { title: 'Meer infra lost dit niet op', body: 'De keten heeft geen capaciteitsprobleem. Ze heeft een coördinatieprobleem. Dat kwartje valt ergens in ronde drie.' },
+        { title: 'Drie dingen die het blokkeren', body: 'Governance, data-uitwisseling, bundeling. Na het spel heb je een naam voor elk probleem dat je net zelf hebt veroorzaakt.' },
+        { title: 'Symptoom of oorzaak?', body: 'Na het spel weet je het verschil. En je weet in welke volgorde je dingen zou aanpakken.' },
+      ],
+    },
+    howItWorks: {
+      eyebrow: 'Spelverloop',
+      title: 'Hoe het werkt',
+      body: 'Jij beheert één schakel. Je ziet alleen je eigen cijfers. De rest moet je raden. Dat is precies het punt.',
+      steps: [
+        'Kies een rol: Havenmeester, Inland Terminal, Binnenvaart, Spoor of Vervoerder. Elke rol heeft zijn eigen rolkaart, eigen LEGO-stukken en eigen KPI.',
+        'Ronde 1 en 2: lokale optimalisatie. De Havenmeester pakt containers uit de voorraad en zet ze op de yard. Als de yard vol is (8 containers), seint hij de Vervoerder. De Vervoerder kiest: vrachtwagen (2 containers), trein (3) of binnenvaart (4). Iedereen maximaliseert zijn eigen score, niemand kijkt naar de keten.',
+        'Ergens in ronde 1 of 2 loopt de keten vast terwijl jouw eigen score prima is. Dat moment is de kern van het spel.',
+        'Ronde 3 en 4: bilaterale afstemming. Aangrenzende schakels mogen beperkt informatie delen. Het begint te werken, maar je ziet ook meteen waar de volgende knoop zit.',
+        'Ronde 5 en 6: ketencoördinatie. Er komt een gedeeld planningsinstrument. Je kunt KPI-afspraken heronderhandelen. De ketenscore en je eigen score beginnen naar elkaar toe te groeien.',
+        'Na zes ronden: debriefing. Wat heb je veroorzaakt? Wat had je nodig gehad? Governance, data, bundeling: je plakt nu een naam op wat je hebt gevoeld.',
+      ],
+    },
+    research: {
+      eyebrow: 'Onderzoeksbasis',
+      title: 'Niet verzonnen, maar onderzocht',
+      body: 'Het spel is direct gebouwd op Productiviteit van de achterlandcontainerketen (Topsector Logistiek / SmartPort / Rebel, 2026). De problemen die je speelt zijn de problemen uit het rapport. Speldata gaat geanonimiseerd terug de kennisbasis in.',
+    },
+    cta: {
+      title: 'Speel je mee?',
+      body: 'Plan een sessie voor je team, klas of organisatie. Of haal eerst de brochure op.',
+      contact: 'Plan een sessie',
+      pdf: 'Bekijk brochure',
     },
   },
 } as const;
