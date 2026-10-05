@@ -8,6 +8,9 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = locale === 'nl' ? nl : en;
+
+const commitHash = import.meta.env.COMMIT_REF?.slice(0, 7) ?? 'dev';
+const buildDate = new Date().toISOString().slice(0, 10);
 ---
 
 <footer class="site-footer">
@@ -41,5 +44,10 @@ const t = locale === 'nl' ? nl : en;
   <div class="wrap footer-bottom">
     <span>{t.footer.copyright}</span>
     <span>research-ready.nl</span>
+    <span class="footer-version">
+      <a href={`https://github.com/Research-Ready/website-ResearchReady/commit/${import.meta.env.COMMIT_REF ?? ''}`} target="_blank" rel="noopener" title="View this commit on GitHub">
+        v{buildDate} · {commitHash}
+      </a>
+    </span>
   </div>
 </footer>
