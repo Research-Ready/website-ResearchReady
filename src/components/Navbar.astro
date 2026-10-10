@@ -15,7 +15,7 @@ const nlHref = path;
 const enHref = path === '/' ? '/en/' : `/en${path}`;
 const toggleHref = locale === 'nl' ? enHref : nlHref;
 
-const isActive = (shape: string) => path === shape;
+const isActive = (shape: string) => path === shape || path.startsWith(shape);
 ---
 
 <header class="site-header">
@@ -31,13 +31,15 @@ const isActive = (shape: string) => path === shape;
     </a>
     <div class="site-nav-row">
       <nav class="nav-links" aria-label="Main">
-        <a href={locale === 'nl' ? '/' : '/en/'} aria-current={isActive('/') ? 'page' : undefined}>{t.nav.home}</a>
-        <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'} aria-current={isActive('/pipelines/') ? 'page' : undefined}>{t.nav.pipelines}</a>
-        <a href={locale === 'nl' ? '/contact/' : '/en/contact/'} aria-current={isActive('/contact/') ? 'page' : undefined}>{t.nav.contact}</a>
-        <a href={locale === 'nl' ? '/docs/' : '/en/docs/'} aria-current={isActive('/docs/') ? 'page' : undefined}>{t.nav.docs}</a>
-        <a href={locale === 'nl' ? '/learn/' : '/en/learn/'} aria-current={path.startsWith('/learn/') ? 'page' : undefined}>{t.nav.learn}</a>
-        <a href={locale === 'nl' ? '/container-collision/' : '/en/container-collision/'} aria-current={isActive('/container-collision/') ? 'page' : undefined}>{t.nav.containerCollision}</a>
-        <a class="btn btn-ghost nav-pitch-btn" href={locale === 'nl' ? '/pitch/' : '/en/pitch/'} aria-current={isActive('/pitch/') ? 'page' : undefined}>{t.nav.pitch}</a>
+        <a href={locale === 'nl' ? '/' : '/en/'} aria-current={path === '/' ? 'page' : undefined}>{t.nav.home}</a>
+        <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'} aria-current={path.startsWith('/pipelines') ? 'page' : undefined}>{t.nav.pipelines}</a>
+        <a href={locale === 'nl' ? '/uc1-citable-research/' : '/en/uc1-citable-research/'} aria-current={path.startsWith('/uc1') ? 'page' : undefined} title="UC1: Citeerbaar Onderzoek">UC1</a>
+        <a href={locale === 'nl' ? '/uc4-supplylens/' : '/en/uc4-supplylens/'} aria-current={path.startsWith('/uc4') ? 'page' : undefined} title="UC4: SupplyLens">UC4</a>
+        <a href={locale === 'nl' ? '/container-collision/' : '/en/container-collision/'} aria-current={path.startsWith('/container-collision') ? 'page' : undefined} title="UC11: Container Collision">UC11</a>
+        <a href={locale === 'nl' ? '/uc12-chainforge/' : '/en/uc12-chainforge/'} aria-current={path.startsWith('/uc12') ? 'page' : undefined} title="UC12: ChainForge AI Evaluatie">UC12</a>
+        <a href={locale === 'nl' ? '/docs/' : '/en/docs/'} aria-current={path.startsWith('/docs') ? 'page' : undefined}>{t.nav.docs}</a>
+        <a href={locale === 'nl' ? '/contact/' : '/en/contact/'} aria-current={path.startsWith('/contact') ? 'page' : undefined}>{t.nav.contact}</a>
+        <a class="btn btn-ghost nav-pitch-btn" href={locale === 'nl' ? '/pitch/' : '/en/pitch/'} aria-current={path.startsWith('/pitch') ? 'page' : undefined}>{t.nav.pitch}</a>
       </nav>
       <a class="lang-toggle" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
     </div>
