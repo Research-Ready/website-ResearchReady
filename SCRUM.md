@@ -13,7 +13,9 @@ Dit backlog bevat de geprioriteerde epics en Scrum-taken voor de doorontwikkelin
 | **EPIC-WEB-03** | Interactieve Demo Previews (3D Graph & Tooltips) | P2 (Medium) | 8 SP | To Do |
 | **EPIC-WEB-04** | Workshop & Intake Funnel (4-Stappen Traject & Cal.com) | P2 (Medium) | 8 SP | To Do |
 | **EPIC-WEB-05** | Complete 21 Use Cases Directory & Filtermatrix | P3 (Laag) | 13 SP | To Do |
-| **EPIC-WEB-06** | Trust Signals, EDRM Compliance & SEO Structured Data | P3 (Laag) | 5 SP | To Do |
+| **EPIC-WEB-06** | Trust Signals & EDRM Compliance Badges | P3 (Laag) | 4 SP | To Do |
+| **EPIC-WEB-07** | Advanced SEO, Sitemap & Meta Discoverability | P2 (Medium) | 5 SP | To Do |
+| **EPIC-WEB-08** | Call Automation, Lead Routing & Pre-Call Intelligence | P2 (Medium) | 8 SP | To Do |
 
 ---
 
@@ -204,3 +206,72 @@ Dit backlog bevat de geprioriteerde epics en Scrum-taken voor de doorontwikkelin
   * **Omschrijving:** Voeg gestructureerde data toe aan `BaseLayout.astro` en `UseCasePage.astro` (`Organization`, `SoftwareApplication`).
   * **Acceptatiecriteria:**
     - [ ] Slaagt foutloos voor de Google Rich Results validator.
+
+---
+
+## EPIC-WEB-07: Advanced SEO, Sitemap & Meta Discoverability
+**User Story:**  
+*Als potentiële Europese klant of onderzoeker wil ik dat Research-Ready hoog scoort in zoekmachines op termen als "soevereine AI", "supply chain intelligence Scania" en "reproduceerbaar onderzoek", zodat onze oplossingen organisch vindbaar zijn.*
+
+**INVEST Validatie:**  
+- **I:** Onafhankelijk van interactieve features; betreft build-time metadata en sitemaps.  
+- **N:** Sleutelwoorden en meta descriptions kunnen per pagina geoptimaliseerd worden.  
+- **V:** Essentieel voor organische vindbaarheid en zakelijke reputatie.  
+- **E:** In te schatten op 5 SP (~4 uur).  
+- **S:** Opgesplitst in 3 afgebakende technische taken.  
+- **T:** Valideerbaar via sitemap validators, robots.txt analyzers en OpenGraph previewers.
+
+### Taken:
+* **TSK-WEB-20: XML Sitemap & Robots.txt Generatie** (2 SP)
+  * **Omschrijving:** Integreer `@astrojs/sitemap` in `astro.config.mjs` en configureer automatische generatie van `sitemap-index.xml` en `robots.txt` met canonieke meertalige hreflang-tags voor alle 196+ pagina's.
+  * **Acceptatiecriteria:**
+    - [ ] `https://research-ready.nl/sitemap-index.xml` valideert volgens W3C sitemap standaarden.
+    - [ ] Alle use cases (NL en EN) zijn opgenomen met correcte `hreflang` cross-verwijzingen.
+    - [ ] `robots.txt` blokkeert geen assets en verwijst netjes naar de sitemap.
+* **TSK-WEB-21: OpenGraph Social Cards & Dynamische Meta Tags** (2 SP)
+  * **Omschrijving:** Bouw unieke social share cards (`og:image`, `twitter:card`) voor de use cases en voeg gerichte meta-keywords en descriptions toe over soevereine AI, EDRM en ketenvisibiliteit.
+  * **Acceptatiecriteria:**
+    - [ ] Delen van `/uc1-citable-research/` of `/uc4-supplylens/` op LinkedIn/Twitter toont een rijk grafisch voorbeeld met de juiste titel en intro.
+    - [ ] Geen duplicate meta tags of ontbrekende canonical links.
+* **TSK-WEB-22: Core Web Vitals & Asset Optimalisatie** (1 SP)
+  * **Omschrijving:** Controleer laadtijden van fonts (Inter & Space Grotesk woff2 preload) en converteer dashboard PNG's automatisch naar WebP met behoud van scherpte.
+  * **Acceptatiecriteria:**
+    - [ ] Google PageSpeed Insights score > 90 op zowel desktop als mobiel.
+    - [ ] Cumulative Layout Shift (CLS) < 0.05.
+
+---
+
+## EPIC-WEB-08: Call Automation, Lead Routing & Pre-Call Intelligence
+**User Story:**  
+*Als geïnteresseerde enterprise partner wil ik naadloos een demonstratie of adviesgesprek kunnen boeken met relevante intakevragen, en als Research-Ready team willen we dat leads automatisch worden voorbereid met AI-gedreven briefings en kalenderflows.*
+
+**INVEST Validatie:**  
+- **I:** Koppelt aan de bestaande `/contact/` route en Cal.com embed zonder de rest van de site te verstoren.  
+- **N:** Aantal intakevragen en notificatiekanalen (mail vs webhook) zijn flexibel.  
+- **V:** Zeer hoge operationele waarde: bespaart uren aan handmatige acquisitie- en voorbereidingstijd.  
+- **E:** In te schatten op 8 SP (~1 werkdag).  
+- **S:** Opgesplitst in 4 specifieke integratietaken.  
+- **T:** Testbaar via sandbox Cal.com boekingen en n8n webhook testruns.
+
+### Taken:
+* **TSK-WEB-23: Geavanceerde Cal.com Intake Routing & Vragenlijst** (2 SP)
+  * **Omschrijving:** Configureer binnen Cal.com dynamische intakevragen: Type organisatie (Universiteit, Logistiek bedrijf, Overheid), Doel-usecase (UC1, UC4, UC11, UC12 of custom), en Infrastructuurwens (Volledig On-Premise GPU vs Cloud-hybride).
+  * **Acceptatiecriteria:**
+    - [ ] Intakevragen zijn verplicht gesteld vóór afronding van de boeking.
+    - [ ] Cal.com routing stuurt de afspraak direct naar de juiste agenda en tijdsduur (30 min intro vs 60 min diepe demo).
+* **TSK-WEB-24: Webhook Pipeline & n8n Lead Orchestratie** (2 SP)
+  * **Omschrijving:** Bouw een n8n workflow die bij een `BOOKING_CREATED` webhook van Cal.com de gegevens opvangt, opslaat in de Postgres lead-database, en een notificatie verzendt.
+  * **Acceptatiecriteria:**
+    - [ ] Webhook payload wordt cryptografisch geverifieerd via secret token.
+    - [ ] Data wordt gestructureerd weggeschreven en bevestigingsmail met agendalinks wordt verzonden via Brevo/Mailcow.
+* **TSK-WEB-25: AI Pre-Call Briefing Generator** (3 SP)
+  * **Omschrijving:** Koppel een n8n workflow aan een lokale LiteLLM/Ollama agent die bij een nieuwe boeking het domein van de aanvrager opzoekt, de openbare bedrijfsactiviteit samenvat, en matcht met de meest relevante Research-Ready use case.
+  * **Acceptatiecriteria:**
+    - [ ] 1 uur vóór het gesprek ontvangt de Research-Ready host een beknopt PDF/Markdown overzicht ("Pre-Call Dossier") met bedrijfscontext en voorgestelde demo-focus.
+    - [ ] Bevat een link naar het specifieke interactieve dashboard (bijv. SupplyLens voor logistiekers).
+* **TSK-WEB-26: Geautomatiseerde Reminder & Follow-Up Sequence** (1 SP)
+  * **Omschrijving:** Richt geautomatiseerde herinneringen in: 24 uur vóór het gesprek een e-mail met de directe link naar de bijbehorende Reveal.js pitch presentatie (`/pitch/ucX/`), en na afloop een geautomatiseerde bedankmail met whitepaper links.
+  * **Acceptatiecriteria:**
+    - [ ] Herinneringsmail bevat de Reveal.js presentatielink die past bij de geselecteerde use case.
+    - [ ] Afspraak kan 1-klik worden verzet of geannuleerd via Cal.com.
+
