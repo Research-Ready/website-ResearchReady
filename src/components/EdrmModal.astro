@@ -1,0 +1,244 @@
+---
+interface Props {
+  locale: 'nl' | 'en';
+}
+
+const { locale } = Astro.props;
+const isEn = locale === 'en';
+---
+
+<dialog id="edrm-modal" class="edrm-modal" aria-labelledby="edrm-modal-title">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <div class="modal-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        {isEn ? "Evidentiary Standard & Compliance" : "Bewijsstandaard & Compliancy"}
+      </div>
+      <button type="button" class="modal-close" id="close-edrm-modal" aria-label={isEn ? "Close dialog" : "Sluit venster"}>
+        &times;
+      </button>
+    </div>
+
+    <h2 id="edrm-modal-title" class="modal-title">
+      {isEn
+        ? "EDRM Discipline & 100% EU Data Sovereignty"
+        : "EDRM Discipline & 100% EU Datasoevereiniteit"}
+    </h2>
+
+    <div class="modal-body">
+      <div class="modal-section">
+        <h3>{isEn ? "1. Electronic Discovery Reference Model (EDRM)" : "1. Electronic Discovery Reference Model (EDRM)"}</h3>
+        <p>
+          {isEn
+            ? "Research-Ready pipelines apply legal-grade evidentiary rigor to generative AI workflows. Every extraction, graph synthesis, and benchmark run maintains a cryptographic chain-of-custody:"
+            : "Research-Ready pipelines passen de juridische bewijsstandaarden van EDRM toe op AI-workflows. Elke data-extractie, graafsynthese en benchmark behoudt een cryptografisch traceerbare keten:"}
+        </p>
+        <ul class="modal-list">
+          <li>
+            <strong>{isEn ? "Deterministic Provenance:" : "Deterministische Herkomst:"}</strong>
+            {isEn
+              ? " Every factual claim is paired with exact SHA-256 hashes of the source documents and page-level BibTeX citations."
+              : " Elke feitelijke bewering is gekoppeld aan de exacte SHA-256 hash van het bronbestand en paginaspecifieke BibTeX annotaties."}
+          </li>
+          <li>
+            <strong>{isEn ? "Audit Trail & Reproducibility:" : "Audit Trail & Reproduceerbaarheid:"}</strong>
+            {isEn
+              ? " Prompts, model weights versions, temperature seeds, and agent decisions are logged verbatim for independent peer review."
+              : " Prompts, modelversies, temperature-seeds en agent-stappen worden ongewijzigd gelogd voor onafhankelijke peer review of juridische audits."}
+          </li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>{isEn ? "2. Sovereign On-Premise Execution" : "2. Volledig Soevereine Lokale Executie"}</h3>
+        <p>
+          {isEn
+            ? "Your trade secrets, supply contracts, and proprietary research never leave your infrastructure:"
+            : "Uw bedrijfsgeheimen, toeleveringscontracten en onderzoeksdata verlaten nooit uw eigen infrastructuur:"}
+        </p>
+        <ul class="modal-list">
+          <li>
+            <strong>{isEn ? "Zero Cloud Leakage:" : "Geen Datalekkage naar Cloud LLM's:"}</strong>
+            {isEn
+              ? " Local open-weights execution (Ollama, vLLM, RTX/H100) ensures zero telemetry or training data harvesting by external API providers."
+              : " Lokale modellen (Ollama, vLLM) garanderen dat uw data nooit wordt gedeeld met commerciële API-aanbieders of gebruikt wordt voor modeltraining."}
+          </li>
+          <li>
+            <strong>{isEn ? "EU GDPR & AI Act Compliance:" : "AVG & EU AI Act Conformiteit:"}</strong>
+            {isEn
+              ? " Complies with Articles 9 & 10 of the EU AI Act regarding data governance, bias auditing, and human oversight."
+              : " Voldoet aan de eisen van de AVG (GDPR) en Artikelen 9 & 10 van de EU AI Act inzake databeheer en menselijke controle."}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary btn-sm" id="confirm-edrm-modal">
+        {isEn ? "Understood" : "Begrepen"}
+      </button>
+      <a href={isEn ? "/en/contact/" : "/contact/"} class="btn btn-ghost btn-sm">
+        {isEn ? "Schedule Architecture Review" : "Plan een Architectuur Review"}
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .edrm-modal {
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-md);
+    background: transparent;
+    max-width: 640px;
+    width: 90vw;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
+  }
+
+  .edrm-modal::backdrop {
+    background: rgba(14, 26, 36, 0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-inner {
+    background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+  }
+
+  .modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    transition: color 150ms ease;
+  }
+
+  .modal-close:hover {
+    color: var(--ink);
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+
+  .modal-section h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.4rem;
+    color: var(--ink);
+  }
+
+  .modal-section p {
+    margin: 0 0 0.5rem;
+  }
+
+  .modal-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .modal-list strong {
+    color: var(--ink);
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .btn-sm {
+    font-size: 0.85rem;
+    padding: 0.45rem 1rem;
+  }
+</style>
+
+<script>
+  function setupEdrmModal() {
+    const dialog = document.getElementById('edrm-modal') as HTMLDialogElement | null;
+    const triggers = document.querySelectorAll('[data-open-edrm-modal]');
+    const closeBtn = document.getElementById('close-edrm-modal');
+    const confirmBtn = document.getElementById('confirm-edrm-modal');
+
+    if (!dialog) return;
+
+    triggers.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        dialog.showModal();
+      });
+    });
+
+    const closeModal = () => dialog.close();
+
+    closeBtn?.addEventListener('click', closeModal);
+    confirmBtn?.addEventListener('click', closeModal);
+
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
+      const isInDialog = (
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width
+      );
+      if (!isInDialog) {
+        dialog.close();
+      }
+    });
+  }
+
+  setupEdrmModal();
+  document.addEventListener('astro:page-load', setupEdrmModal);
+</script>

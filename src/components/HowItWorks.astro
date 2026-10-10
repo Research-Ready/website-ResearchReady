@@ -1,0 +1,186 @@
+---
+interface Props {
+  locale: 'nl' | 'en';
+}
+
+const { locale } = Astro.props;
+const isEn = locale === 'en';
+
+const steps = isEn ? [
+  {
+    num: '01',
+    title: 'Intake & Scoping Call',
+    desc: 'Clarify research questions, input data formats, and institutional constraints in an introductory 30-minute session.',
+    deliverable: 'Deliverable: Scoping memo & feasibility assessment',
+  },
+  {
+    num: '02',
+    title: 'Sovereignty & Architecture Review',
+    desc: 'Determine on-premise hardware boundaries, open-weights model selection, and EDRM-compliant chain-of-custody protocols.',
+    deliverable: 'Deliverable: Architecture blueprint & security clearance',
+  },
+  {
+    num: '03',
+    title: 'Demonstrator & Live Workshop',
+    desc: 'Interactive workshop run on real sample data or domain graphs (e.g. Neo4j SupplyLens, ChainForge benchmark suite).',
+    deliverable: 'Deliverable: Working proof-of-concept with measurable metrics',
+  },
+  {
+    num: '04',
+    title: 'Pipeline Delivery & Handover',
+    desc: 'Fully reproducible Docker/container stack, executable Quarto publications, and automated CI/CD pipeline handover.',
+    deliverable: 'Deliverable: Production code, docs, and knowledge transfer',
+  },
+] : [
+  {
+    num: '01',
+    title: 'Intake & Vraagdefinitie',
+    desc: 'In een gerichte intake van 30 minuten bakenen we de onderzoeksvragen, dataformaten en institutionele randvoorwaarden af.',
+    deliverable: 'Oplevering: Vraagdefinitie & haalbaarheidsmemo',
+  },
+  {
+    num: '02',
+    title: 'Soevereiniteitstoets & Architectuur',
+    desc: 'Keuze voor lokale GPU-hardware, selectie van open-weights modellen en inrichting van EDRM-conforme auditlogging.',
+    deliverable: 'Oplevering: Architectuurblauwdruk & privacy-toets',
+  },
+  {
+    num: '03',
+    title: 'Demonstrator & Validatieworkshop',
+    desc: 'Hands-on interactieve werksessie op reële steekproefdata of domeingrafen (bijv. SupplyLens 3D, ChainForge benchmarks).',
+    deliverable: 'Oplevering: Werkende proof-of-concept met meetbare KPI\'s',
+  },
+  {
+    num: '04',
+    title: 'Pipeline Oplevering & Overdracht',
+    desc: 'Containerized softwarestack (Docker/Podman), ceteerbare Quarto publicaties en volledige broncode-overdracht.',
+    deliverable: 'Oplevering: Productiecode, documentatie & teamtraining',
+  },
+];
+---
+
+<section class="how-it-works-section">
+  <div class="wrap">
+    <div class="section-intro">
+      <span class="eyebrow">{isEn ? "Collaboration Process" : "Samenwerkingstraject"}</span>
+      <h2>{isEn ? "How We Work: From Intake to Production" : "Hoe het werkt: Van Intake tot Oplevering"}</h2>
+      <p class="lede">
+        {isEn
+          ? "A transparent 4-stage path ensuring verified accuracy, complete data sovereignty, and reproducible outcomes."
+          : "Een transparant 4-stappentraject dat methodologische nauwkeurigheid, 100% datasoevereiniteit en reproduceerbare resultaten borgt."}
+      </p>
+    </div>
+
+    <div class="steps-grid">
+      {steps.map((s) => (
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-num">{s.num}</span>
+          </div>
+          <h3 class="step-title">{s.title}</h3>
+          <p class="step-desc">{s.desc}</p>
+          <div class="step-deliverable">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{s.deliverable}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-it-works-section {
+    padding: 4.5rem 0;
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-intro {
+    max-width: 44rem;
+    margin-bottom: 2.75rem;
+  }
+
+  .section-intro h2 {
+    font-size: 2rem;
+    line-height: 1.25;
+    margin: 0.5rem 0 0.75rem;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 160ms ease, border-color 160ms ease;
+  }
+
+  .step-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+
+  .step-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: inline-block;
+  }
+
+  .step-title {
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin: 0 0 0.6rem;
+    color: var(--ink);
+  }
+
+  .step-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 1.25rem;
+    flex-grow: 1;
+  }
+
+  .step-deliverable {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+  }
+
+  .step-deliverable svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

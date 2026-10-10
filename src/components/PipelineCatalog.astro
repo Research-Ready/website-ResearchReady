@@ -1,0 +1,612 @@
+---
+import { allUseCases } from '../data/allUseCases';
+
+interface Props {
+  locale: 'nl' | 'en';
+}
+
+const { locale } = Astro.props;
+const isEn = locale === 'en';
+
+const domainFilters = isEn
+  ? [
+      { id: 'all', label: 'All Sectors' },
+      { id: 'supply_chain', label: 'Logistics & Supply Chain' },
+      { id: 'research', label: 'Research & Science' },
+      { id: 'ai_eval', label: 'AI Evaluation & Governance' },
+      { id: 'operations', label: 'Software & Operations' },
+      { id: 'education', label: 'Education & Consortia' },
+    ]
+  : [
+      { id: 'all', label: 'Alle Sectoren' },
+      { id: 'supply_chain', label: 'Logistiek & Supply Chain' },
+      { id: 'research', label: 'Onderzoek & Wetenschap' },
+      { id: 'ai_eval', label: 'AI Evaluatie & Governance' },
+      { id: 'operations', label: 'Software & Bedrijfsvoering' },
+      { id: 'education', label: 'Onderwijs & Subsidies' },
+    ];
+
+const statusFilters = isEn
+  ? [
+      { id: 'all', label: 'All Statuses' },
+      { id: 'ready', label: 'Demo Ready / Live' },
+      { id: 'progress', label: 'In Progress / Design' },
+    ]
+  : [
+      { id: 'all', label: 'Alle Statussen' },
+      { id: 'ready', label: 'Demo Gereed / Live' },
+      { id: 'progress', label: 'In Ontwikkeling / Specificatie' },
+    ];
+
+const getStatusGroup = (status: string) => {
+  if (status === 'demo-ready' || status === 'live') return 'ready';
+  return 'progress';
+};
+---
+
+<div class="pipeline-catalog" id="pipeline-catalog">
+  <!-- Controls bar: Search & Filters -->
+  <div class="catalog-controls">
+    <div class="search-box">
+      <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="9" r="6" />
+        <path d="M13.5 13.5L18 18" stroke-linecap="round" />
+      </svg>
+      <input
+        type="search"
+        id="catalog-search"
+        placeholder={isEn ? "Search by keyword, UC number, or domain..." : "Zoek op trefwoord, UC-nummer of domein..."}
+        aria-label={isEn ? "Search use cases" : "Zoek use cases"}
+      />
+    </div>
+
+    <!-- Domain filters -->
+    <div class="filter-group">
+      <span class="filter-label">{isEn ? "Sector:" : "Sector:"}</span>
+      <div class="pill-group" role="group" aria-label="Sector filter">
+        {domainFilters.map((df, i) => (
+          <button
+            type="button"
+            class={`filter-pill ${i === 0 ? 'active' : ''}`}
+            data-filter-domain={df.id}
+          >
+            {df.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Status filters -->
+    <div class="filter-group">
+      <span class="filter-label">{isEn ? "Status:" : "Status:"}</span>
+      <div class="pill-group" role="group" aria-label="Status filter">
+        {statusFilters.map((sf, i) => (
+          <button
+            type="button"
+            class={`filter-pill ${i === 0 ? 'active' : ''}`}
+            data-filter-status={sf.id}
+          >
+            {sf.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Counter -->
+    <div class="results-meta">
+      <span id="results-count">
+        {isEn ? `Showing ${allUseCases.length} of ${allUseCases.length} use cases` : `Getoond: ${allUseCases.length} van ${allUseCases.length} use cases`}
+      </span>
+    </div>
+  </div>
+
+  <!-- Use cases list -->
+  <div class="catalog-list" id="catalog-list">
+    {allUseCases.map((uc) => {
+      const pageHref = isEn ? (uc.pageHrefEn || uc.pageHrefNl) : uc.pageHrefNl;
+      const pitchHref = isEn ? (uc.pitchHrefEn || uc.pitchHrefNl) : uc.pitchHrefNl;
+      const statusGroup = getStatusGroup(uc.status);
+      const isReady = statusGroup === 'ready';
+
+      const searchHaystack = [
+        uc.id,
+        `UC${uc.num}`,
+        uc.titleNl,
+        uc.titleEn,
+        uc.domainLabelNl,
+        uc.domainLabelEn,
+        uc.descNl,
+        uc.descEn,
+        uc.repo
+      ].join(' ').toLowerCase();
+
+      return (
+        <article
+          class="catalog-card"
+          data-domain={uc.domain}
+          data-status-group={statusGroup}
+          data-search={searchHaystack}
+        >
+          <div class="card-side">
+            <span class="card-index">{String(uc.num).padStart(2, '0')}</span>
+            <span class="card-id">{uc.id}</span>
+          </div>
+
+          <div class="card-main">
+            <div class="card-header">
+              <div class="badges-row">
+                <span class={`badge-status ${isReady ? 'status-ready' : 'status-progress'}`}>
+                  {isEn ? uc.statusLabelEn : uc.statusLabelNl}
+                </span>
+                <span class="badge-domain">
+                  {isEn ? uc.domainLabelEn : uc.domainLabelNl}
+                </span>
+                <span class="badge-repo">
+                  {uc.repo}
+                </span>
+              </div>
+              <h2 class="card-title">
+                {isEn ? uc.titleEn : uc.titleNl}
+              </h2>
+            </div>
+
+            <p class="card-desc">
+              {isEn ? uc.descEn : uc.descNl}
+            </p>
+
+            <div class="card-actions">
+              {pageHref ? (
+                <a href={pageHref} class="btn btn-primary btn-sm">
+                  {isEn ? "View Showcase & Results" : "Bekijk Use Case & Resultaten"}
+                  <span aria-hidden="true">&rarr;</span>
+                </a>
+              ) : null}
+
+              {pitchHref ? (
+                <a
+                  href={pitchHref}
+                  target={pitchHref.startsWith('http') ? '_blank' : '_self'}
+                  rel={pitchHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  class="btn btn-ghost btn-sm"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  {isEn ? "Pitch Deck" : "Pitch Presentatie"}
+                </a>
+              ) : null}
+
+              <a
+                href={`https://github.com/Research-Ready/${uc.repo}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-ghost btn-sm btn-subtle"
+                title={isEn ? "Inspect GitHub repository" : "Bekijk broncode op GitHub"}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+
+  <div id="catalog-empty" class="catalog-empty" style="display: none;">
+    <p>
+      {isEn
+        ? "No use cases found matching your search and filter criteria."
+        : "Geen use cases gevonden voor deze zoekterm of filterselectie."}
+    </p>
+    <button type="button" id="reset-filters-btn" class="btn btn-ghost btn-sm">
+      {isEn ? "Reset all filters" : "Herstel alle filters"}
+    </button>
+  </div>
+</div>
+
+<style>
+  .pipeline-catalog {
+    margin-top: 2rem;
+  }
+
+  .catalog-controls {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search-box {
+    position: relative;
+    width: 100%;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .search-box input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(47, 111, 146, 0.15);
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .filter-pill {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--ink-soft);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 140ms ease;
+  }
+
+  .filter-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--surface);
+  }
+
+  .filter-pill.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .results-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Catalog items list */
+  .catalog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .catalog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.75rem;
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .catalog-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px -12px rgba(14, 26, 36, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .card-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 0.25rem;
+    border-right: 1px solid var(--border);
+    padding-right: 1.25rem;
+  }
+
+  .card-index {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--border);
+    transition: color 150ms ease;
+  }
+
+  .catalog-card:hover .card-index {
+    color: var(--accent);
+  }
+
+  .card-id {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .card-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .badge-status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+  }
+
+  .status-ready {
+    background: rgba(46, 125, 50, 0.12);
+    color: #2e7d32;
+    border: 1px solid rgba(46, 125, 50, 0.25);
+  }
+
+  .status-progress {
+    background: rgba(224, 138, 0, 0.1);
+    color: #b36b00;
+    border: 1px solid rgba(224, 138, 0, 0.22);
+  }
+
+  .badge-domain {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: var(--bg-alt);
+    color: var(--ink-soft);
+  }
+
+  .badge-repo {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .card-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-sm {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-subtle {
+    opacity: 0.8;
+  }
+
+  .btn-subtle:hover {
+    opacity: 1;
+  }
+
+  .catalog-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+    margin-top: 1.5rem;
+  }
+
+  .catalog-empty p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .catalog-card {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.25rem;
+    }
+
+    .card-side {
+      flex-direction: row;
+      justify-content: space-between;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding-right: 0;
+      padding-bottom: 0.75rem;
+    }
+
+    .card-index {
+      font-size: 1.5rem;
+    }
+
+    .filter-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+  }
+</style>
+
+<script>
+  function setupPipelineCatalog() {
+    const root = document.getElementById('pipeline-catalog');
+    if (!root) return;
+
+    const searchInput = root.querySelector('#catalog-search') as HTMLInputElement | null;
+    const domainPills = root.querySelectorAll('[data-filter-domain]') as NodeListOf<HTMLButtonElement>;
+    const statusPills = root.querySelectorAll('[data-filter-status]') as NodeListOf<HTMLButtonElement>;
+    const cards = root.querySelectorAll('.catalog-card') as NodeListOf<HTMLElement>;
+    const resultsCount = root.querySelector('#results-count') as HTMLElement | null;
+    const emptyState = root.querySelector('#catalog-empty') as HTMLElement | null;
+    const resetBtn = root.querySelector('#reset-filters-btn') as HTMLButtonElement | null;
+
+    let activeDomain = 'all';
+    let activeStatus = 'all';
+    let searchQuery = '';
+    const totalCount = cards.length;
+
+    function applyFilters() {
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const domain = card.dataset.domain || '';
+        const statusGroup = card.dataset.statusGroup || '';
+        const searchContent = card.dataset.search || '';
+
+        const matchesDomain = activeDomain === 'all' || domain === activeDomain;
+        const matchesStatus = activeStatus === 'all' || statusGroup === activeStatus;
+        const matchesSearch = !searchQuery || searchContent.includes(searchQuery);
+
+        if (matchesDomain && matchesStatus && matchesSearch) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (resultsCount) {
+        const isEn = document.documentElement.lang === 'en';
+        resultsCount.textContent = isEn
+          ? `Showing ${visibleCount} of ${totalCount} use cases`
+          : `Getoond: ${visibleCount} van ${totalCount} use cases`;
+      }
+
+      if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    // Domain filter pill click
+    domainPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        domainPills.forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeDomain = pill.dataset.filterDomain || 'all';
+        applyFilters();
+      });
+    });
+
+    // Status filter pill click
+    statusPills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        statusPills.forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeStatus = pill.dataset.filterStatus || 'all';
+        applyFilters();
+      });
+    });
+
+    // Search input
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = (e.target as HTMLInputElement).value.trim().toLowerCase();
+        applyFilters();
+      });
+    }
+
+    // Reset button
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+
+        domainPills.forEach((p, idx) => {
+          if (idx === 0) p.classList.add('active');
+          else p.classList.remove('active');
+        });
+        activeDomain = 'all';
+
+        statusPills.forEach((p, idx) => {
+          if (idx === 0) p.classList.add('active');
+          else p.classList.remove('active');
+        });
+        activeStatus = 'all';
+
+        applyFilters();
+      });
+    }
+  }
+
+  // Init on first load and on client-side navigations
+  setupPipelineCatalog();
+  document.addEventListener('astro:page-load', setupPipelineCatalog);
+</script>

@@ -1,47 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PipelineCatalog from '../components/PipelineCatalog.astro';
 import { nl } from '../i18n/nl';
 
 const t = nl;
-
-const getUcHref = (repo: string) => {
-  if (repo === 'uc1-research') return '/uc1-citable-research/';
-  if (repo === 'uc4-supply-chain') return '/uc4-supplylens/';
-  if (repo === 'uc11-container-collision') return '/container-collision/';
-  if (repo === 'uc12-chainforge-eval' || repo === 'uc12-chainforge') return '/uc12-chainforge/';
-  return null;
-};
 ---
 
 <BaseLayout locale="nl" title={t.pipelines.title} description={t.pipelines.intro}>
   <section class="section">
     <div class="wrap">
-      <span class="eyebrow">{t.pipelines.title}</span>
+      <span class="eyebrow">Catalogus & Portfolio</span>
       <h1>{t.pipelines.title}</h1>
       <p class="lede">{t.pipelines.intro}</p>
-      <div class="pipeline-list">
-        {t.pipelines.items.map((item, i) => {
-          const ucHref = getUcHref(item.repo);
-          return (
-            <div class="pipeline-row">
-              <span class="pipeline-index">{String(i + 1).padStart(2, '0')}</span>
-              <div>
-                <h3>
-                  {item.title} <span class="repo-badge">{item.repo}</span>
-                </h3>
-                <p>{item.description}</p>
-                {ucHref && (
-                  <div style="margin-top: 0.9rem;">
-                    <a href={ucHref} class="btn btn-ghost" style="padding: 0.35rem 0.85rem; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem;">
-                      Bekijk Use Case & Resultaten <span>&rarr;</span>
-                    </a>
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <PipelineCatalog locale="nl" />
     </div>
   </section>
 </BaseLayout>

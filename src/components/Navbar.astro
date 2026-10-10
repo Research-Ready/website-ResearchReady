@@ -15,11 +15,11 @@ const nlHref = path;
 const enHref = path === '/' ? '/en/' : `/en${path}`;
 const toggleHref = locale === 'nl' ? enHref : nlHref;
 
-const isActive = (shape: string) => path === shape || path.startsWith(shape);
+const isCaseActive = path.startsWith('/uc1') || path.startsWith('/uc4') || path.startsWith('/uc12') || path.startsWith('/container-collision');
 ---
 
 <header class="site-header">
-  <div class="wrap">
+  <div class="wrap header-wrap">
     <a class="brand" href={locale === 'nl' ? '/' : '/en/'}>
       <svg class="brand-mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
         <path d="M8 22 L16 10 L24 22" stroke="#2f6f92" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
@@ -29,19 +29,274 @@ const isActive = (shape: string) => path === shape || path.startsWith(shape);
       </svg>
       Research-Ready
     </a>
-    <div class="site-nav-row">
-      <nav class="nav-links" aria-label="Main">
-        <a href={locale === 'nl' ? '/' : '/en/'} aria-current={path === '/' ? 'page' : undefined}>{t.nav.home}</a>
-        <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'} aria-current={path.startsWith('/pipelines') ? 'page' : undefined}>{t.nav.pipelines}</a>
-        <a href={locale === 'nl' ? '/uc1-citable-research/' : '/en/uc1-citable-research/'} aria-current={path.startsWith('/uc1') ? 'page' : undefined} title="UC1: Citeerbaar Onderzoek">UC1</a>
-        <a href={locale === 'nl' ? '/uc4-supplylens/' : '/en/uc4-supplylens/'} aria-current={path.startsWith('/uc4') ? 'page' : undefined} title="UC4: SupplyLens">UC4</a>
-        <a href={locale === 'nl' ? '/container-collision/' : '/en/container-collision/'} aria-current={path.startsWith('/container-collision') ? 'page' : undefined} title="UC11: Container Collision">UC11</a>
-        <a href={locale === 'nl' ? '/uc12-chainforge/' : '/en/uc12-chainforge/'} aria-current={path.startsWith('/uc12') ? 'page' : undefined} title="UC12: ChainForge AI Evaluatie">UC12</a>
-        <a href={locale === 'nl' ? '/docs/' : '/en/docs/'} aria-current={path.startsWith('/docs') ? 'page' : undefined}>{t.nav.docs}</a>
-        <a href={locale === 'nl' ? '/contact/' : '/en/contact/'} aria-current={path.startsWith('/contact') ? 'page' : undefined}>{t.nav.contact}</a>
-        <a class="btn btn-ghost nav-pitch-btn" href={locale === 'nl' ? '/pitch/' : '/en/pitch/'} aria-current={path.startsWith('/pitch') ? 'page' : undefined}>{t.nav.pitch}</a>
-      </nav>
-      <a class="lang-toggle" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
+
+    <div class="nav-controls">
+      <a class="lang-toggle mobile-lang" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
+      <button class="mobile-menu-btn" aria-label="Toggle navigatiemenu" aria-expanded="false" id="menuToggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
     </div>
+
+    <nav class="nav-links" id="mainNav" aria-label="Main">
+      <a href={locale === 'nl' ? '/' : '/en/'} aria-current={path === '/' ? 'page' : undefined}>{t.nav.home}</a>
+      <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'} aria-current={path.startsWith('/pipelines') ? 'page' : undefined}>{t.nav.pipelines}</a>
+
+      <!-- Use Cases Dropdown -->
+      <div class="dropdown-wrapper">
+        <button class={`dropdown-trigger ${isCaseActive ? 'is-active' : ''}`} aria-haspopup="true">
+          {locale === 'nl' ? 'Use Cases' : 'Use Cases'}
+          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="dropdown-menu">
+          <a href={locale === 'nl' ? '/uc1-citable-research/' : '/en/uc1-citable-research/'} class="dropdown-item">
+            <strong>UC1: {locale === 'nl' ? 'Citeerbaar Onderzoek' : 'Citable Research'}</strong>
+            <span>{locale === 'nl' ? 'Autonome synthese met BibTeX bronnen' : 'Autonomous multi-agent research with citations'}</span>
+          </a>
+          <a href={locale === 'nl' ? '/uc4-supplylens/' : '/en/uc4-supplylens/'} class="dropdown-item">
+            <strong>UC4: SupplyLens</strong>
+            <span>{locale === 'nl' ? 'Keteninvisie tot Tier-5 (Scania partner)' : 'Multi-tier supply chain mapping (Scania AB)'}</span>
+          </a>
+          <a href={locale === 'nl' ? '/container-collision/' : '/en/container-collision/'} class="dropdown-item">
+            <strong>UC11: Container Collision</strong>
+            <span>{locale === 'nl' ? 'Achterlandketen simulatiespel' : 'Hinterland logistics simulation game'}</span>
+          </a>
+          <a href={locale === 'nl' ? '/uc12-chainforge/' : '/en/uc12-chainforge/'} class="dropdown-item">
+            <strong>UC12: ChainForge AI Eval</strong>
+            <span>{locale === 'nl' ? 'Lokale vs frontier modelbenchmarks' : 'Local vs frontier model benchmark suite'}</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href={locale === 'nl' ? '/pipelines/' : '/en/pipelines/'} class="dropdown-item dropdown-footer-link">
+            <span>{locale === 'nl' ? 'Bekijk alle 21 use cases &rarr;' : 'Explore all 21 use cases &rarr;'}</span>
+          </a>
+        </div>
+      </div>
+
+      <a href={locale === 'nl' ? '/docs/' : '/en/docs/'} aria-current={path.startsWith('/docs') ? 'page' : undefined}>{t.nav.docs}</a>
+      <a href={locale === 'nl' ? '/contact/' : '/en/contact/'} aria-current={path.startsWith('/contact') ? 'page' : undefined}>{t.nav.contact}</a>
+      <a class="btn btn-ghost nav-pitch-btn" href={locale === 'nl' ? '/pitch/' : '/en/pitch/'} aria-current={path.startsWith('/pitch') ? 'page' : undefined}>{t.nav.pitch}</a>
+      <a class="lang-toggle desktop-lang" href={toggleHref} aria-label="Switch language">{t.nav.langToggle}</a>
+    </nav>
   </div>
 </header>
+
+<style>
+  .header-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .nav-controls {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  /* Dropdown Styles */
+  .dropdown-wrapper {
+    position: relative;
+  }
+
+  .dropdown-trigger {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 0.96rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    padding: 0.25rem 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border-bottom: 2px solid transparent;
+    transition: color 160ms ease, border-color 160ms ease;
+  }
+
+  .dropdown-trigger:hover,
+  .dropdown-wrapper:hover .dropdown-trigger,
+  .dropdown-wrapper:focus-within .dropdown-trigger {
+    color: var(--accent);
+  }
+
+  .dropdown-trigger.is-active {
+    color: var(--ink);
+    border-color: var(--accent);
+  }
+
+  .chevron {
+    transition: transform 180ms ease;
+  }
+
+  .dropdown-wrapper:hover .chevron,
+  .dropdown-wrapper:focus-within .chevron {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 290px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 16px 36px rgba(14, 26, 36, 0.16);
+    padding: 0.6rem 0;
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+    z-index: 100;
+  }
+
+  .dropdown-wrapper:hover .dropdown-menu,
+  .dropdown-wrapper:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-item {
+    padding: 0.6rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-bottom: none !important;
+    transition: background 140ms ease;
+  }
+
+  .dropdown-item strong {
+    font-size: 0.92rem;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .dropdown-item span {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+
+  .dropdown-item:hover {
+    background: var(--bg);
+  }
+
+  .dropdown-item:hover strong {
+    color: var(--accent);
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0.4rem 0;
+  }
+
+  .dropdown-footer-link span {
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* Mobile menu button */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mobile-menu-btn .bar {
+    width: 100%;
+    height: 2.5px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .mobile-menu-btn.is-active .bar:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+  }
+  .mobile-menu-btn.is-active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu-btn.is-active .bar:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+  }
+
+  @media (max-width: 880px) {
+    .nav-controls {
+      display: flex;
+    }
+    .desktop-lang {
+      display: none;
+    }
+    .mobile-menu-btn {
+      display: flex;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: 0 16px 36px rgba(14, 26, 36, 0.18);
+      padding: 1.25rem 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 0.75rem;
+      z-index: 99;
+    }
+
+    .nav-links.is-open {
+      display: flex;
+    }
+
+    .dropdown-menu {
+      position: static;
+      box-shadow: none;
+      border: 1px solid var(--border);
+      margin-top: 0.5rem;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      min-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  const toggleBtn = document.getElementById('menuToggle');
+  const nav = document.getElementById('mainNav');
+
+  if (toggleBtn && nav) {
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      toggleBtn.classList.toggle('is-active', isOpen);
+      toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+</script>
