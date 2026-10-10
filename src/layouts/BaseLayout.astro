@@ -13,14 +13,39 @@ interface Props {
   locale: 'nl' | 'en';
   title: string;
   description: string;
+  image?: string;
 }
 
-const { locale, title, description } = Astro.props;
+const { locale, title, description, image = '/images/usecases/uc4/dashboard_launcher.png' } = Astro.props;
 
 const path = Astro.url.pathname.replace(/^\/en(\/|$)/, '/');
 const nlUrl = new URL(path, Astro.site).toString();
 const enUrl = new URL(path === '/' ? '/en/' : `/en${path}`, Astro.site).toString();
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const imageUrl = new URL(image, Astro.site).toString();
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://research-ready.nl/#organization",
+      "name": "Research-Ready",
+      "url": "https://research-ready.nl",
+      "logo": "https://research-ready.nl/favicon.svg",
+      "description": "Reproducible, forensically grounded sovereign AI research and pipelines under European control.",
+      "knowsAbout": ["Artificial Intelligence", "Supply Chain Intelligence", "Reproducible Research", "EDRM", "Model Evaluation"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://research-ready.nl/#website",
+      "url": "https://research-ready.nl",
+      "name": "Research-Ready",
+      "publisher": { "@id": "https://research-ready.nl/#organization" },
+      "inLanguage": [locale]
+    }
+  ]
+};
 ---
 
 <!doctype html>
@@ -39,8 +64,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:title" content={`${title} · Research-Ready`} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} · Research-Ready`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
   </head>
   <body>
     <a class="skip-link" href="#main">{locale === 'nl' ? 'Naar de inhoud' : 'Skip to content'}</a>

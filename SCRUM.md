@@ -8,14 +8,14 @@ Dit backlog bevat de geprioriteerde epics en Scrum-taken voor de doorontwikkelin
 
 | Epic ID | Titel | Prioriteit | Story Points | Status |
 |---|---|---|---|---|
-| **EPIC-WEB-01** | Homepage Showcase: Uitgelichte Use Cases | P1 (Hoog) | 8 SP | To Do |
-| **EPIC-WEB-02** | Navigatie & Mobile UX: Use Cases Dropdown & Hamburger | P1 (Hoog) | 5 SP | To Do |
+| **EPIC-WEB-01** | Homepage Showcase: Uitgelichte Use Cases | P1 (Hoog) | 8 SP | Voltooid ✅ |
+| **EPIC-WEB-02** | Navigatie & Mobile UX: Use Cases Dropdown & Hamburger | P1 (Hoog) | 5 SP | Voltooid ✅ |
 | **EPIC-WEB-03** | Interactieve Demo Previews (3D Graph & Tooltips) | P2 (Medium) | 8 SP | To Do |
-| **EPIC-WEB-04** | Workshop & Intake Funnel (4-Stappen Traject & Cal.com) | P2 (Medium) | 8 SP | To Do |
-| **EPIC-WEB-05** | Complete 21 Use Cases Directory & Filtermatrix | P3 (Laag) | 13 SP | To Do |
-| **EPIC-WEB-06** | Trust Signals & EDRM Compliance Badges | P3 (Laag) | 4 SP | To Do |
-| **EPIC-WEB-07** | Advanced SEO, Sitemap & Meta Discoverability | P2 (Medium) | 5 SP | To Do |
-| **EPIC-WEB-08** | Call Automation, Lead Routing & Pre-Call Intelligence | P2 (Medium) | 8 SP | To Do |
+| **EPIC-WEB-04** | Workshop & Intake Funnel (4-Stappen Traject & Cal.com) | P2 (Medium) | 8 SP | Deels Voltooid 🟡 (Methodologie & Contact gereed) |
+| **EPIC-WEB-05** | Complete 21 Use Cases Directory & Filtermatrix | P3 (Laag) | 13 SP | Voltooid ✅ |
+| **EPIC-WEB-06** | Trust Signals & EDRM Compliance Badges | P3 (Laag) | 4 SP | Voltooid ✅ |
+| **EPIC-WEB-07** | Advanced SEO, Sitemap & Meta Discoverability | P2 (Medium) | 5 SP | Voltooid ✅ |
+| **EPIC-WEB-08** | Call Automation, Lead Routing & Pre-Call Intelligence | P2 (Medium) | 8 SP | Deels Voltooid 🟡 (n8n workflow & docs gereed) |
 
 ---
 

@@ -13,7 +13,7 @@ const { locale, data, heroImage, heroImageAlt, pitchHref } = Astro.props;
 const contactHref = locale === 'nl' ? '/contact/' : '/en/contact/';
 ---
 
-<BaseLayout locale={locale} title={data.title} description={data.description}>
+<BaseLayout locale={locale} title={data.title} description={data.description} image={heroImage}>
 
   <!-- Hero Section -->
   <section class="hero section-dark">

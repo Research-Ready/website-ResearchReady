@@ -1,0 +1,126 @@
+{
+  "name": "Research-Ready Cal.com Lead Orchestration & Pre-Call Intelligence",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "calcom-booking",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Cal.com Webhook (BOOKING_CREATED)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "calcom-booking"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Extract attendee details and booked event from Cal.com payload\nconst payload = items[0].json.body || items[0].json;\nconst booking = payload.payload || payload;\n\nconst attendee = (booking.attendees && booking.attendees[0]) || {};\nconst name = attendee.name || 'Valued Partner';\nconst email = attendee.email || '';\nconst startTime = booking.startTime || '';\nconst title = booking.title || 'Research-Ready Consultation';\nconst description = booking.description || '';\n\n// Custom responses from Cal.com booking form\nconst responses = booking.responses || {};\nconst useCaseInterest = responses.useCase || responses.interest || 'General / Multi-tier Intelligence';\nconst orgType = responses.orgType || 'Enterprise / Research Institution';\nconst hostingPref = responses.hosting || '100% On-Premise GPU Sovereign';\n\n// Match pitch presentation based on use case interest\nlet pitchUrl = 'https://research-ready.nl/pitch/uc4/';\nlet showcaseUrl = 'https://research-ready.nl/uc4-supplylens/';\n\nconst interestLower = String(useCaseInterest).toLowerCase();\nif (interestLower.includes('uc1') || interestLower.includes('citable') || interestLower.includes('research')) {\n  pitchUrl = 'https://research-ready.nl/pitch/uc1/';\n  showcaseUrl = 'https://research-ready.nl/uc1-citable-research/';\n} else if (interestLower.includes('uc12') || interestLower.includes('eval') || interestLower.includes('benchmark')) {\n  pitchUrl = 'https://research-ready.nl/pitch/uc12/';\n  showcaseUrl = 'https://research-ready.nl/uc12-chainforge/';\n} else if (interestLower.includes('uc11') || interestLower.includes('collision') || interestLower.includes('game')) {\n  pitchUrl = 'https://container-collision.pages.dev/';\n  showcaseUrl = 'https://research-ready.nl/container-collision/';\n}\n\nreturn [{\n  json: {\n    name,\n    email,\n    startTime,\n    title,\n    description,\n    useCaseInterest,\n    orgType,\n    hostingPref,\n    pitchUrl,\n    showcaseUrl\n  }\n}];"
+      },
+      "id": "2",
+      "name": "Parse Booking Payload",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama3.2\",\n  \"prompt\": \"You are an executive assistant for Research-Ready (research-ready.nl), sovereign AI consultancy.\\\\n\\\\nA new client has booked a discovery call:\\\\nName: {{ $json.name }}\\\\nEmail: {{ $json.email }}\\\\nOrg Type: {{ $json.orgType }}\\\\nUse Case Interest: {{ $json.useCaseInterest }}\\\\nHosting Preference: {{ $json.hostingPref }}\\\\nNotes: {{ $json.description }}\\\\n\\\\nPlease draft a concise pre-call dossier with:\\\\n1. Executive Summary & context analysis\\\\n2. 3 Key strategic questions for the 30-min intake\\\\n3. Recommended architecture focus (EDRM provenance / on-premise GPU stack)\",\n  \"stream\": false\n}",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Local LLM Pre-Call Briefing (Ollama)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        720,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const booking = items[0].json;\nconst aiResponse = $node[\"Local LLM Pre-Call Briefing (Ollama)\"].json;\nconst briefingNotes = (aiResponse && aiResponse.response) || 'AI briefing pending.';\n\nconst emailSubject = `[Research-Ready Intake] New Consultation: ${booking.name} (${booking.orgType})`;\nconst notificationBody = `\n📅 NEW CONSULTATION SCHEDULED\n--------------------------------------------\nAttendee: ${booking.name} <${booking.email}>\nDate/Time: ${booking.startTime}\nInterest: ${booking.useCaseInterest}\nHosting: ${booking.hostingPref}\nShowcase URL: ${booking.showcaseUrl}\nPitch URL: ${booking.pitchUrl}\n\n🤖 PRE-CALL AI BRIEFING DOSSIER:\n--------------------------------------------\n${briefingNotes}\n`;\n\nreturn [{\n  json: {\n    ...booking,\n    emailSubject,\n    notificationBody,\n    briefingNotes\n  }\n}];"
+      },
+      "id": "4",
+      "name": "Compose Notification & Briefing",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        960,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@research-ready.nl",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Bevestiging & Pitch Presentatie: Uw Research-Ready adviesgesprek",
+        "html": "=<!DOCTYPE html>\n<html>\n<head><style>body { font-family: sans-serif; line-height: 1.6; color: #101c26; }</style></head>\n<body>\n  <p>Beste {{ $json.name }},</p>\n  <p>Hartelijk dank voor het inplannen van uw consultatie met Research-Ready op <strong>{{ $json.startTime }}</strong>.</p>\n  <p>Ter voorbereiding op ons gesprek kunt u alvast de interactieve pitch presentatie en showcase van de relevante use case bekijken:</p>\n  <ul>\n    <li><strong>Interactieve Pitch Presentatie:</strong> <a href=\"{{ $json.pitchUrl }}\">{{ $json.pitchUrl }}</a></li>\n    <li><strong>Online Showcase & Resultaten:</strong> <a href=\"{{ $json.showcaseUrl }}\">{{ $json.showcaseUrl }}</a></li>\n  </ul>\n  <p>Wij kijken uit naar onze kennismaking en de bespreking van uw data- en architectuurwensen.</p>\n  <p>Met vriendelijke groet,<br><strong>Research-Ready Team</strong><br><a href=\"https://research-ready.nl\">research-ready.nl</a></p>\n</body>\n</html>"
+      },
+      "id": "5",
+      "name": "Send Attendee Welcome Email (SMTP)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Cal.com Webhook (BOOKING_CREATED)": {
+      "main": [
+        [
+          {
+            "node": "Parse Booking Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Booking Payload": {
+      "main": [
+        [
+          {
+            "node": "Local LLM Pre-Call Briefing (Ollama)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Local LLM Pre-Call Briefing (Ollama)": {
+      "main": [
+        [
+          {
+            "node": "Compose Notification & Briefing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compose Notification & Briefing": {
+      "main": [
+        [
+          {
+            "node": "Send Attendee Welcome Email (SMTP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
