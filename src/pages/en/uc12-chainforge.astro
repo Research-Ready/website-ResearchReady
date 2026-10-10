@@ -1,0 +1,14 @@
+---
+import UseCasePage from '../../components/UseCasePage.astro';
+import { en } from '../../i18n/en';
+
+const data = en.uc12ChainForge;
+---
+
+<UseCasePage
+  locale="en"
+  data={data}
+  heroImage="/images/usecases/uc12/radar_chart.svg"
+  heroImageAlt="ChainForge evaluation radar across 10 operational task categories"
+  pitchHref="/en/pitch/uc12/"
+/>

@@ -1,0 +1,119 @@
+---
+import 'reveal.js/reveal.css';
+import '../styles/pitch.css';
+
+interface Props {
+  locale: 'nl' | 'en';
+  data: any;
+  backHref: string;
+}
+
+const { locale, data, backHref } = Astro.props;
+const contactHref = locale === 'nl' ? '/contact/' : '/en/contact/';
+---
+
+<a class="pitch-exit" href={backHref}>&larr; {locale === 'nl' ? 'Terug naar use case' : 'Back to use case'}</a>
+
+<div class="reveal-root">
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Title & Vision -->
+      <section>
+        <span class="slide-eyebrow">{data.eyebrow}</span>
+        <h1>{data.title}</h1>
+        <p class="slide-lede">{data.headline}</p>
+        <p style="color: var(--on-dark-muted); font-size: 1.15rem; max-width: 48rem; margin: 1.5rem auto 0;">
+          {data.vision.body}
+        </p>
+      </section>
+
+      <!-- Slide 2: The Problem -->
+      <section>
+        <span class="slide-eyebrow">{data.problem.eyebrow}</span>
+        <h2>{data.problem.title}</h2>
+        <p class="slide-lede">{data.problem.body}</p>
+        <ul class="slide-checklist">
+          {data.problem.points.map((pt: string) => <li>{pt}</li>)}
+        </ul>
+      </section>
+
+      <!-- Slide 3: Mission & Solution -->
+      <section>
+        <span class="slide-eyebrow">{locale === 'nl' ? 'Oplossing & Methode' : 'Solution & Methodology'}</span>
+        <h2>{data.mission.title}</h2>
+        <p class="slide-lede">{data.mission.body}</p>
+        <ul class="slide-checklist">
+          {data.mission.bullets.map((b: string) => <li>{b}</li>)}
+        </ul>
+      </section>
+
+      <!-- Slide 4: Epics & Progress -->
+      <section>
+        <span class="slide-eyebrow">{data.epics.eyebrow}</span>
+        <h2>{data.epics.title}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 2rem; text-align: left;">
+          {data.epics.items.map((epic: { id: string; title: string; statusLabel: string; body: string }) => (
+            <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 1rem 1.2rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <strong style="color: #7fb8d6;">{epic.id}</strong>
+                <span>{epic.statusLabel}</span>
+              </div>
+              <h4 style="margin: 0 0 0.4rem; font-size: 1.05rem; color: #fff;">{epic.title}</h4>
+              <p style="margin: 0; font-size: 0.88rem; color: var(--on-dark-muted); line-height: 1.5;">{epic.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Slide 5: Empirical Results & Artifacts -->
+      <section>
+        <span class="slide-eyebrow">{data.results.eyebrow}</span>
+        <h2>{data.results.title}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          {data.results.items.slice(0, 2).map((res: { title: string; image: string; caption: string }) => (
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1rem;">
+              <div style="height: 220px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 6px; padding: 0.5rem; margin-bottom: 0.8rem;">
+                <img src={res.image} alt={res.title} style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+              </div>
+              <h4 style="margin: 0 0 0.3rem; font-size: 1rem; color: #fff;">{res.title}</h4>
+              <p style="margin: 0; font-size: 0.85rem; color: var(--on-dark-muted);">{res.caption}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Slide 6: Call to Action -->
+      <section>
+        <span class="slide-eyebrow">{locale === 'nl' ? 'Volgende Stap' : 'Next Steps'}</span>
+        <h2>{data.cta.title}</h2>
+        <p class="slide-lede">{data.cta.body}</p>
+        <div class="slide-actions">
+          <a class="slide-btn slide-btn-primary" href={contactHref}>{data.cta.primary}</a>
+          <a class="slide-btn slide-btn-ghost" href={backHref}>{locale === 'nl' ? 'Bekijk volledige pagina' : 'View full page'}</a>
+        </div>
+        <ul class="slide-contact-list">
+          <li>research-ready.nl</li>
+          <li><a href="mailto:info@research-ready.nl">info@research-ready.nl</a></li>
+          <li><a href="https://github.com/Research-Ready" target="_blank" rel="noopener">Research-Ready on GitHub</a></li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  import Reveal from 'reveal.js';
+
+  const deck = new Reveal(document.querySelector('.reveal') as HTMLElement, {
+    hash: true,
+    controls: true,
+    progress: true,
+    center: false,
+    transition: 'slide',
+    width: 1280,
+    height: 720,
+  });
+  deck.initialize();
+</script>

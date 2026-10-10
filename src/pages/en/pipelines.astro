@@ -3,6 +3,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { en } from '../../i18n/en';
 
 const t = en;
+
+const getUcHref = (repo: string) => {
+  if (repo === 'uc1-research') return '/en/uc1-citable-research/';
+  if (repo === 'uc4-supply-chain') return '/en/uc4-supplylens/';
+  if (repo === 'uc11-container-collision') return '/en/container-collision/';
+  if (repo === 'uc12-chainforge-eval' || repo === 'uc12-chainforge') return '/en/uc12-chainforge/';
+  return null;
+};
 ---
 
 <BaseLayout locale="en" title={t.pipelines.title} description={t.pipelines.intro}>
@@ -12,15 +20,27 @@ const t = en;
       <h1>{t.pipelines.title}</h1>
       <p class="lede">{t.pipelines.intro}</p>
       <div class="pipeline-list">
-        {t.pipelines.items.map((item, i) => (
-          <div class="pipeline-row">
-            <span class="pipeline-index">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3>{item.title} <span class="repo-badge">{item.repo}</span></h3>
-              <p>{item.description}</p>
+        {t.pipelines.items.map((item, i) => {
+          const ucHref = getUcHref(item.repo);
+          return (
+            <div class="pipeline-row">
+              <span class="pipeline-index">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>
+                  {item.title} <span class="repo-badge">{item.repo}</span>
+                </h3>
+                <p>{item.description}</p>
+                {ucHref && (
+                  <div style="margin-top: 0.9rem;">
+                    <a href={ucHref} class="btn btn-ghost" style="padding: 0.35rem 0.85rem; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                      View Use Case & Results <span>&rarr;</span>
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
