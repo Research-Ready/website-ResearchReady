@@ -1,0 +1,14 @@
+---
+import UseCasePage from '../../components/UseCasePage.astro';
+import { en } from '../../i18n/en';
+
+const data = en.uc4SupplyLens;
+---
+
+<UseCasePage
+  locale="en"
+  data={data}
+  heroImage="/images/usecases/uc4/dashboard_launcher.png"
+  heroImageAlt="SupplyLens Dashboard Launcher featuring 30 analytical tabs"
+  pitchHref="/en/pitch/uc4/"
+/>

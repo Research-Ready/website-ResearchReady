@@ -1,0 +1,14 @@
+---
+import UseCasePage from '../components/UseCasePage.astro';
+import { nl } from '../i18n/nl';
+
+const data = nl.uc1Research;
+---
+
+<UseCasePage
+  locale="nl"
+  data={data}
+  heroImage="/images/usecases/uc1/fig2_pareto_energy_accuracy.png"
+  heroImageAlt="Pareto-optimaliteit: bronnauwkeurigheid versus inferentietijd in UC1"
+  pitchHref="/pitch/uc1/"
+/>

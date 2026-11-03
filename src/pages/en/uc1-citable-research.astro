@@ -1,0 +1,14 @@
+---
+import UseCasePage from '../../components/UseCasePage.astro';
+import { en } from '../../i18n/en';
+
+const data = en.uc1Research;
+---
+
+<UseCasePage
+  locale="en"
+  data={data}
+  heroImage="/images/usecases/uc1/fig2_pareto_energy_accuracy.png"
+  heroImageAlt="Pareto optimality: citation accuracy vs inference runtime in UC1"
+  pitchHref="/en/pitch/uc1/"
+/>
