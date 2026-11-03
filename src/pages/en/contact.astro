@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CalEmbed from '../../components/CalEmbed.astro';
+import HowItWorks from '../../components/HowItWorks.astro';
 import { en } from '../../i18n/en';
 
 const t = en;
@@ -13,14 +14,76 @@ const t = en;
         <span class="eyebrow">{t.contact.title}</span>
         <h1>{t.contact.title}</h1>
         <p class="lede">{t.contact.intro}</p>
-        <div class="contact-block">
-          <p>{t.contact.emailLabel} <a href="mailto:info@research-ready.nl">info@research-ready.nl</a></p>
+
+        <div class="contact-block-card">
+          <h3>Direct Contact</h3>
+          <p class="contact-lead">Have questions regarding on-premise GPU clusters, EDRM auditing, or consortium participation?</p>
+          <ul class="contact-details-list">
+            <li>
+              <strong>Email:</strong> <a href="mailto:info@research-ready.nl">info@research-ready.nl</a>
+            </li>
+            <li>
+              <strong>Response Time:</strong> Personal reply within 1 business day
+            </li>
+            <li>
+              <strong>Location:</strong> The Netherlands (Hybrid / On-site)
+            </li>
+          </ul>
+          <div style="margin-top: 1.25rem;">
+            <a href="mailto:info@research-ready.nl?subject=Inquiry%20Research-Ready%20Intake" class="btn btn-ghost btn-sm">
+              Send an Email Directly &rarr;
+            </a>
+          </div>
         </div>
       </div>
+
       <div class="contact-card">
         <h2>{t.contact.bookingLabel}</h2>
+        <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;">
+          Schedule an introductory 30-minute consultation directly via our secure calendar:
+        </p>
         <CalEmbed />
       </div>
     </div>
   </section>
+
+  <!-- 4-Steps Collaboration Process -->
+  <HowItWorks locale="en" />
 </BaseLayout>
+
+<style>
+  .contact-block-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .contact-block-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+  }
+
+  .contact-lead {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+
+  .contact-details-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.92rem;
+  }
+
+  .contact-details-list strong {
+    color: var(--ink);
+  }
+</style>

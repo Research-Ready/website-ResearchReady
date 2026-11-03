@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import FeaturedShowcase from '../../components/FeaturedShowcase.astro';
+import TrustBar from '../../components/TrustBar.astro';
 import { en } from '../../i18n/en';
 
 const t = en;
@@ -45,6 +47,12 @@ const teaserItems = t.pipelines.items.slice(0, 4);
       </div>
     </div>
   </section>
+
+  <!-- Partner & Trust Credentials Strip -->
+  <TrustBar locale="en" />
+
+  <!-- Featured Use Cases Showcase -->
+  <FeaturedShowcase locale="en" />
 
   <section class="section">
     <div class="wrap split">

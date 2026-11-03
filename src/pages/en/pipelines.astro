@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PipelineCatalog from '../../components/PipelineCatalog.astro';
 import { en } from '../../i18n/en';
 
 const t = en;
@@ -8,20 +9,10 @@ const t = en;
 <BaseLayout locale="en" title={t.pipelines.title} description={t.pipelines.intro}>
   <section class="section">
     <div class="wrap">
-      <span class="eyebrow">{t.pipelines.title}</span>
+      <span class="eyebrow">Directory & Portfolio</span>
       <h1>{t.pipelines.title}</h1>
       <p class="lede">{t.pipelines.intro}</p>
-      <div class="pipeline-list">
-        {t.pipelines.items.map((item, i) => (
-          <div class="pipeline-row">
-            <span class="pipeline-index">{String(i + 1).padStart(2, '0')}</span>
-            <div>
-              <h3>{item.title} <span class="repo-badge">{item.repo}</span></h3>
-              <p>{item.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <PipelineCatalog locale="en" />
     </div>
   </section>
 </BaseLayout>
