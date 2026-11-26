@@ -6,3 +6,6 @@ public/cert-prep/
 public/presentations/
 public/reports/*.html
 public/reports/*_files/
+
+# KeePass only in private repos
+*.kdbx
